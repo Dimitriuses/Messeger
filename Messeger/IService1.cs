@@ -19,6 +19,18 @@ namespace Messeger
         [OperationContract]
         CompositeType GetDataUsingDataContract(CompositeType composite);
 
+        [OperationContract]
+        string HelloResponse(string name);
+
+        [OperationContract]
+        decimal SimpleCalculator(decimal a, decimal b, char @operator);
+
+        [OperationContract]
+        Message GetMessageById(int id);
+
+        [OperationContract]
+        bool Add(Message message);
+
         // TODO: Add your service operations here
     }
 
