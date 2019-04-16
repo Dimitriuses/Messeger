@@ -12,6 +12,8 @@ namespace Messeger
         [DataMember]
         public int id { get; set; }
         [DataMember]
+        public string Name { get; set; }
+        [DataMember]
         public List<Message> Messages { get; set; }
         [DataMember]
         public List<User> Participants { get; set; }

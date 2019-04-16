@@ -49,7 +49,37 @@ namespace Messeger
         /////////////////////////////////////////////////////////////////////////////
         ///
 
-        
+        public bool AddNewUser(Loger login, string email, string phone)
+        {
+            if (login != null) 
+            {
+                using(Meseger meseger = new Meseger())
+                {
+                    meseger.Users.Add(new User { Login = login.Login, PasswordHash = login.PasswordHash, Email = email, Phone = phone });
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool AddNewChat(Loger login, string name, List<string> participants)
+        {
+            if (login != null && name != null && participants.Count > 0)
+            {
+                using (Meseger meseger = new Meseger())
+                {
+                    User user = meseger.Users.Find(new object { new string Login = login})
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         
 
         //public bool Add(Message message)

@@ -37,8 +37,10 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -57,6 +59,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Registr.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registr.Designer.cs">
+      <DependentUpon>Registr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SingIN.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SingIN.Designer.cs">
+      <DependentUpon>SingIN.cs</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -92,6 +106,12 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registr.resx">
+      <DependentUpon>Registr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SingIN.resx">
+      <DependentUpon>SingIN.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Connected Services\Server\Client.Server.CompositeType.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>

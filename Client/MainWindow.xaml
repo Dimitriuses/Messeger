@@ -18,12 +18,19 @@
                 <RowDefinition Height="10*"/>
             </Grid.RowDefinitions>
             <ListBox x:Name="listBoxChats" Grid.Row="1"/>
+            <Button x:Name="button" Content="≡" HorizontalAlignment="Left" Width="38" Height="38" FontSize="22" Click="Button_Click"/>
 
         </Grid>
         <GridSplitter Grid.Column="1" ShowsPreview="False" Width="3"
         HorizontalAlignment="Center" VerticalAlignment="Stretch" />
-        
-        
+        <Grid Grid.Column="2" Margin="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="189*"/>
+                <RowDefinition Height="230*"/>
+            </Grid.RowDefinitions>
+        </Grid>
+
+
 
     </Grid>
 
