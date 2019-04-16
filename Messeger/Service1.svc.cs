@@ -55,7 +55,9 @@ namespace Messeger
             {
                 using(Meseger meseger = new Meseger())
                 {
-                    meseger.Users.Add(new User { Login = login.Login, PasswordHash = login.PasswordHash, Email = email, Phone = phone });
+                    User user = new User { Login = login.Login, Email = email, Phone = phone };
+                    user.SetHashPass(login);
+                    meseger.Users.Add(user);
                 }
                 return true;
             }
@@ -71,13 +73,78 @@ namespace Messeger
             {
                 using (Meseger meseger = new Meseger())
                 {
-                    User user = meseger.Users.Find(new object { new string Login = login})
+                    User user = meseger.Users.Find(login.Login);
+                    if(user != null && user.CompareHashPass(login))
+                    {
+                        Chat chat = new Chat();
+                        chat.Name = name;
+                        chat.Admin = user;
+                        foreach (string item in participants)
+                        {
+                            User tmp = meseger.Users.Find(item);
+                            if(tmp != null)
+                            {
+                                //logic error, i don`t know exactly how work DBset and i need help
+                            }                     //  /|\
+                        }                         //   |
+                        user.Chats.Add(chat); //-------|
+                        chat.Admin.Chats.Add(chat);//--|
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 return true;
             }
             else
             {
                 return false;
+            }
+        }
+
+        public List<string> GetChatList(Loger Userloger)
+        {
+            using(Meseger meseger = new Meseger())
+            {
+                User user = meseger.Users.Find(Userloger.Login);
+                if(user != null && user.CompareHashPass(Userloger))
+                {
+                    List<string> tmp = new List<string>();
+                    foreach (Chat item in user.Chats)
+                    {
+                        tmp.Add(item.Name);
+                    }
+                    return tmp;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        public List<Message> GetMessages(Loger Userloger,int chatID)
+        {
+            using (Meseger meseger = new Meseger())
+            {
+                User user = meseger.Users.Find(Userloger.Login);
+                Chat chat = meseger.Chats.Find(chatID);
+                if (user != null && user.CompareHashPass(Userloger) && chat != null)
+                {
+                    if(chat.Admin == user || chat.Participants.Find(a=>a.Login == user.Login) != null)
+                    {
+                        return chat.Messages;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
         

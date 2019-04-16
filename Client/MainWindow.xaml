@@ -25,9 +25,9 @@
         HorizontalAlignment="Center" VerticalAlignment="Stretch" />
         <Grid Grid.Column="2" Margin="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="189*"/>
-                <RowDefinition Height="230*"/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
+            
         </Grid>
 
 
