@@ -73,22 +73,26 @@ namespace Messeger
             {
                 using (Meseger meseger = new Meseger())
                 {
-                    User user = meseger.Users.Find(login.Login);
+                    User user = meseger.Users.SingleOrDefault<User>(a => a.Login == login.Login);
                     if(user != null && user.CompareHashPass(login))
                     {
                         Chat chat = new Chat();
                         chat.Name = name;
                         chat.Admin = user;
+                        string recipients = " ";
                         foreach (string item in participants)
                         {
                             User tmp = meseger.Users.Find(item);
                             if(tmp != null)
                             {
-                                //logic error, i don`t know exactly how work DBset and i need help
-                            }                     //  /|\
-                        }                         //   |
-                        user.Chats.Add(chat); //-------|
-                        chat.Admin.Chats.Add(chat);//--|
+                                tmp.Chats.Add(chat);
+                                chat.Participants.Add(tmp);
+                                recipients += $"{tmp.Login} ";
+                            }                     
+                        }                         
+                        user.Chats.Add(chat); 
+                        chat.Admin.Chats.Add(chat);
+                        chat.Messages.Add(new Message { ChatId = chat, Text = $"hello and welcome: {recipients}" });
                     }
                     else
                     {
@@ -107,8 +111,8 @@ namespace Messeger
         {
             using(Meseger meseger = new Meseger())
             {
-                User user = meseger.Users.Find(Userloger.Login);
-                if(user != null && user.CompareHashPass(Userloger))
+                User user = meseger.Users.SingleOrDefault<User>(a => a.Login == Userloger.Login);
+                if (user != null && user.CompareHashPass(Userloger))
                 {
                     List<string> tmp = new List<string>();
                     foreach (Chat item in user.Chats)
@@ -128,7 +132,7 @@ namespace Messeger
         {
             using (Meseger meseger = new Meseger())
             {
-                User user = meseger.Users.Find(Userloger.Login);
+                User user = meseger.Users.SingleOrDefault<User>(a => a.Login == Userloger.Login);
                 Chat chat = meseger.Chats.Find(chatID);
                 if (user != null && user.CompareHashPass(Userloger) && chat != null)
                 {

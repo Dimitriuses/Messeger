@@ -14,7 +14,7 @@ namespace Messeger
         [DataMember]
         public string Login { get; set; }
         [DataMember]
-        private string PasswordHash;
+        public string PasswordHash { get; set; }
 
         public bool CompareHashPass(Loger Userloger)
         {

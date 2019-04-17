@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Client.Server;
 
 namespace Client
 {
@@ -20,6 +21,7 @@ namespace Client
     /// </summary>
     public partial class MainWindow : Window
     {
+        Loger UserLoger;
         public MainWindow()
         {
             InitializeComponent();
@@ -27,7 +29,11 @@ namespace Client
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            SingIN dlg = new SingIN();
+            if(dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
 
+            }
         }
     }
 }

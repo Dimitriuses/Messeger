@@ -19,16 +19,20 @@ namespace Messeger
         [OperationContract]
         CompositeType GetDataUsingDataContract(CompositeType composite);
 
-        //[OperationContract]
+        [OperationContract]
+        bool AddNewUser(Loger login, string email, string phone);
         //string HelloResponse(string name);
 
-        //[OperationContract]
+        [OperationContract]
+        bool AddNewChat(Loger login, string name, List<string> participants);
         //decimal SimpleCalculator(decimal a, decimal b, char @operator);
 
-        //[OperationContract]
+        [OperationContract]
+        List<string> GetChatList(Loger Userloger);
         //Message GetMessageById(int id);
 
-        //[OperationContract]
+        [OperationContract]
+        List<Message> GetMessages(Loger Userloger, int chatID);
         //bool Add(Message message);
 
         // TODO: Add your service operations here

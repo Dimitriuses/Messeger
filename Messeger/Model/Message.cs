@@ -21,6 +21,8 @@ namespace Messeger
         public User Sender { get; set; }
         [DataMember]
         public List<User> Reciver { get; set; }
+
+        
         //public override string ToString()
         //{
         //    return $"{Id} {Sender} => {Reciver} << {Text}";
