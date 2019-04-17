@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Client.Server;
 
 namespace Client
 {
@@ -58,6 +59,36 @@ namespace Client
             else
             {
                 return false;
+            }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            /*using(*/Service1Client client = new Service1Client();//)
+            //{
+                if (client.ThisLoginIsUnique(textBox1.Text))
+                {
+                    label7.ForeColor = Color.Green;
+                    label7.Text = "Unique";
+                }
+                else
+                {
+                    label7.Text = "This login exists";
+                    label7.ForeColor = Color.Red;
+                }
+            //}
+            client.Close();
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+            if(textBox2.Text == textBox3.Text)
+            {
+                textBox3.ForeColor = SystemColors.WindowText;
+            }
+            else
+            {
+                textBox3.ForeColor = Color.Red;
             }
         }
     }

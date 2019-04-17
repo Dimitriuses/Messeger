@@ -480,6 +480,12 @@ namespace Client.Server {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetMessages", ReplyAction="http://tempuri.org/IService1/GetMessagesResponse")]
         System.Threading.Tasks.Task<Client.Server.Message[]> GetMessagesAsync(Client.Server.Loger Userloger, int chatID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ThisLoginIsUnique", ReplyAction="http://tempuri.org/IService1/ThisLoginIsUniqueResponse")]
+        bool ThisLoginIsUnique(string Login);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ThisLoginIsUnique", ReplyAction="http://tempuri.org/IService1/ThisLoginIsUniqueResponse")]
+        System.Threading.Tasks.Task<bool> ThisLoginIsUniqueAsync(string Login);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -555,6 +561,14 @@ namespace Client.Server {
         
         public System.Threading.Tasks.Task<Client.Server.Message[]> GetMessagesAsync(Client.Server.Loger Userloger, int chatID) {
             return base.Channel.GetMessagesAsync(Userloger, chatID);
+        }
+        
+        public bool ThisLoginIsUnique(string Login) {
+            return base.Channel.ThisLoginIsUnique(Login);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ThisLoginIsUniqueAsync(string Login) {
+            return base.Channel.ThisLoginIsUniqueAsync(Login);
         }
     }
 }

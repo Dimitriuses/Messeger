@@ -66,6 +66,29 @@ namespace Messeger
                 return false;
             }
         }
+        
+        public bool ThisLoginIsUnique(string Login)
+        {
+            if(Login != null)
+            {
+                using(Meseger meseger = new Meseger())
+                {
+                    var user = meseger.Users;
+                    foreach (User item in user)
+                    {
+                        if(item.Login == Login)
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         public bool AddNewChat(Loger login, string name, List<string> participants)
         {

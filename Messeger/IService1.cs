@@ -34,7 +34,8 @@ namespace Messeger
         [OperationContract]
         List<Message> GetMessages(Loger Userloger, int chatID);
         //bool Add(Message message);
-
+        [OperationContract]
+        bool ThisLoginIsUnique(string Login);
         // TODO: Add your service operations here
     }
 
