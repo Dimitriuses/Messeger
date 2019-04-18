@@ -20,7 +20,7 @@ namespace Messeger
         [DataMember]
         public User Sender { get; set; }
         [DataMember]
-        public List<User> Reciver { get; set; }
+        public virtual ICollection<User> Reciver { get; set; }
 
         
         //public override string ToString()

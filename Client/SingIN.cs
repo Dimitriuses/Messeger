@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Client.Server;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,8 +14,7 @@ namespace Client
 {
     public partial class SingIN: Form
     {
-        public string Login { get; set; }
-        public string Password { get; set; }
+        public Loger User { get; set; }
         public SingIN()
         {
             InitializeComponent();
@@ -23,16 +23,27 @@ namespace Client
         private void button2_Click(object sender, EventArgs e)
         {
             Registr registr = new Registr();
-            registr.Show();
+            registr.ShowDialog();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Login = textBox1.Text;
+            User = new Loger();
+            User.Login = textBox1.Text;
             using (MD5 md5Hash = MD5.Create())
             {
-                Password = GetMd5Hash(md5Hash, textBox2.Text);
+                User.PasswordHash = GetMd5Hash(md5Hash, textBox2.Text);
             }
+            Service1Client client = new Service1Client();
+            if (client.UserExists(User))
+            {
+                DialogResult = DialogResult.OK;
+            }
+            else
+            {
+                MessageBox.Show("Error");
+            }
+            client.Close();
 
         }
         static string GetMd5Hash(MD5 md5Hash, string input)

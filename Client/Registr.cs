@@ -14,12 +14,36 @@ namespace Client
 {
     public partial class Registr: Form
     {
+        bool login = false;
+        bool pass = false;
         public Registr()
         {
             InitializeComponent();
         }
         private void button1_Click(object sender, EventArgs e)
         {
+            if (login && pass)
+            {
+                bool Complete = false;
+                Loger user = new Loger();
+                user.Login = textBox1.Text;
+                using (MD5 md5Hash = MD5.Create())
+                {
+                    user.PasswordHash = GetMd5Hash(md5Hash, textBox2.Text);
+                }
+                Service1Client client = new Service1Client();
+                Complete = client.AddNewUser(user, textBox4.Text, textBox5.Text);
+                client.Close();
+                if (Complete)
+                {
+                    MessageBox.Show("Complete");
+                    DialogResult = DialogResult.OK;
+                }
+                else
+                {
+                    MessageBox.Show("Error");
+                }
+            }
 
         }
         static string GetMd5Hash(MD5 md5Hash, string input)
@@ -56,10 +80,7 @@ namespace Client
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -70,11 +91,13 @@ namespace Client
                 {
                     label7.ForeColor = Color.Green;
                     label7.Text = "Unique";
+                    login = true;
                 }
                 else
                 {
                     label7.Text = "This login exists";
                     label7.ForeColor = Color.Red;
+                    login = false;
                 }
             //}
             client.Close();
@@ -85,9 +108,11 @@ namespace Client
             if(textBox2.Text == textBox3.Text)
             {
                 textBox3.ForeColor = SystemColors.WindowText;
+                pass = true;
             }
             else
             {
+                pass = false;
                 textBox3.ForeColor = Color.Red;
             }
         }

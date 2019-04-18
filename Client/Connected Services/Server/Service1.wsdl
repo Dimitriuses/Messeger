@@ -26,6 +26,18 @@
   <wsdl:message name="IService1_AddNewUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddNewUserResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_ReloadEmailUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReloadEmailUser" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ReloadEmailUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReloadEmailUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ReloadPhonelUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReloadPhonelUser" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ReloadPhonelUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReloadPhonelUserResponse" />
+  </wsdl:message>
   <wsdl:message name="IService1_AddNewChat_InputMessage">
     <wsdl:part name="parameters" element="tns:AddNewChat" />
   </wsdl:message>
@@ -50,6 +62,12 @@
   <wsdl:message name="IService1_ThisLoginIsUnique_OutputMessage">
     <wsdl:part name="parameters" element="tns:ThisLoginIsUniqueResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_UserExists_InputMessage">
+    <wsdl:part name="parameters" element="tns:UserExists" />
+  </wsdl:message>
+  <wsdl:message name="IService1_UserExists_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UserExistsResponse" />
+  </wsdl:message>
   <wsdl:portType name="IService1">
     <wsdl:operation name="GetData">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetData" message="tns:IService1_GetData_InputMessage" />
@@ -62,6 +80,14 @@
     <wsdl:operation name="AddNewUser">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddNewUser" message="tns:IService1_AddNewUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddNewUserResponse" message="tns:IService1_AddNewUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReloadEmailUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ReloadEmailUser" message="tns:IService1_ReloadEmailUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ReloadEmailUserResponse" message="tns:IService1_ReloadEmailUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReloadPhonelUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ReloadPhonelUser" message="tns:IService1_ReloadPhonelUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ReloadPhonelUserResponse" message="tns:IService1_ReloadPhonelUser_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="AddNewChat">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddNewChat" message="tns:IService1_AddNewChat_InputMessage" />
@@ -78,6 +104,10 @@
     <wsdl:operation name="ThisLoginIsUnique">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/ThisLoginIsUnique" message="tns:IService1_ThisLoginIsUnique_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/ThisLoginIsUniqueResponse" message="tns:IService1_ThisLoginIsUnique_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UserExists">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/UserExists" message="tns:IService1_UserExists_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/UserExistsResponse" message="tns:IService1_UserExists_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IService1" type="tns:IService1">
@@ -102,6 +132,24 @@
     </wsdl:operation>
     <wsdl:operation name="AddNewUser">
       <soap:operation soapAction="http://tempuri.org/IService1/AddNewUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReloadEmailUser">
+      <soap:operation soapAction="http://tempuri.org/IService1/ReloadEmailUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReloadPhonelUser">
+      <soap:operation soapAction="http://tempuri.org/IService1/ReloadPhonelUser" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -138,6 +186,15 @@
     </wsdl:operation>
     <wsdl:operation name="ThisLoginIsUnique">
       <soap:operation soapAction="http://tempuri.org/IService1/ThisLoginIsUnique" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UserExists">
+      <soap:operation soapAction="http://tempuri.org/IService1/UserExists" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

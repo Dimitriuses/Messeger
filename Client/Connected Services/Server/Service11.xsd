@@ -46,12 +46,42 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="ReloadEmailUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="Userloger" nillable="true" type="q4:Loger" />
+        <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReloadEmailUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ReloadEmailUserResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReloadPhonelUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="Userloger" nillable="true" type="q5:Loger" />
+        <xs:element minOccurs="0" name="phone" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReloadPhonelUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ReloadPhonelUserResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="AddNewChat">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="login" nillable="true" type="q4:Loger" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="login" nillable="true" type="q6:Loger" />
         <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
-        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="participants" nillable="true" type="q5:ArrayOfstring" />
+        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="participants" nillable="true" type="q7:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -65,21 +95,21 @@
   <xs:element name="GetChatList">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="Userloger" nillable="true" type="q6:Loger" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="Userloger" nillable="true" type="q8:Loger" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetChatListResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetChatListResult" nillable="true" type="q7:ArrayOfstring" />
+        <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="GetChatListResult" nillable="true" type="q9:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetMessages">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="Userloger" nillable="true" type="q8:Loger" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="Userloger" nillable="true" type="q10:Loger" />
         <xs:element minOccurs="0" name="chatID" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
@@ -87,7 +117,7 @@
   <xs:element name="GetMessagesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="GetMessagesResult" nillable="true" type="q9:ArrayOfMessage" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="GetMessagesResult" nillable="true" type="q11:ArrayOfMessage" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -102,6 +132,20 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="ThisLoginIsUniqueResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UserExists">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="loger" nillable="true" type="q12:Loger" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UserExistsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UserExistsResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

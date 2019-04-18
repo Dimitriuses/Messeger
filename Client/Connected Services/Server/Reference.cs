@@ -463,6 +463,18 @@ namespace Client.Server {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddNewUser", ReplyAction="http://tempuri.org/IService1/AddNewUserResponse")]
         System.Threading.Tasks.Task<bool> AddNewUserAsync(Client.Server.Loger login, string email, string phone);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ReloadEmailUser", ReplyAction="http://tempuri.org/IService1/ReloadEmailUserResponse")]
+        bool ReloadEmailUser(Client.Server.Loger Userloger, string Email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ReloadEmailUser", ReplyAction="http://tempuri.org/IService1/ReloadEmailUserResponse")]
+        System.Threading.Tasks.Task<bool> ReloadEmailUserAsync(Client.Server.Loger Userloger, string Email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ReloadPhonelUser", ReplyAction="http://tempuri.org/IService1/ReloadPhonelUserResponse")]
+        bool ReloadPhonelUser(Client.Server.Loger Userloger, string phone);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ReloadPhonelUser", ReplyAction="http://tempuri.org/IService1/ReloadPhonelUserResponse")]
+        System.Threading.Tasks.Task<bool> ReloadPhonelUserAsync(Client.Server.Loger Userloger, string phone);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddNewChat", ReplyAction="http://tempuri.org/IService1/AddNewChatResponse")]
         bool AddNewChat(Client.Server.Loger login, string name, string[] participants);
         
@@ -486,6 +498,12 @@ namespace Client.Server {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ThisLoginIsUnique", ReplyAction="http://tempuri.org/IService1/ThisLoginIsUniqueResponse")]
         System.Threading.Tasks.Task<bool> ThisLoginIsUniqueAsync(string Login);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UserExists", ReplyAction="http://tempuri.org/IService1/UserExistsResponse")]
+        bool UserExists(Client.Server.Loger loger);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UserExists", ReplyAction="http://tempuri.org/IService1/UserExistsResponse")]
+        System.Threading.Tasks.Task<bool> UserExistsAsync(Client.Server.Loger loger);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -539,6 +557,22 @@ namespace Client.Server {
             return base.Channel.AddNewUserAsync(login, email, phone);
         }
         
+        public bool ReloadEmailUser(Client.Server.Loger Userloger, string Email) {
+            return base.Channel.ReloadEmailUser(Userloger, Email);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ReloadEmailUserAsync(Client.Server.Loger Userloger, string Email) {
+            return base.Channel.ReloadEmailUserAsync(Userloger, Email);
+        }
+        
+        public bool ReloadPhonelUser(Client.Server.Loger Userloger, string phone) {
+            return base.Channel.ReloadPhonelUser(Userloger, phone);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ReloadPhonelUserAsync(Client.Server.Loger Userloger, string phone) {
+            return base.Channel.ReloadPhonelUserAsync(Userloger, phone);
+        }
+        
         public bool AddNewChat(Client.Server.Loger login, string name, string[] participants) {
             return base.Channel.AddNewChat(login, name, participants);
         }
@@ -569,6 +603,14 @@ namespace Client.Server {
         
         public System.Threading.Tasks.Task<bool> ThisLoginIsUniqueAsync(string Login) {
             return base.Channel.ThisLoginIsUniqueAsync(Login);
+        }
+        
+        public bool UserExists(Client.Server.Loger loger) {
+            return base.Channel.UserExists(loger);
+        }
+        
+        public System.Threading.Tasks.Task<bool> UserExistsAsync(Client.Server.Loger loger) {
+            return base.Channel.UserExistsAsync(loger);
         }
     }
 }

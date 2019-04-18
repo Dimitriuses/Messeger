@@ -22,6 +22,10 @@ namespace Messeger
         [OperationContract]
         bool AddNewUser(Loger login, string email, string phone);
         //string HelloResponse(string name);
+        [OperationContract]
+        bool ReloadEmailUser(Loger Userloger, string Email);
+        [OperationContract]
+        bool ReloadPhonelUser(Loger Userloger, string phone);
 
         [OperationContract]
         bool AddNewChat(Loger login, string name, List<string> participants);
@@ -36,6 +40,8 @@ namespace Messeger
         //bool Add(Message message);
         [OperationContract]
         bool ThisLoginIsUnique(string Login);
+        [OperationContract]
+        bool UserExists(Loger loger);
         // TODO: Add your service operations here
     }
 

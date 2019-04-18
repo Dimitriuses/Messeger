@@ -49,16 +49,13 @@ namespace Messeger
                     Participants.Add(user);
                     return true;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     return false;
                     //throw;
                 }
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
         public bool RemoveParticipant(User user)
         {

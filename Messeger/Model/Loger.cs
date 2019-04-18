@@ -28,14 +28,14 @@ namespace Messeger
             }
         }
 
-        public bool SetHashPass(string pass)
-        {
-            PasswordHash = pass;
-            return true;
-        }
+        public void SetHashPass(string pass) => PasswordHash = pass;
+        //{
+       // PasswordHash = pass;
+            //return true;
+       // }
         public bool SetHashPass(Loger Userloger)
         {
-            PasswordHash = Userloger.PasswordHash;
+            return PasswordHash == Userloger.PasswordHash;
             return true;
         }
     }

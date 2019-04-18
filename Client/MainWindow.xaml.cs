@@ -24,6 +24,7 @@ namespace Client
         Loger UserLoger;
         public MainWindow()
         {
+            UserLoger = new Loger(); 
             InitializeComponent();
         }
 
@@ -32,7 +33,16 @@ namespace Client
             SingIN dlg = new SingIN();
             if(dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+                string[] tmp;
+                UserLoger = dlg.User;
+                Service1Client client = new Service1Client();
+                tmp = client.GetChatList(UserLoger);
+                client.Close();
+                listBoxChats.Items.Add(tmp);
+                //foreach (string item in tmp)
+                //{
 
+                //}
             }
         }
     }
