@@ -14,15 +14,18 @@ namespace Messeger
         [DataMember]
         public int Id { get; set; }
         [DataMember]
-        public Chat ChatId { get; set; }
-        [DataMember]
         public string Text { get; set; }
         [DataMember]
-        public User Sender { get; set; }
+        public virtual Chat Chat { get; set; }
+        [DataMember]
+        public virtual User Sender { get; set; }
         [DataMember]
         public virtual ICollection<User> Reciver { get; set; }
 
-        
+        public virtual ICollection<Chat> Chats  { get; set; }
+
+
+
         //public override string ToString()
         //{
         //    return $"{Id} {Sender} => {Reciver} << {Text}";

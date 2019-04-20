@@ -10,15 +10,15 @@ namespace Messeger
     public class Chat
     {
         [DataMember]
-        public int id { get; set; }
+        public int Id { get; set; }
         [DataMember]
         public string Name { get; set; }
         [DataMember]
-        public List<Message> Messages { get; set; }
+        public virtual User Admin { get; set; }
         [DataMember]
-        public List<User> Participants { get; set; }
+        public virtual ICollection<Message> Messages { get; set; }
         [DataMember]
-        public User Admin { get; set; }
+        public virtual ICollection<User> Participants { get; set; }
 
         public bool AddMessage(Message message)
         {
