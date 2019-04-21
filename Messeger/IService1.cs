@@ -28,7 +28,7 @@ namespace Messeger
         bool ReloadPhonelUser(Loger Userloger, string phone);
 
         [OperationContract]
-        bool AddNewChat(Loger login, string name, List<string> participants);
+        bool AddNewChat(Loger login, string name, List<User> participants);
         //decimal SimpleCalculator(decimal a, decimal b, char @operator);
 
         [OperationContract]
