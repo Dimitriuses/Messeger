@@ -169,7 +169,7 @@ namespace Messeger
                         //chat.Admin.Chats.Add(chat);
                         chat.Messages = new List<Message>();
                         chat.Messages.Add(new Message { Chat = chat, Text = $"hello and welcome" });
-                        meseger.SaveChanges();
+                        meseger.SaveChanges(); // Multiplicity constraint violated. The role 'User_Chats_Source' of the relationship 'Messeger.User_Chats' has multiplicity 1 or 0..1.
                         return true;
                     }
                     return false;
