@@ -11,16 +11,14 @@ namespace Messeger
     public class User : Loger
     {
         [DataMember]
-        public int Id { get; set; }
-        [DataMember]
         public string Email { get; set; }
         [DataMember]
         public string Phone { get; set; }
         [DataMember]
         public virtual ICollection<Chat> Chats { get; set; }
 
-        public virtual Message Message { get; set; }
-        public virtual Chat Chat { get; set; }
+        //public virtual Message Message { get; set; }
+        //public virtual Chat Chat { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
         //public virtual ICollection<Chat> Chats { get; set; }
 
