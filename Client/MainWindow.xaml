@@ -17,7 +17,13 @@
                 <RowDefinition/>
                 <RowDefinition Height="10*"/>
             </Grid.RowDefinitions>
-            <ListBox x:Name="listBoxChats" Grid.Row="1"/>
+            <ListBox x:Name="listBoxChats" Grid.Row="1" SelectionChanged="ListBoxChats_SelectionChanged" ItemsSource="{Binding}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
             <Button x:Name="button" Content="≡" HorizontalAlignment="Left" Width="38" Height="38" FontSize="22" Click="Button_Click"/>
 
         </Grid>
@@ -32,11 +38,9 @@
                     <RowDefinition Height="10*"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <RichTextBox x:Name="richTextBox">
-                    <FlowDocument>
-                        <Paragraph>
-                            <Run Text="RichTextBox"/>
-                        </Paragraph>
+                <RichTextBox x:Name="richMessageBox">
+                    <FlowDocument x:Name="Messages">
+                        
                     </FlowDocument>
                 </RichTextBox>
                 <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="10,5,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="304"/>

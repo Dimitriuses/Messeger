@@ -26,6 +26,7 @@ namespace Client
         {
             UserLoger = new Loger(); 
             InitializeComponent();
+            listBoxChats.ItemsSource = new List<string>() { " test message ", " helow blet " };
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -50,5 +51,54 @@ namespace Client
         {
 
         }
+
+        private void ListBoxChats_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+            
+            if(e.AddedItems[0] == " helow blet ")
+            {
+                //MessageBox.Show("EEEE boyy");
+                UserLoger.Login = "Test_User";
+                RenderMessage(bletMassage());
+                UserLoger.Login = null;
+            }
+            
+            
+        }
+
+        private void RenderMessage(List<Message> messages)
+        {
+            Messages.Blocks.Clear();
+            foreach (Message item in messages)
+            {
+                Paragraph paragraph = new Paragraph(new Run(item.Sender.Login +": " + item.Text));
+                if(item.Sender.Login == UserLoger.Login)
+                {
+                    paragraph.FlowDirection = FlowDirection.RightToLeft;
+                    
+                }
+                else
+                {
+                    paragraph.FlowDirection = FlowDirection.LeftToRight;
+                }
+                Messages.Blocks.Add(paragraph);
+            }
+        }
+
+        private List<Message> bletMassage()
+        {
+            User TestUser = new User() { Login = "VASA_TEST" };
+            User user = new User() { Login = UserLoger.Login };
+            List<Message> messages = new List<Message>
+            {
+                new Message { Id = 0 , Reciver = new User[] { TestUser } , Sender = user, Text = "Hello" },
+                new Message { Id = 1 , Reciver = new User[] { user } , Sender = TestUser, Text = "Hello" },
+                new Message { Id = 2 , Reciver = new User[] { TestUser } , Sender = user, Text = "Чо за НА**Й" },
+                new Message { Id = 3 , Reciver = new User[] { user } , Sender = TestUser, Text = "???" }
+            };
+            return messages;
+        }
+
     }
 }
