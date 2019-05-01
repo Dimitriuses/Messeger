@@ -73,14 +73,17 @@ namespace Client
             foreach (Message item in messages)
             {
                 Paragraph paragraph = new Paragraph(new Run(item.Sender.Login +": " + item.Text));
-                if(item.Sender.Login == UserLoger.Login)
+                ThicknessConverter tc = new ThicknessConverter();
+                paragraph.BorderThickness = (Thickness)tc.ConvertFromString("1px");
+                if (item.Sender.Login == UserLoger.Login)
                 {
                     paragraph.FlowDirection = FlowDirection.RightToLeft;
-                    
+                    paragraph.BorderBrush = Brushes.Red;
                 }
                 else
                 {
                     paragraph.FlowDirection = FlowDirection.LeftToRight;
+                    paragraph.BorderBrush = Brushes.Blue;
                 }
                 Messages.Blocks.Add(paragraph);
             }

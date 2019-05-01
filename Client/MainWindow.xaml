@@ -40,10 +40,12 @@
                 </Grid.RowDefinitions>
                 <RichTextBox x:Name="richMessageBox">
                     <FlowDocument x:Name="Messages">
-                        
+                        <Paragraph>
+                            <Run >hello</Run>
+                        </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
-                <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="10,5,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="304"/>
+                <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="0,5,0,0" Grid.Row="1" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="304"/>
                 <Button x:Name="button1" Content="&gt;&gt;&gt;" HorizontalAlignment="Left" Margin="320,5,0,0" Grid.Row="1" VerticalAlignment="Top" Width="65" Height="23" Click="Button1_Click"/>
             </Grid>
 
