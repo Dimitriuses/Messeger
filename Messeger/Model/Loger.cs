@@ -16,27 +16,6 @@ namespace Messeger
         [DataMember]
         public string PasswordHash { get; set; }
 
-        public bool CompareHashPass(Loger Userloger)
-        {
-            if(Userloger.PasswordHash == PasswordHash)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public void SetHashPass(string pass) => PasswordHash = pass;
-        //{
-       // PasswordHash = pass;
-            //return true;
-       // }
-        public bool SetHashPass(Loger Userloger)
-        {
-            return PasswordHash == Userloger.PasswordHash;
-            return true;
-        }
+       
     }
 }

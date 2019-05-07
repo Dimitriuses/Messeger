@@ -10,6 +10,10 @@ namespace Messeger
     [KnownType(typeof(Loger))]
     public class User : Loger
     {
+        public User()
+        {
+            Chats = new HashSet<Chat>();
+        }
         [DataMember]
         public string Email { get; set; }
         [DataMember]

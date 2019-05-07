@@ -53,16 +53,18 @@ namespace Messeger
         {
             if (login != null) 
             {
-                using(Meseger meseger = new Meseger())
+                using(var ctx = new Meseger())
                 {
-                    User user = new User { Login = login.Login, Email = email, Phone = phone };
-                    user.SetHashPass(login);
-                    meseger.Users.Add(user);
-                    meseger.SaveChanges();
-                    if(AddNewChat(user,"Save",new List<User> { user }))
-                    {
-
-                    }
+                    User user = new User { Login = login.Login, Email = email, Phone = phone, PasswordHash = login.PasswordHash };
+                    Chat chat = new Chat { Admin = user, Name = "Save", Participants = new List<User> { user }};
+                    //user.PasswordHash = login.;
+                    // meseger.Users.Add(user);
+                    ctx.Chats.Add(chat);
+                    ctx.SaveChanges();
+                    //if(AddNewChat(user,"Save",new List<User> { user }))
+                    //{
+                    //
+                    //}
                 }
                 return true;
             }
@@ -73,9 +75,9 @@ namespace Messeger
         {
             if(Login != null)
             {
-                using(Meseger meseger = new Meseger())
+                using(Meseger ctx = new Meseger())
                 {
-                    var user = meseger.Users;
+                    var user = ctx.Users;
                     foreach (User item in user)
                     {
                         if(item.Login == Login)
@@ -159,15 +161,22 @@ namespace Messeger
                 using (Meseger meseger = new Meseger())
                 {
                     User user = meseger.Users.SingleOrDefault<User>(a => a.Login == login.Login);
+                    meseger.Entry(user).State = System.Data.Entity.EntityState.Unchanged;
                     if(UserLogin(login))
                     {
-                        Chat chat = new Chat();
-                        chat.Name = name;
-                        chat.Admin = user;
-                        AddChatToParticipants(participants, chat);                   
+                        Chat chat = new Chat
+                        {
+                            Name = name,
+                            Admin = user,
+                            
+                        };
+
+                        chat.Admin.Chats.Add(chat);
+                        meseger.SaveChanges();
+                        AddChatToParticipants(participants, chat);
+                        participants.ForEach(p => p.Chats.Add(chat));
                         user.Chats.Add(chat); 
-                        //chat.Admin.Chats.Add(chat);
-                        chat.Messages = new List<Message>();
+                       // chat.Messages = new List<Message>();
                         chat.Messages.Add(new Message { Chat = chat, Text = $"hello and welcome" });
                         meseger.SaveChanges(); // Multiplicity constraint violated. The role 'User_Chats_Source' of the relationship 'Messeger.User_Chats' has multiplicity 1 or 0..1.
                         return true;
@@ -214,7 +223,7 @@ namespace Messeger
         {
             using (Meseger meseger = new Meseger())
             {
-                User user = meseger.Users.SingleOrDefault<User>(a => a.Login == loger.Login);
+                User user = meseger.Users.SingleOrDefault(a => a.Login == loger.Login);
                 if (user != null)
                 {
                     return true;
@@ -227,8 +236,8 @@ namespace Messeger
         {
             using (Meseger meseger = new Meseger())
             {
-                User user = meseger.Users.SingleOrDefault<User>(a => a.Login == loger.Login);
-                if (user != null && user.CompareHashPass(loger))
+                User user = meseger.Users.SingleOrDefault(a => a.Login == loger.Login);
+                if (user != null && user.PasswordHash == loger.PasswordHash )
                 {
                     return true;
                 }
@@ -240,8 +249,8 @@ namespace Messeger
         {
             using (Meseger meseger = new Meseger())
             {
-                User user = meseger.Users.SingleOrDefault<User>(a => a.Login == loger.Login);
-                if(chat.Admin == user || chat.Participants.SingleOrDefault<User>(a=> a.Login == user.Login) != null)
+                User user = meseger.Users.SingleOrDefault(a => a.Login == loger.Login);
+                if(chat.Admin == user || chat.Participants.SingleOrDefault(a=> a.Login == user.Login) != null)
                 {
                     return true;
                 }

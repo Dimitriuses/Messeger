@@ -26,14 +26,6 @@ namespace Messeger
 
 
 
-        //public override string ToString()
-        //{
-        //    return $"{Id} {Sender} => {Reciver} << {Text}";
-        //}
-        //public bool HasTheSameTitle(string newName)
-        //{
-
-        //    return Title == newName;
-        //}
+        
     }
 }

@@ -9,6 +9,11 @@ namespace Messeger
     [DataContract]
     public class Chat
     {
+        public Chat()
+        {
+            Messages = new HashSet<Message>();
+            Participants = new HashSet<User>();
+        }
         [DataMember]
         public int Id { get; set; }
         [DataMember]
@@ -20,53 +25,6 @@ namespace Messeger
         [DataMember]
         public virtual ICollection<User> Participants { get; set; }
 
-        public bool AddMessage(Message message)
-        {
-            if (message != null)
-            {
-                try
-                {
-                    Messages.Add(message);
-                    return true;
-                }
-                catch (Exception)
-                {
-                    return false;
-                    //throw;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-        public bool AddParticipant(User user)
-        {
-            if (user != null)
-            {
-                try
-                {
-                    Participants.Add(user);
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    return false;
-                    //throw;
-                }
-            }
-            return false;
-        }
-        public bool RemoveParticipant(User user)
-        {
-            if(user != null)
-            {
-                return Participants.Remove(user);
-            }
-            else
-            {
-                return false;
-            }
-        }
+
     }
 }
