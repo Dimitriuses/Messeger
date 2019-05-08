@@ -18,7 +18,7 @@ namespace Messeger
         public string Email { get; set; }
         [DataMember]
         public string Phone { get; set; }
-        [DataMember]
+       // [DataMember]
         public virtual ICollection<Chat> Chats { get; set; }
 
         //public virtual Message Message { get; set; }

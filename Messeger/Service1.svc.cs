@@ -56,10 +56,21 @@ namespace Messeger
                 using(var ctx = new Meseger())
                 {
                     User user = new User { Login = login.Login, Email = email, Phone = phone, PasswordHash = login.PasswordHash };
+                    //ctx.Users.Add(user);
+                    //ctx.SaveChanges();
                     Chat chat = new Chat { Admin = user, Name = "Save", Participants = new List<User> { user }};
-                    //user.PasswordHash = login.;
-                    // meseger.Users.Add(user);
-                    ctx.Chats.Add(chat);
+                    //ctx.SaveChanges();
+                  //  Message message = new Message { Chat = chat, Text = $"Hello {user.Login}", Sender = user, Reciver = new List<User> { user } };
+                  //  ctx.SaveChanges();
+                  //  chat.Messages.Add(message);
+                  //  ctx.SaveChanges();
+                  //  user.Chats.Add(chat);
+                  //  ctx.SaveChanges();
+                  //  //user.PasswordHash = login.;
+                  //  // meseger.Users.Add(user);
+                  ////  ctx.Users.Add(user);
+                   ctx.Chats.Add(chat);
+                  // // ctx.Messages.Add(message);
                     ctx.SaveChanges();
                     //if(AddNewChat(user,"Save",new List<User> { user }))
                     //{
@@ -128,32 +139,32 @@ namespace Messeger
             return false;
         }
 
-        private bool AddChatToParticipants (List<User> participants, Chat chat)
-        {
-            if(participants != null && participants.Count > 0 && chat != null)
-            {
-                foreach (User item in participants)
-                {
-                    if (UserExists(item))
-                    {
-                        if (item.Chats == null)
-                        {
-                            item.Chats = new List<Chat>();
-                        }
-                        item.Chats.Add(chat);
-                        if (chat.Participants == null)
-                        {
-                            chat.Participants = new List<User>();
-                        }
-                        chat.Participants.Add(item);
+        //private bool AddChatToParticipants (List<User> participants, Chat chat)
+        //{
+        //    if(participants != null && participants.Count > 0 && chat != null)
+        //    {
+        //        foreach (User item in participants)
+        //        {
+        //            if (UserExists(item))
+        //            {
+        //                if (item.Chats == null)
+        //                {
+        //                    item.Chats = new List<Chat>();
+        //                }
+        //                item.Chats.Add(chat);
+        //                if (chat.Participants == null)
+        //                {
+        //                    chat.Participants = new List<User>();
+        //                }
+        //                chat.Participants.Add(item);
                         
-                    }
+        //            }
 
-                }
-                return true;
-            }
-            return false;
-        }
+        //        }
+        //        return true;
+        //    }
+        //    return false;
+        //}
         public bool AddNewChat(Loger login, string name, List<User> participants)
         {
             if (login != null && name != null && participants.Count > 0)
@@ -168,13 +179,14 @@ namespace Messeger
                         {
                             Name = name,
                             Admin = user,
-                            
+                            Participants = participants
                         };
 
                         chat.Admin.Chats.Add(chat);
                         meseger.SaveChanges();
-                        AddChatToParticipants(participants, chat);
+                        //AddChatToParticipants(participants, chat);
                         participants.ForEach(p => p.Chats.Add(chat));
+                        
                         user.Chats.Add(chat); 
                        // chat.Messages = new List<Message>();
                         chat.Messages.Add(new Message { Chat = chat, Text = $"hello and welcome" });
