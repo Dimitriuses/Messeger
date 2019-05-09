@@ -78,20 +78,19 @@ namespace Client.Server {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Loger", Namespace="http://schemas.datacontract.org/2004/07/Messeger")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Client.Server.User))]
     public partial class Loger : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string LoginField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PasswordHashField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int idField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -100,6 +99,19 @@ namespace Client.Server {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
             }
         }
         
@@ -129,15 +141,111 @@ namespace Client.Server {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int id {
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Message", Namespace="http://schemas.datacontract.org/2004/07/Messeger")]
+    [System.SerializableAttribute()]
+    public partial class Message : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Client.Server.Chat ChatField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int[] ReciversField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int SenderField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TextField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
-                return this.idField;
+                return this.extensionDataField;
             }
             set {
-                if ((this.idField.Equals(value) != true)) {
-                    this.idField = value;
-                    this.RaisePropertyChanged("id");
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Client.Server.Chat Chat {
+            get {
+                return this.ChatField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ChatField, value) != true)) {
+                    this.ChatField = value;
+                    this.RaisePropertyChanged("Chat");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int[] Recivers {
+            get {
+                return this.ReciversField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ReciversField, value) != true)) {
+                    this.ReciversField = value;
+                    this.RaisePropertyChanged("Recivers");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Sender {
+            get {
+                return this.SenderField;
+            }
+            set {
+                if ((this.SenderField.Equals(value) != true)) {
+                    this.SenderField = value;
+                    this.RaisePropertyChanged("Sender");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Text {
+            get {
+                return this.TextField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TextField, value) != true)) {
+                    this.TextField = value;
+                    this.RaisePropertyChanged("Text");
                 }
             }
         }
@@ -154,77 +262,6 @@ namespace Client.Server {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/Messeger")]
-    [System.SerializableAttribute()]
-    public partial class User : Client.Server.Loger {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Client.Server.Chat[] ChatsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EmailField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PhoneField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int id1Field;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Client.Server.Chat[] Chats {
-            get {
-                return this.ChatsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ChatsField, value) != true)) {
-                    this.ChatsField = value;
-                    this.RaisePropertyChanged("Chats");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Email {
-            get {
-                return this.EmailField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
-                    this.EmailField = value;
-                    this.RaisePropertyChanged("Email");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Phone {
-            get {
-                return this.PhoneField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PhoneField, value) != true)) {
-                    this.PhoneField = value;
-                    this.RaisePropertyChanged("Phone");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(Name="id")]
-        public int id1 {
-            get {
-                return this.id1Field;
-            }
-            set {
-                if ((this.id1Field.Equals(value) != true)) {
-                    this.id1Field = value;
-                    this.RaisePropertyChanged("id1");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Chat", Namespace="http://schemas.datacontract.org/2004/07/Messeger")]
     [System.SerializableAttribute()]
     public partial class Chat : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -233,7 +270,10 @@ namespace Client.Server {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Client.Server.User AdminField;
+        private int AdminField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Client.Server.Message[] MessagesField;
@@ -242,10 +282,7 @@ namespace Client.Server {
         private string NameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Client.Server.User[] ParticipantsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int idField;
+        private int[] ParticipantsField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -258,14 +295,27 @@ namespace Client.Server {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Client.Server.User Admin {
+        public int Admin {
             get {
                 return this.AdminField;
             }
             set {
-                if ((object.ReferenceEquals(this.AdminField, value) != true)) {
+                if ((this.AdminField.Equals(value) != true)) {
                     this.AdminField = value;
                     this.RaisePropertyChanged("Admin");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
                 }
             }
         }
@@ -297,7 +347,7 @@ namespace Client.Server {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Client.Server.User[] Participants {
+        public int[] Participants {
             get {
                 return this.ParticipantsField;
             }
@@ -305,128 +355,6 @@ namespace Client.Server {
                 if ((object.ReferenceEquals(this.ParticipantsField, value) != true)) {
                     this.ParticipantsField = value;
                     this.RaisePropertyChanged("Participants");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int id {
-            get {
-                return this.idField;
-            }
-            set {
-                if ((this.idField.Equals(value) != true)) {
-                    this.idField = value;
-                    this.RaisePropertyChanged("id");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Message", Namespace="http://schemas.datacontract.org/2004/07/Messeger")]
-    [System.SerializableAttribute()]
-    public partial class Message : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Client.Server.Chat ChatIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Client.Server.User[] ReciverField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Client.Server.User SenderField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string TextField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Client.Server.Chat ChatId {
-            get {
-                return this.ChatIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ChatIdField, value) != true)) {
-                    this.ChatIdField = value;
-                    this.RaisePropertyChanged("ChatId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Client.Server.User[] Reciver {
-            get {
-                return this.ReciverField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ReciverField, value) != true)) {
-                    this.ReciverField = value;
-                    this.RaisePropertyChanged("Reciver");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Client.Server.User Sender {
-            get {
-                return this.SenderField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SenderField, value) != true)) {
-                    this.SenderField = value;
-                    this.RaisePropertyChanged("Sender");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Text {
-            get {
-                return this.TextField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TextField, value) != true)) {
-                    this.TextField = value;
-                    this.RaisePropertyChanged("Text");
                 }
             }
         }
@@ -476,10 +404,10 @@ namespace Client.Server {
         System.Threading.Tasks.Task<bool> ReloadPhonelUserAsync(Client.Server.Loger Userloger, string phone);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddNewChat", ReplyAction="http://tempuri.org/IService1/AddNewChatResponse")]
-        bool AddNewChat(Client.Server.Loger login, string name, string[] participants);
+        bool AddNewChat(Client.Server.Loger login, string name, int[] participants);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddNewChat", ReplyAction="http://tempuri.org/IService1/AddNewChatResponse")]
-        System.Threading.Tasks.Task<bool> AddNewChatAsync(Client.Server.Loger login, string name, string[] participants);
+        System.Threading.Tasks.Task<bool> AddNewChatAsync(Client.Server.Loger login, string name, int[] participants);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetChatList", ReplyAction="http://tempuri.org/IService1/GetChatListResponse")]
         string[] GetChatList(Client.Server.Loger Userloger);
@@ -573,11 +501,11 @@ namespace Client.Server {
             return base.Channel.ReloadPhonelUserAsync(Userloger, phone);
         }
         
-        public bool AddNewChat(Client.Server.Loger login, string name, string[] participants) {
+        public bool AddNewChat(Client.Server.Loger login, string name, int[] participants) {
             return base.Channel.AddNewChat(login, name, participants);
         }
         
-        public System.Threading.Tasks.Task<bool> AddNewChatAsync(Client.Server.Loger login, string name, string[] participants) {
+        public System.Threading.Tasks.Task<bool> AddNewChatAsync(Client.Server.Loger login, string name, int[] participants) {
             return base.Channel.AddNewChatAsync(login, name, participants);
         }
         

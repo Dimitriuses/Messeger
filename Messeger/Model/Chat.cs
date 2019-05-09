@@ -13,7 +13,7 @@ namespace Messeger
         public Chat()
         {
             Messages = new HashSet<Message>();
-            Participants = new HashSet<User>();
+            Users = new HashSet<User>();
         }
         [DataMember]
         public int Id { get; set; }
@@ -24,9 +24,11 @@ namespace Messeger
         [DataMember]
         public virtual ICollection<Message> Messages { get; set; }
         [DataMember]
-        public virtual ICollection<User> Participants { get; set; }
+        public virtual ICollection<int> Participants { get; set; }
         [ForeignKey("Admin")]
         public virtual User User { get; set; }
+        [ForeignKey("Participants")]
+        public virtual ICollection<User> Users { get; set; }
 
 
     }

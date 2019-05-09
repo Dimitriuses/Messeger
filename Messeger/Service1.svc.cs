@@ -58,7 +58,7 @@ namespace Messeger
                     User user = new User { Login = login.Login, Email = email, Phone = phone, PasswordHash = login.PasswordHash };
                     //ctx.Users.Add(user);
                     //ctx.SaveChanges();
-                    Chat chat = new Chat { Admin = user, Name = "Save", Participants = new List<User> { user }};
+                    Chat chat = new Chat { Admin = user.Id, Name = "Save", Participants = new List<int> { user.Id }};
                     //ctx.SaveChanges();
                   //  Message message = new Message { Chat = chat, Text = $"Hello {user.Login}", Sender = user, Reciver = new List<User> { user } };
                   //  ctx.SaveChanges();
@@ -165,7 +165,7 @@ namespace Messeger
         //    }
         //    return false;
         //}
-        public bool AddNewChat(Loger login, string name, List<User> participants)
+        public bool AddNewChat(Loger login, string name, List<int> participants)
         {
             if (login != null && name != null && participants.Count > 0)
             {
@@ -178,16 +178,17 @@ namespace Messeger
                         Chat chat = new Chat
                         {
                             Name = name,
-                            Admin = user,
+                            Admin = user.Id,
                             Participants = participants
                         };
 
-                        chat.Admin.Chats.Add(chat);
+                        user.Chats.Add(chat);
                         meseger.SaveChanges();
                         //AddChatToParticipants(participants, chat);
-                        participants.ForEach(p => p.Chats.Add(chat));
+                        var users = meseger.Users.Where(a => participants.Contains(a.Id));
+                        //users.ForEach(p => p.Chats.Add(chat));
                         
-                        user.Chats.Add(chat); 
+                        //user.Chats.Add(chat); 
                        // chat.Messages = new List<Message>();
                         chat.Messages.Add(new Message { Chat = chat, Text = $"hello and welcome" });
                         meseger.SaveChanges(); // Multiplicity constraint violated. The role 'User_Chats_Source' of the relationship 'Messeger.User_Chats' has multiplicity 1 or 0..1.
@@ -262,7 +263,7 @@ namespace Messeger
             using (Meseger meseger = new Meseger())
             {
                 User user = meseger.Users.SingleOrDefault(a => a.Login == loger.Login);
-                if(chat.Admin == user || chat.Participants.SingleOrDefault(a=> a.Login == user.Login) != null)
+                if(chat.Admin == user.Id || chat.Participants.SingleOrDefault(a=> user.Id == a) != null)
                 {
                     return true;
                 }

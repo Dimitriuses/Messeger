@@ -60,7 +60,7 @@ namespace Client
             {
                 //MessageBox.Show("EEEE boyy");
                 UserLoger.Login = "Test_User";
-                RenderMessage(bletMassage());
+                //RenderMessage(bletMassage());
                 UserLoger.Login = null;
             }
             
@@ -72,10 +72,10 @@ namespace Client
             Messages.Blocks.Clear();
             foreach (Message item in messages)
             {
-                Paragraph paragraph = new Paragraph(new Run(item.Sender.Login +": " + item.Text));
+                Paragraph paragraph = new Paragraph(new Run(item.Sender +": " + item.Text));
                 ThicknessConverter tc = new ThicknessConverter();
                 paragraph.BorderThickness = (Thickness)tc.ConvertFromString("1px");
-                if (item.Sender.Login == UserLoger.Login)
+                if (item.Sender == UserLoger.Id)
                 {
                     paragraph.FlowDirection = FlowDirection.RightToLeft;
                     paragraph.BorderBrush = Brushes.Red;
@@ -89,19 +89,19 @@ namespace Client
             }
         }
 
-        private List<Message> bletMassage()
-        {
-            User TestUser = new User() { Login = "VASA_TEST" };
-            User user = new User() { Login = UserLoger.Login };
-            List<Message> messages = new List<Message>
-            {
-                new Message { Id = 0 , Reciver = new User[] { TestUser } , Sender = user, Text = "Hello" },
-                new Message { Id = 1 , Reciver = new User[] { user } , Sender = TestUser, Text = "Hello" },
-                new Message { Id = 2 , Reciver = new User[] { TestUser } , Sender = user, Text = "Чо за НА**Й" },
-                new Message { Id = 3 , Reciver = new User[] { user } , Sender = TestUser, Text = "???" }
-            };
-            return messages;
-        }
+        //private List<Message> bletMassage()
+        //{
+        //    User TestUser = new User() { Login = "VASA_TEST" };
+        //    User user = new User() { Login = UserLoger.Login };
+        //    List<Message> messages = new List<Message>
+        //    {
+        //        new Message { Id = 0 , Reciver = new User[] { TestUser } , Sender = user, Text = "Hello" },
+        //        new Message { Id = 1 , Reciver = new User[] { user } , Sender = TestUser, Text = "Hello" },
+        //        new Message { Id = 2 , Reciver = new User[] { TestUser } , Sender = user, Text = "Чо за НА**Й" },
+        //        new Message { Id = 3 , Reciver = new User[] { user } , Sender = TestUser, Text = "???" }
+        //    };
+        //    return messages;
+        //}
 
     }
 }
