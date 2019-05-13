@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Messeger.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -58,7 +59,9 @@ namespace Messeger
                     User user = new User { Login = login.Login, Email = email, Phone = phone, PasswordHash = login.PasswordHash };
                     //ctx.Users.Add(user);
                     //ctx.SaveChanges();
-                    Chat chat = new Chat { Admin = user.Id, Name = "Save", Participants = new List<int> { user.Id }};
+                    Administrator admin = new Administrator { User = user };
+                    Participant participant = new Participant { Users = new List<User> { user } };
+                    Chat chat = new Chat { Administrator = admin, Name = "Save", Participants = new List<Participant> { participant } };
                     //ctx.SaveChanges();
                   //  Message message = new Message { Chat = chat, Text = $"Hello {user.Login}", Sender = user, Reciver = new List<User> { user } };
                   //  ctx.SaveChanges();
@@ -175,17 +178,21 @@ namespace Messeger
                     meseger.Entry(user).State = System.Data.Entity.EntityState.Unchanged;
                     if(UserLogin(login))
                     {
+                        List<User> users = meseger.Users.Where(a => participants.Contains(a.Id)).ToList();
+                        users.Add(user);
+                        Administrator administrator = new Administrator { User = user };
+                        List<Participant> par = new List<Participant>();
+                        par.Add(new Participant { Users = users});
                         Chat chat = new Chat
                         {
                             Name = name,
-                            Admin = user.Id,
-                            Participants = participants
+                            Administrator = administrator,
+                            Participants = par 
                         };
 
-                        user.Chats.Add(chat);
+                        //user.Chats.Add(chat);
                         meseger.SaveChanges();
                         //AddChatToParticipants(participants, chat);
-                        var users = meseger.Users.Where(a => participants.Contains(a.Id));
                         //users.ForEach(p => p.Chats.Add(chat));
                         
                         //user.Chats.Add(chat); 
@@ -208,7 +215,8 @@ namespace Messeger
                 if (UserLogin(Userloger))
                 {
                     List<string> tmp = new List<string>();
-                    foreach (Chat item in user.Chats)
+                    var chats = meseger.Chats.Select(a => a.Participants.Select(b => b.Users.SingleOrDefault(c => c.Login == user.Login)));
+                    foreach (Chat item in chats)
                     {
                         tmp.Add(item.Name);
                     }
@@ -263,7 +271,7 @@ namespace Messeger
             using (Meseger meseger = new Meseger())
             {
                 User user = meseger.Users.SingleOrDefault(a => a.Login == loger.Login);
-                if(chat.Admin == user.Id || chat.Participants.SingleOrDefault(a=> user.Id == a) != null)
+                if(chat.Administrator.User == user || chat.Participants.SingleOrDefault(a=> user == a.Users) != null)
                 {
                     return true;
                 }

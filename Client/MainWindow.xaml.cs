@@ -67,27 +67,27 @@ namespace Client
             
         }
 
-        private void RenderMessage(List<Message> messages)
-        {
-            Messages.Blocks.Clear();
-            foreach (Message item in messages)
-            {
-                Paragraph paragraph = new Paragraph(new Run(item.Sender +": " + item.Text));
-                ThicknessConverter tc = new ThicknessConverter();
-                paragraph.BorderThickness = (Thickness)tc.ConvertFromString("1px");
-                if (item.Sender == UserLoger.Id)
-                {
-                    paragraph.FlowDirection = FlowDirection.RightToLeft;
-                    paragraph.BorderBrush = Brushes.Red;
-                }
-                else
-                {
-                    paragraph.FlowDirection = FlowDirection.LeftToRight;
-                    paragraph.BorderBrush = Brushes.Blue;
-                }
-                Messages.Blocks.Add(paragraph);
-            }
-        }
+        //private void RenderMessage(List<Message> messages)
+        //{
+        //    Messages.Blocks.Clear();
+        //    foreach (Message item in messages)
+        //    {
+        //        Paragraph paragraph = new Paragraph(new Run(item. +": " + item.Text));
+        //        ThicknessConverter tc = new ThicknessConverter();
+        //        paragraph.BorderThickness = (Thickness)tc.ConvertFromString("1px");
+        //        if (item.Sender == UserLoger.Id)
+        //        {
+        //            paragraph.FlowDirection = FlowDirection.RightToLeft;
+        //            paragraph.BorderBrush = Brushes.Red;
+        //        }
+        //        else
+        //        {
+        //            paragraph.FlowDirection = FlowDirection.LeftToRight;
+        //            paragraph.BorderBrush = Brushes.Blue;
+        //        }
+        //        Messages.Blocks.Add(paragraph);
+        //    }
+        //}
 
         //private List<Message> bletMassage()
         //{

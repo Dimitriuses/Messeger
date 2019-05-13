@@ -76,9 +76,13 @@
   <ItemGroup>
     <Compile Include="Custom.cs" />
     <Compile Include="Meseger.cs" />
+    <Compile Include="Model\Administrator.cs" />
     <Compile Include="Model\Chat.cs" />
     <Compile Include="Model\Message.cs" />
     <Compile Include="Model\Loger.cs" />
+    <Compile Include="Model\Participant.cs" />
+    <Compile Include="Model\Receiver.cs" />
+    <Compile Include="Model\Sender.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Service1.svc.cs">
       <DependentUpon>Service1.svc</DependentUpon>

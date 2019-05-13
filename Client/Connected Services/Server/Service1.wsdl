@@ -6,6 +6,7 @@
       <xsd:import schemaLocation="http://localhost:63716/Service1.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:63716/Service1.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Messeger" />
       <xsd:import schemaLocation="http://localhost:63716/Service1.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost:63716/Service1.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Messeger.Model" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IService1_GetData_InputMessage">
