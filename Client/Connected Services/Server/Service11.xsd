@@ -149,4 +149,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="PushMessage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="message" nillable="true" type="q13:Message" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="loger" nillable="true" type="q14:Loger" />
+        <xs:element minOccurs="0" name="ChatId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PushMessageResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PushMessageResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

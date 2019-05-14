@@ -42,6 +42,8 @@ namespace Messeger
         bool ThisLoginIsUnique(string Login);
         [OperationContract]
         bool UserExists(Loger loger);
+        [OperationContract]
+        bool PushMessage(Message message, Loger loger,int ChatId);
         // TODO: Add your service operations here
     }
 

@@ -201,6 +201,9 @@ namespace Client.Server {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime DateTimeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -216,6 +219,19 @@ namespace Client.Server {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime DateTime {
+            get {
+                return this.DateTimeField;
+            }
+            set {
+                if ((this.DateTimeField.Equals(value) != true)) {
+                    this.DateTimeField = value;
+                    this.RaisePropertyChanged("DateTime");
+                }
             }
         }
         
@@ -281,10 +297,10 @@ namespace Client.Server {
         private int IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Client.Server.Message MessageField;
+        private Client.Server.Message[] MessagesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Client.Server.User[] UsersField;
+        private Client.Server.User UserField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -310,27 +326,27 @@ namespace Client.Server {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Client.Server.Message Message {
+        public Client.Server.Message[] Messages {
             get {
-                return this.MessageField;
+                return this.MessagesField;
             }
             set {
-                if ((object.ReferenceEquals(this.MessageField, value) != true)) {
-                    this.MessageField = value;
-                    this.RaisePropertyChanged("Message");
+                if ((object.ReferenceEquals(this.MessagesField, value) != true)) {
+                    this.MessagesField = value;
+                    this.RaisePropertyChanged("Messages");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Client.Server.User[] Users {
+        public Client.Server.User User {
             get {
-                return this.UsersField;
+                return this.UserField;
             }
             set {
-                if ((object.ReferenceEquals(this.UsersField, value) != true)) {
-                    this.UsersField = value;
-                    this.RaisePropertyChanged("Users");
+                if ((object.ReferenceEquals(this.UserField, value) != true)) {
+                    this.UserField = value;
+                    this.RaisePropertyChanged("User");
                 }
             }
         }
@@ -408,6 +424,12 @@ namespace Client.Server {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UserExists", ReplyAction="http://tempuri.org/IService1/UserExistsResponse")]
         System.Threading.Tasks.Task<bool> UserExistsAsync(Client.Server.Loger loger);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/PushMessage", ReplyAction="http://tempuri.org/IService1/PushMessageResponse")]
+        bool PushMessage(Client.Server.Message message, Client.Server.Loger loger, int ChatId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/PushMessage", ReplyAction="http://tempuri.org/IService1/PushMessageResponse")]
+        System.Threading.Tasks.Task<bool> PushMessageAsync(Client.Server.Message message, Client.Server.Loger loger, int ChatId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -515,6 +537,14 @@ namespace Client.Server {
         
         public System.Threading.Tasks.Task<bool> UserExistsAsync(Client.Server.Loger loger) {
             return base.Channel.UserExistsAsync(loger);
+        }
+        
+        public bool PushMessage(Client.Server.Message message, Client.Server.Loger loger, int ChatId) {
+            return base.Channel.PushMessage(message, loger, ChatId);
+        }
+        
+        public System.Threading.Tasks.Task<bool> PushMessageAsync(Client.Server.Message message, Client.Server.Loger loger, int ChatId) {
+            return base.Channel.PushMessageAsync(message, loger, ChatId);
         }
     }
 }

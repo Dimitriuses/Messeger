@@ -69,6 +69,12 @@
   <wsdl:message name="IService1_UserExists_OutputMessage">
     <wsdl:part name="parameters" element="tns:UserExistsResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_PushMessage_InputMessage">
+    <wsdl:part name="parameters" element="tns:PushMessage" />
+  </wsdl:message>
+  <wsdl:message name="IService1_PushMessage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PushMessageResponse" />
+  </wsdl:message>
   <wsdl:portType name="IService1">
     <wsdl:operation name="GetData">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetData" message="tns:IService1_GetData_InputMessage" />
@@ -109,6 +115,10 @@
     <wsdl:operation name="UserExists">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/UserExists" message="tns:IService1_UserExists_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/UserExistsResponse" message="tns:IService1_UserExists_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PushMessage">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/PushMessage" message="tns:IService1_PushMessage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/PushMessageResponse" message="tns:IService1_PushMessage_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IService1" type="tns:IService1">
@@ -196,6 +206,15 @@
     </wsdl:operation>
     <wsdl:operation name="UserExists">
       <soap:operation soapAction="http://tempuri.org/IService1/UserExists" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PushMessage">
+      <soap:operation soapAction="http://tempuri.org/IService1/PushMessage" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

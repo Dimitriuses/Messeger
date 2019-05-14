@@ -19,8 +19,8 @@ namespace Messeger
         public int Id { get; set; }
         [DataMember]
         public string Text { get; set; }
-        //[DataMember]
-        //public virtual Chat Chat { get; set; }
+        [DataMember]
+        public DateTime DateTime { get; set; }
         //[DataMember]
         //public virtual int Sender { get; set; }
         //[DataMember]

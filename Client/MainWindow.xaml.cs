@@ -22,11 +22,12 @@ namespace Client
     public partial class MainWindow : Window
     {
         Loger UserLoger;
+        int idChat;
         public MainWindow()
         {
             UserLoger = new Loger(); 
             InitializeComponent();
-            listBoxChats.ItemsSource = new List<string>() { " test message ", " helow blet " };
+            //listBoxChats.ItemsSource = new List<string>() { " test message ", " helow blet " };
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -34,60 +35,85 @@ namespace Client
             SingIN dlg = new SingIN();
             if(dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                string[] tmp;
                 UserLoger = dlg.User;
-                Service1Client client = new Service1Client();
-                tmp = client.GetChatList(UserLoger);
-                client.Close();
-                listBoxChats.Items.Add(tmp);
-                //foreach (string item in tmp)
-                //{
-
-                //}
+                Update_Chat_List();
             }
         }
 
         private void Button1_Click(object sender, RoutedEventArgs e)
         {
-
+            Message message = new Message();
+            message.Text = textBox.Text;
+            Service1Client client = new Service1Client();
+            if (client.PushMessage(message, UserLoger, idChat))
+            {
+                UpdateMessages();
+            }
+            else
+            {
+                MessageBox.Show("Error push message");
+            }
+            client.Close();
         }
 
         private void ListBoxChats_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            idChat = listBoxChats.SelectedIndex;
+            UpdateMessages();
             
-            
-            if(e.AddedItems[0] == " helow blet ")
-            {
-                //MessageBox.Show("EEEE boyy");
-                UserLoger.Login = "Test_User";
-                //RenderMessage(bletMassage());
-                UserLoger.Login = null;
-            }
-            
-            
+            //if(e.AddedItems[0] == " helow blet ")
+            //{
+            //    //MessageBox.Show("EEEE boyy");
+            //    UserLoger.Login = "Test_User";
+            //    //RenderMessage(bletMassage());
+            //    UserLoger.Login = null;
+            //}  
         }
 
-        //private void RenderMessage(List<Message> messages)
-        //{
-        //    Messages.Blocks.Clear();
-        //    foreach (Message item in messages)
-        //    {
-        //        Paragraph paragraph = new Paragraph(new Run(item. +": " + item.Text));
-        //        ThicknessConverter tc = new ThicknessConverter();
-        //        paragraph.BorderThickness = (Thickness)tc.ConvertFromString("1px");
-        //        if (item.Sender == UserLoger.Id)
-        //        {
-        //            paragraph.FlowDirection = FlowDirection.RightToLeft;
-        //            paragraph.BorderBrush = Brushes.Red;
-        //        }
-        //        else
-        //        {
-        //            paragraph.FlowDirection = FlowDirection.LeftToRight;
-        //            paragraph.BorderBrush = Brushes.Blue;
-        //        }
-        //        Messages.Blocks.Add(paragraph);
-        //    }
-        //}
+        private void UpdateMessages()
+        {
+            Message[] messages;
+            Service1Client client = new Service1Client();
+            messages = client.GetMessages(UserLoger, idChat);
+            client.Close();
+            RenderMessage(messages);
+        }
+
+        private void RenderMessage(Message[] messages)
+        {
+            Messages.Blocks.Clear();
+            foreach (Message item in messages)
+            {
+                Paragraph paragraph = new Paragraph(new Run(item.Sender.User.Login + ": " + item.Text));
+                ThicknessConverter tc = new ThicknessConverter();
+                paragraph.BorderThickness = (Thickness)tc.ConvertFromString("1px");
+                if (item.Sender.User == UserLoger)
+                {
+                    paragraph.FlowDirection = FlowDirection.RightToLeft;
+                    //paragraph.BorderBrush = Brushes.Red;
+                }
+                else
+                {
+                    paragraph.FlowDirection = FlowDirection.LeftToRight;
+                    //paragraph.BorderBrush = Brushes.Blue;
+                }
+                Messages.Blocks.Add(paragraph);
+            }
+        }
+
+        private void Update_Chat_List()
+        {
+            string[] tmp;
+            Service1Client client = new Service1Client();
+            tmp = client.GetChatList(UserLoger);
+            client.Close();
+            listBoxChats.Items.Clear();
+            foreach (string item in tmp)
+            {
+                listBoxChats.Items.Add(item);
+            }
+            
+        }
 
         //private List<Message> bletMassage()
         //{

@@ -215,7 +215,10 @@ namespace Messeger
                 if (UserLogin(Userloger))
                 {
                     List<string> tmp = new List<string>();
-                    var chats = meseger.Chats.Select(a => a.Participants.Select(b => b.Users.SingleOrDefault(c => c.Login == user.Login)));
+                    //var chats = meseger.Chats.Select(a => a.Participants.Select(b => b.Users.Select(c => c.Login == user.Login)));
+                    //var chats = meseger.Chats.Where(a => a.Participants.Where(b => b.Users.Where(c => c.Login == user.Login) != null) != null).ToList<Chat>();
+
+                    var chats = user.Participant.Chats.ToList();
                     foreach (Chat item in chats)
                     {
                         tmp.Add(item.Name);
@@ -226,12 +229,30 @@ namespace Messeger
             }
         }
 
+        public Chat GetChat(Loger Userloger,int id)
+        {
+            using (Meseger meseger = new Meseger())
+            {
+                User user = meseger.Users.SingleOrDefault<User>(a => a.Login == Userloger.Login);
+                if (UserLogin(Userloger))
+                {
+                    List<Chat> tmp = new List<Chat>();
+                    var chats = user.Participant.Chats.ToList();
+                    foreach (Chat item in chats)
+                    {
+                        tmp.Add(item);
+                    }
+                    return tmp[id];
+                }
+                return null;
+            }
+        }
+
         public List<Message> GetMessages(Loger Userloger,int chatID)
         {
             using (Meseger meseger = new Meseger())
             {
-                
-                Chat chat = meseger.Chats.Find(chatID);
+                Chat chat = GetChat(Userloger, chatID);
                 if (UserLogin(Userloger) && ChatUserExists(Userloger, chat))
                 {
                     return chat.Messages.ToList<Message>();
@@ -278,13 +299,25 @@ namespace Messeger
                 return false;
             }
         }
-        //public bool Add(Message message)
-        //{
-        //    int oldLength = messages.Count;
-        //    messages.Add(message);
-        //    int newLength = messages.Count;
-        //    return newLength > oldLength;
-        //}
+
+        public bool PushMessage(Message message,Loger loger,int ChatId)
+        {
+            using (Meseger ctx = new Meseger())
+            {
+                User user = ctx.Users.SingleOrDefault(a => a.Login == loger.Login);
+                Chat chat = GetChat(loger, ChatId);
+                if (ChatUserExists(loger, chat)&&UserLogin(loger))
+                {
+                    message.Sender.User = user;
+                    ctx.Messages.Add(message);
+                    ctx.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        
 
         //public Message GetMessageById(int id)
         //{

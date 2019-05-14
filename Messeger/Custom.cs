@@ -2,7 +2,7 @@
 
 namespace Messeger
 {
-    internal class Custom<T> : DropCreateDatabaseAlways<Meseger>
+    internal class Custom<T> : DropCreateDatabaseIfModelChanges<Meseger>//DropCreateDatabaseAlways<Meseger>
     {
         protected override void Seed(Meseger context)
         {

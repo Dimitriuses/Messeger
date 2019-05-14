@@ -24,18 +24,13 @@
   <xs:element name="ArrayOfMessage" nillable="true" type="tns:ArrayOfMessage" />
   <xs:complexType name="Message">
     <xs:sequence>
+      <xs:element minOccurs="0" name="DateTime" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Id" type="xs:int" />
       <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Messeger.Model" minOccurs="0" name="Sender" nillable="true" type="q1:Sender" />
       <xs:element minOccurs="0" name="Text" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Message" nillable="true" type="tns:Message" />
-  <xs:complexType name="ArrayOfUser">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="User" nillable="true" type="tns:User" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfUser" nillable="true" type="tns:ArrayOfUser" />
   <xs:complexType name="User">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Loger">
