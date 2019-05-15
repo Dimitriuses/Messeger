@@ -232,7 +232,7 @@ namespace Messeger
             }
         }
 
-        public Chat GetChat(Loger Userloger,int id)
+        public int GetChat(Loger Userloger,int id)
         {
             using (Meseger meseger = new Meseger())
             {
@@ -245,9 +245,9 @@ namespace Messeger
                     {
                         tmp.Add(item);
                     }
-                    return tmp[id];
+                    return tmp[id].Id;
                 }
-                return null;
+                return -1;
             }
         }
 
@@ -255,8 +255,12 @@ namespace Messeger
         {
             using (Meseger meseger = new Meseger())
             {
-                Chat chat = GetChat(Userloger, chatID);
-                if (UserLogin(Userloger) && ChatUserExists(Userloger, chat))
+                int id = GetChat(Userloger, chatID);
+                Chat chat = meseger.Chats.SingleOrDefault(a=> a.Id == id);
+                //bool admin = chat.Administrator.User == Userloger;
+                //bool participant = chat.Participants.SingleOrDefault(a => Userloger == a.Users) != null;
+                //bool all = admin || participant;
+                if (UserLogin(Userloger) && ChatUserExists(Userloger, id))
                 {
                     return chat.Messages.ToList<Message>();
                 }
@@ -290,12 +294,13 @@ namespace Messeger
             }
         }
         
-        public bool ChatUserExists(Loger loger, Chat chat)
+        public bool ChatUserExists(Loger loger, int Chatid)
         {
             using (Meseger meseger = new Meseger())
             {
                 User user = meseger.Users.SingleOrDefault(a => a.Login == loger.Login);
-                if(chat.Administrator.User == user || chat.Participants.SingleOrDefault(a=> user == a.Users) != null)
+                Chat chat = meseger.Chats.SingleOrDefault(a => a.Id == Chatid);
+                if (chat.Administrator.User == user || chat.Participants.SingleOrDefault(a=> user == a.Users) != null)
                 {
                     return true;
                 }
@@ -303,17 +308,20 @@ namespace Messeger
             }
         }
 
-        public bool PushMessage(Message message,Loger loger,int ChatId)
+        public bool PushMessage(string text,Loger loger,int ChatId)
         {
             using (Meseger ctx = new Meseger())
             {
+                
                 User user = ctx.Users.SingleOrDefault(a => a.Login == loger.Login);
-                Chat chat = GetChat(loger, ChatId);
+                int id = GetChat(loger, ChatId);
+                Chat chat = ctx.Chats.SingleOrDefault(a => a.Id == id);
 
-                if (ChatUserExists(loger, chat)&&UserLogin(loger))
+                if (ChatUserExists(loger, chat.Id)&&UserLogin(loger))
                 {
-                    message.Sender.User = user;
-                    ctx.Messages.Add(message);
+                    Sender sender = new Sender { User = user };
+                    Message msg = new Message { Text = text , Sender = sender};
+                    ctx.Messages.Add(msg);
                     ctx.SaveChanges();
                     return true;
                 }

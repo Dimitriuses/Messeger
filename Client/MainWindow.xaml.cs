@@ -42,6 +42,7 @@ namespace Client
 
         private void Button1_Click(object sender, RoutedEventArgs e)
         {
+            
             Message message = new Message();
             message.Text = textBox.Text;
             Service1Client client = new Service1Client();

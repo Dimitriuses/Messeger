@@ -43,7 +43,7 @@ namespace Messeger
         [OperationContract]
         bool UserExists(Loger loger);
         [OperationContract]
-        bool PushMessage(Message message, Loger loger,int ChatId);
+        bool PushMessage(string text, Loger loger,int ChatId);
         // TODO: Add your service operations here
     }
 

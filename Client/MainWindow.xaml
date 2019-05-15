@@ -41,7 +41,7 @@
                 <RichTextBox x:Name="richMessageBox">
                     <FlowDocument x:Name="Messages">
                         <Paragraph>
-                            <Run >hello</Run>
+                            <Run ></Run>
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
