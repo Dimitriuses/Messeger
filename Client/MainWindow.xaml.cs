@@ -27,6 +27,7 @@ namespace Client
         {
             UserLoger = new Loger(); 
             InitializeComponent();
+
             //listBoxChats.ItemsSource = new List<string>() { " test message ", " helow blet " };
         }
 
@@ -43,10 +44,11 @@ namespace Client
         private void Button1_Click(object sender, RoutedEventArgs e)
         {
             
-            Message message = new Message();
-            message.Text = textBox.Text;
+            
             Service1Client client = new Service1Client();
-            if (client.PushMessage(message, UserLoger, idChat))
+            bool CompleteOparation = client.PushMessage(textBox.Text, UserLoger, idChat);
+            client.Close();
+            if (CompleteOparation)
             {
                 UpdateMessages();
             }
@@ -54,12 +56,12 @@ namespace Client
             {
                 MessageBox.Show("Error push message");
             }
-            client.Close();
         }
 
         private void ListBoxChats_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             idChat = listBoxChats.SelectedIndex;
+            
             UpdateMessages();
             
             //if(e.AddedItems[0] == " helow blet ")

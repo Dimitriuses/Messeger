@@ -426,10 +426,10 @@ namespace Client.Server {
         System.Threading.Tasks.Task<bool> UserExistsAsync(Client.Server.Loger loger);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/PushMessage", ReplyAction="http://tempuri.org/IService1/PushMessageResponse")]
-        bool PushMessage(Client.Server.Message message, Client.Server.Loger loger, int ChatId);
+        bool PushMessage(string text, Client.Server.Loger loger, int ChatId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/PushMessage", ReplyAction="http://tempuri.org/IService1/PushMessageResponse")]
-        System.Threading.Tasks.Task<bool> PushMessageAsync(Client.Server.Message message, Client.Server.Loger loger, int ChatId);
+        System.Threading.Tasks.Task<bool> PushMessageAsync(string text, Client.Server.Loger loger, int ChatId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -539,12 +539,12 @@ namespace Client.Server {
             return base.Channel.UserExistsAsync(loger);
         }
         
-        public bool PushMessage(Client.Server.Message message, Client.Server.Loger loger, int ChatId) {
-            return base.Channel.PushMessage(message, loger, ChatId);
+        public bool PushMessage(string text, Client.Server.Loger loger, int ChatId) {
+            return base.Channel.PushMessage(text, loger, ChatId);
         }
         
-        public System.Threading.Tasks.Task<bool> PushMessageAsync(Client.Server.Message message, Client.Server.Loger loger, int ChatId) {
-            return base.Channel.PushMessageAsync(message, loger, ChatId);
+        public System.Threading.Tasks.Task<bool> PushMessageAsync(string text, Client.Server.Loger loger, int ChatId) {
+            return base.Channel.PushMessageAsync(text, loger, ChatId);
         }
     }
 }

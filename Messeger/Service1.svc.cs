@@ -319,8 +319,13 @@ namespace Messeger
 
                 if (ChatUserExists(loger, chat.Id)&&UserLogin(loger))
                 {
-                    Sender sender = new Sender { User = user };
-                    Message msg = new Message { Text = text , Sender = sender};
+                    Sender sender = ctx.Senders.SingleOrDefault(a => a.Id == user.Id);
+                    if (sender == null)
+                    {
+                        sender = new Sender { User = user };
+                    }
+                    
+                    Message msg = new Message { Text = text, Sender = sender, DateTime = DateTime.Now, Chat = chat };
                     ctx.Messages.Add(msg);
                     ctx.SaveChanges();
                     return true;
