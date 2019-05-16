@@ -22,7 +22,7 @@ namespace Client
     public partial class MainWindow : Window
     {
         Loger UserLoger;
-        int idChat;
+        int idChat = -1;
         public MainWindow()
         {
             UserLoger = new Loger(); 
@@ -43,19 +43,23 @@ namespace Client
 
         private void Button1_Click(object sender, RoutedEventArgs e)
         {
-            
-            
-            Service1Client client = new Service1Client();
-            bool CompleteOparation = client.PushMessage(textBox.Text, UserLoger, idChat);
-            client.Close();
-            if (CompleteOparation)
+            if (idChat != -1 && UserLoger != null)
             {
-                UpdateMessages();
+                Service1Client client = new Service1Client();
+                bool CompleteOparation = client.PushMessage(textBox.Text, UserLoger, idChat);
+                client.Close();
+                if (CompleteOparation)
+                {
+                    UpdateMessages();
+                    textBox.Text = "";
+                }
+                else
+                {
+                    MessageBox.Show("Error push message");
+                }
+
             }
-            else
-            {
-                MessageBox.Show("Error push message");
-            }
+            
         }
 
         private void ListBoxChats_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -93,7 +97,7 @@ namespace Client
             foreach (MessageDTO item in messages)
             {
                 string SenderLogin = client.GetLoginById(item.SenderId);
-                SenderLogin = (SenderLogin == null) ? "Server" : SenderLogin;
+                //SenderLogin = (SenderLogin == null) ? "Server" : SenderLogin;
                 Paragraph paragraph = new Paragraph(new Run(SenderLogin + ": " + item.Text));
                 ThicknessConverter tc = new ThicknessConverter();
                 paragraph.BorderThickness = (Thickness)tc.ConvertFromString("1px");

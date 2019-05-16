@@ -328,11 +328,11 @@ namespace Client.Server {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetMessages", ReplyAction="http://tempuri.org/IService1/GetMessagesResponse")]
         System.Threading.Tasks.Task<Client.Server.MessageDTO[]> GetMessagesAsync(Client.Server.Loger Userloger, int chatID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ThisLoginIsUnique", ReplyAction="http://tempuri.org/IService1/ThisLoginIsUniqueResponse")]
-        bool ThisLoginIsUnique(string Login);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UserLogin", ReplyAction="http://tempuri.org/IService1/UserLoginResponse")]
+        bool UserLogin(Client.Server.Loger loger);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ThisLoginIsUnique", ReplyAction="http://tempuri.org/IService1/ThisLoginIsUniqueResponse")]
-        System.Threading.Tasks.Task<bool> ThisLoginIsUniqueAsync(string Login);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UserLogin", ReplyAction="http://tempuri.org/IService1/UserLoginResponse")]
+        System.Threading.Tasks.Task<bool> UserLoginAsync(Client.Server.Loger loger);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UserExists", ReplyAction="http://tempuri.org/IService1/UserExistsResponse")]
         bool UserExists(Client.Server.Loger loger);
@@ -444,12 +444,12 @@ namespace Client.Server {
             return base.Channel.GetMessagesAsync(Userloger, chatID);
         }
         
-        public bool ThisLoginIsUnique(string Login) {
-            return base.Channel.ThisLoginIsUnique(Login);
+        public bool UserLogin(Client.Server.Loger loger) {
+            return base.Channel.UserLogin(loger);
         }
         
-        public System.Threading.Tasks.Task<bool> ThisLoginIsUniqueAsync(string Login) {
-            return base.Channel.ThisLoginIsUniqueAsync(Login);
+        public System.Threading.Tasks.Task<bool> UserLoginAsync(Client.Server.Loger loger) {
+            return base.Channel.UserLoginAsync(loger);
         }
         
         public bool UserExists(Client.Server.Loger loger) {

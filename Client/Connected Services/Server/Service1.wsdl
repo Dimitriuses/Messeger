@@ -57,11 +57,11 @@
   <wsdl:message name="IService1_GetMessages_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetMessagesResponse" />
   </wsdl:message>
-  <wsdl:message name="IService1_ThisLoginIsUnique_InputMessage">
-    <wsdl:part name="parameters" element="tns:ThisLoginIsUnique" />
+  <wsdl:message name="IService1_UserLogin_InputMessage">
+    <wsdl:part name="parameters" element="tns:UserLogin" />
   </wsdl:message>
-  <wsdl:message name="IService1_ThisLoginIsUnique_OutputMessage">
-    <wsdl:part name="parameters" element="tns:ThisLoginIsUniqueResponse" />
+  <wsdl:message name="IService1_UserLogin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UserLoginResponse" />
   </wsdl:message>
   <wsdl:message name="IService1_UserExists_InputMessage">
     <wsdl:part name="parameters" element="tns:UserExists" />
@@ -114,9 +114,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/GetMessages" message="tns:IService1_GetMessages_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/GetMessagesResponse" message="tns:IService1_GetMessages_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="ThisLoginIsUnique">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ThisLoginIsUnique" message="tns:IService1_ThisLoginIsUnique_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ThisLoginIsUniqueResponse" message="tns:IService1_ThisLoginIsUnique_OutputMessage" />
+    <wsdl:operation name="UserLogin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/UserLogin" message="tns:IService1_UserLogin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/UserLoginResponse" message="tns:IService1_UserLogin_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="UserExists">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/UserExists" message="tns:IService1_UserExists_InputMessage" />
@@ -205,8 +205,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="ThisLoginIsUnique">
-      <soap:operation soapAction="http://tempuri.org/IService1/ThisLoginIsUnique" style="document" />
+    <wsdl:operation name="UserLogin">
+      <soap:operation soapAction="http://tempuri.org/IService1/UserLogin" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

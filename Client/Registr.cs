@@ -87,7 +87,7 @@ namespace Client
         {
             /*using(*/Service1Client client = new Service1Client();//)
             //{
-                if (client.ThisLoginIsUnique(textBox1.Text))
+                if (!client.UserExists(new Loger { Login = textBox1.Text}))
                 {
                     label7.ForeColor = Color.Green;
                     label7.Text = "Unique";

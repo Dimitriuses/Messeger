@@ -35,13 +35,14 @@ namespace Client
                 User.PasswordHash = GetMd5Hash(md5Hash, textBox2.Text);
             }
             Service1Client client = new Service1Client();
-            if (client.UserExists(User))
+            if (client.UserLogin(User))
             {
                 DialogResult = DialogResult.OK;
             }
             else
             {
                 MessageBox.Show("Error");
+                DialogResult = DialogResult.Retry;
             }
             client.Close();
 

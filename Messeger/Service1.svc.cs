@@ -280,7 +280,7 @@ namespace Messeger
             }
             else if (Secure && messages.Count == 0)
             {
-                messageDTOs.Add(new MessageDTO { Text = "This chat is empty" });
+                messageDTOs.Add(new MessageDTO { Text = "This chat is empty", SenderId = 4 });
                 return messageDTOs;
             }
             return null;

@@ -40,7 +40,7 @@ namespace Messeger
         List<MessageDTO> GetMessages(Loger Userloger, int chatID);
         //bool Add(Message message);
         [OperationContract]
-        bool ThisLoginIsUnique(string Login);
+        bool UserLogin(Loger loger);
         [OperationContract]
         bool UserExists(Loger loger);
         [OperationContract]

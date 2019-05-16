@@ -122,24 +122,24 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ThisLoginIsUnique">
+  <xs:element name="UserLogin">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="Login" nillable="true" type="xs:string" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="loger" nillable="true" type="q12:Loger" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="ThisLoginIsUniqueResponse">
+  <xs:element name="UserLoginResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="ThisLoginIsUniqueResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="UserLoginResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="UserExists">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="loger" nillable="true" type="q12:Loger" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="loger" nillable="true" type="q13:Loger" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -154,7 +154,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="text" nillable="true" type="xs:string" />
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="loger" nillable="true" type="q13:Loger" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="loger" nillable="true" type="q14:Loger" />
         <xs:element minOccurs="0" name="ChatId" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
