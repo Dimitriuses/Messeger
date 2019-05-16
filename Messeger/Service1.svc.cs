@@ -1,4 +1,5 @@
-﻿using Messeger.Model;
+﻿using Messeger.DTO;
+using Messeger.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -251,8 +252,10 @@ namespace Messeger
             }
         }
 
-        public List<Message> GetMessages(Loger Userloger,int chatID)
+        public List<MessageDTO> GetMessages(Loger Userloger,int chatID)
         {
+            bool Secure = false;
+            List<Message> messages = new List<Message>();
             using (Meseger meseger = new Meseger())
             {
                 int id = GetChat(Userloger, chatID);
@@ -262,10 +265,25 @@ namespace Messeger
                 //bool all = admin || participant;
                 if (UserLogin(Userloger) && ChatUserExists(Userloger, id))
                 {
-                    return chat.Messages.ToList<Message>();
+                    messages = chat.Messages.ToList<Message>();
+                    Secure = true;
                 }
-                return null;
             }
+            List<MessageDTO> messageDTOs = new List<MessageDTO>();
+            if (Secure && messages.Count > 0) 
+            {
+                foreach (Message item in messages)
+                {
+                    messageDTOs.Add(new MessageDTO(item));
+                }
+                return messageDTOs;
+            }
+            else if (Secure && messages.Count == 0)
+            {
+                messageDTOs.Add(new MessageDTO { Text = "This chat is empty" });
+                return messageDTOs;
+            }
+            return null;
         }
         
         public bool UserExists(Loger loger)
@@ -334,7 +352,14 @@ namespace Messeger
             }
         }
 
-
+        public string GetLoginById(int id)
+        {
+            using(Meseger ctx = new Meseger())
+            {
+                User user = ctx.Users.Find(id);
+                return user.Login;
+            }
+        }
 
         //public Message GetMessageById(int id)
         //{

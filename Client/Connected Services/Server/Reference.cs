@@ -78,7 +78,6 @@ namespace Client.Server {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Loger", Namespace="http://schemas.datacontract.org/2004/07/Messeger")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Client.Server.User))]
     public partial class Loger : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -154,51 +153,15 @@ namespace Client.Server {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="User", Namespace="http://schemas.datacontract.org/2004/07/Messeger")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MessageDTO", Namespace="http://schemas.datacontract.org/2004/07/Messeger.DTO")]
     [System.SerializableAttribute()]
-    public partial class User : Client.Server.Loger {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EmailField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PhoneField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Email {
-            get {
-                return this.EmailField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
-                    this.EmailField = value;
-                    this.RaisePropertyChanged("Email");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Phone {
-            get {
-                return this.PhoneField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PhoneField, value) != true)) {
-                    this.PhoneField = value;
-                    this.RaisePropertyChanged("Phone");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Message", Namespace="http://schemas.datacontract.org/2004/07/Messeger")]
-    [System.SerializableAttribute()]
-    public partial class Message : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+    public partial class MessageDTO : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ChatIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime DateTimeField;
@@ -207,7 +170,10 @@ namespace Client.Server {
         private int IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Client.Server.Sender SenderField;
+        private int[] ReciversIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int SenderIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string TextField;
@@ -219,6 +185,19 @@ namespace Client.Server {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ChatId {
+            get {
+                return this.ChatIdField;
+            }
+            set {
+                if ((this.ChatIdField.Equals(value) != true)) {
+                    this.ChatIdField = value;
+                    this.RaisePropertyChanged("ChatId");
+                }
             }
         }
         
@@ -249,14 +228,27 @@ namespace Client.Server {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Client.Server.Sender Sender {
+        public int[] ReciversId {
             get {
-                return this.SenderField;
+                return this.ReciversIdField;
             }
             set {
-                if ((object.ReferenceEquals(this.SenderField, value) != true)) {
-                    this.SenderField = value;
-                    this.RaisePropertyChanged("Sender");
+                if ((object.ReferenceEquals(this.ReciversIdField, value) != true)) {
+                    this.ReciversIdField = value;
+                    this.RaisePropertyChanged("ReciversId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int SenderId {
+            get {
+                return this.SenderIdField;
+            }
+            set {
+                if ((this.SenderIdField.Equals(value) != true)) {
+                    this.SenderIdField = value;
+                    this.RaisePropertyChanged("SenderId");
                 }
             }
         }
@@ -270,83 +262,6 @@ namespace Client.Server {
                 if ((object.ReferenceEquals(this.TextField, value) != true)) {
                     this.TextField = value;
                     this.RaisePropertyChanged("Text");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Sender", Namespace="http://schemas.datacontract.org/2004/07/Messeger.Model")]
-    [System.SerializableAttribute()]
-    public partial class Sender : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Client.Server.Message[] MessagesField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Client.Server.User UserField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Client.Server.Message[] Messages {
-            get {
-                return this.MessagesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MessagesField, value) != true)) {
-                    this.MessagesField = value;
-                    this.RaisePropertyChanged("Messages");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Client.Server.User User {
-            get {
-                return this.UserField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UserField, value) != true)) {
-                    this.UserField = value;
-                    this.RaisePropertyChanged("User");
                 }
             }
         }
@@ -408,10 +323,10 @@ namespace Client.Server {
         System.Threading.Tasks.Task<string[]> GetChatListAsync(Client.Server.Loger Userloger);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetMessages", ReplyAction="http://tempuri.org/IService1/GetMessagesResponse")]
-        Client.Server.Message[] GetMessages(Client.Server.Loger Userloger, int chatID);
+        Client.Server.MessageDTO[] GetMessages(Client.Server.Loger Userloger, int chatID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetMessages", ReplyAction="http://tempuri.org/IService1/GetMessagesResponse")]
-        System.Threading.Tasks.Task<Client.Server.Message[]> GetMessagesAsync(Client.Server.Loger Userloger, int chatID);
+        System.Threading.Tasks.Task<Client.Server.MessageDTO[]> GetMessagesAsync(Client.Server.Loger Userloger, int chatID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ThisLoginIsUnique", ReplyAction="http://tempuri.org/IService1/ThisLoginIsUniqueResponse")]
         bool ThisLoginIsUnique(string Login);
@@ -430,6 +345,12 @@ namespace Client.Server {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/PushMessage", ReplyAction="http://tempuri.org/IService1/PushMessageResponse")]
         System.Threading.Tasks.Task<bool> PushMessageAsync(string text, Client.Server.Loger loger, int ChatId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetLoginById", ReplyAction="http://tempuri.org/IService1/GetLoginByIdResponse")]
+        string GetLoginById(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetLoginById", ReplyAction="http://tempuri.org/IService1/GetLoginByIdResponse")]
+        System.Threading.Tasks.Task<string> GetLoginByIdAsync(int id);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -515,11 +436,11 @@ namespace Client.Server {
             return base.Channel.GetChatListAsync(Userloger);
         }
         
-        public Client.Server.Message[] GetMessages(Client.Server.Loger Userloger, int chatID) {
+        public Client.Server.MessageDTO[] GetMessages(Client.Server.Loger Userloger, int chatID) {
             return base.Channel.GetMessages(Userloger, chatID);
         }
         
-        public System.Threading.Tasks.Task<Client.Server.Message[]> GetMessagesAsync(Client.Server.Loger Userloger, int chatID) {
+        public System.Threading.Tasks.Task<Client.Server.MessageDTO[]> GetMessagesAsync(Client.Server.Loger Userloger, int chatID) {
             return base.Channel.GetMessagesAsync(Userloger, chatID);
         }
         
@@ -545,6 +466,14 @@ namespace Client.Server {
         
         public System.Threading.Tasks.Task<bool> PushMessageAsync(string text, Client.Server.Loger loger, int ChatId) {
             return base.Channel.PushMessageAsync(text, loger, ChatId);
+        }
+        
+        public string GetLoginById(int id) {
+            return base.Channel.GetLoginById(id);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetLoginByIdAsync(int id) {
+            return base.Channel.GetLoginByIdAsync(id);
         }
     }
 }

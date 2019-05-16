@@ -117,7 +117,7 @@
     <None Include="Connected Services\Server\Client.Server.CompositeType.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\Server\Client.Server.Message.datasource">
+    <None Include="Connected Services\Server\Client.Server.MessageDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\Server\Service1.wsdl" />

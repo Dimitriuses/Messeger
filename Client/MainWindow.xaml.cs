@@ -75,22 +75,29 @@ namespace Client
 
         private void UpdateMessages()
         {
-            Message[] messages;
+            MessageDTO[] messages;
             Service1Client client = new Service1Client();
             messages = client.GetMessages(UserLoger, idChat);
             client.Close();
             RenderMessage(messages);
         }
 
-        private void RenderMessage(Message[] messages)
+        private void RenderMessage(MessageDTO[] messages)
         {
             Messages.Blocks.Clear();
-            foreach (Message item in messages)
+            if(messages == null ||messages.Length == 0)
             {
-                Paragraph paragraph = new Paragraph(new Run(item.Sender.User.Login + ": " + item.Text));
+                return;
+            }
+            Service1Client client = new Service1Client();
+            foreach (MessageDTO item in messages)
+            {
+                string SenderLogin = client.GetLoginById(item.SenderId);
+                SenderLogin = (SenderLogin == null) ? "Server" : SenderLogin;
+                Paragraph paragraph = new Paragraph(new Run(SenderLogin + ": " + item.Text));
                 ThicknessConverter tc = new ThicknessConverter();
                 paragraph.BorderThickness = (Thickness)tc.ConvertFromString("1px");
-                if (item.Sender.User == UserLoger)
+                if (SenderLogin == UserLoger.Login)
                 {
                     paragraph.FlowDirection = FlowDirection.RightToLeft;
                     //paragraph.BorderBrush = Brushes.Red;
@@ -102,6 +109,7 @@ namespace Client
                 }
                 Messages.Blocks.Add(paragraph);
             }
+            client.Close();
         }
 
         private void Update_Chat_List()

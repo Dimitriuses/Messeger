@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Messeger.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -36,7 +37,7 @@ namespace Messeger
         //Message GetMessageById(int id);
 
         [OperationContract]
-        List<Message> GetMessages(Loger Userloger, int chatID);
+        List<MessageDTO> GetMessages(Loger Userloger, int chatID);
         //bool Add(Message message);
         [OperationContract]
         bool ThisLoginIsUnique(string Login);
@@ -44,6 +45,8 @@ namespace Messeger
         bool UserExists(Loger loger);
         [OperationContract]
         bool PushMessage(string text, Loger loger,int ChatId);
+        [OperationContract]
+        string GetLoginById(int id);
         // TODO: Add your service operations here
     }
 
