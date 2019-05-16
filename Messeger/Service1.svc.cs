@@ -361,6 +361,29 @@ namespace Messeger
             }
         }
 
+        public List<LogerDTO> GetUserListByFindMode(string findstring)
+        {
+            List<LogerDTO> logers = new List<LogerDTO>();
+            if (findstring != string.Empty)
+            {
+                using (Meseger ctx = new Meseger())
+                {
+                    List<User> tmp = new List<User>();
+                    tmp = ctx.Users.Where(t => t.Login.ToUpper().StartsWith(findstring)).ToList();
+                    if (tmp.Count > 0)
+                    {
+                        foreach (User item in tmp)
+                        {
+                            logers.Add(new LogerDTO(item));
+                        }
+                        return logers;
+                    }
+                }
+            }
+            logers.Add(new LogerDTO { Login = "Users not find" , Id = -1});
+            return logers;
+        }
+
         //public Message GetMessageById(int id)
         //{
         //    return messages.SingleOrDefault(b => b.Id == id);

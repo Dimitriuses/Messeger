@@ -276,6 +276,67 @@ namespace Client.Server {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="LogerDTO", Namespace="http://schemas.datacontract.org/2004/07/Messeger.DTO")]
+    [System.SerializableAttribute()]
+    public partial class LogerDTO : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LoginField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Login {
+            get {
+                return this.LoginField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LoginField, value) != true)) {
+                    this.LoginField = value;
+                    this.RaisePropertyChanged("Login");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Server.IService1")]
     public interface IService1 {
@@ -351,6 +412,12 @@ namespace Client.Server {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetLoginById", ReplyAction="http://tempuri.org/IService1/GetLoginByIdResponse")]
         System.Threading.Tasks.Task<string> GetLoginByIdAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetUserListByFindMode", ReplyAction="http://tempuri.org/IService1/GetUserListByFindModeResponse")]
+        Client.Server.LogerDTO[] GetUserListByFindMode(string findstring);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetUserListByFindMode", ReplyAction="http://tempuri.org/IService1/GetUserListByFindModeResponse")]
+        System.Threading.Tasks.Task<Client.Server.LogerDTO[]> GetUserListByFindModeAsync(string findstring);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -474,6 +541,14 @@ namespace Client.Server {
         
         public System.Threading.Tasks.Task<string> GetLoginByIdAsync(int id) {
             return base.Channel.GetLoginByIdAsync(id);
+        }
+        
+        public Client.Server.LogerDTO[] GetUserListByFindMode(string findstring) {
+            return base.Channel.GetUserListByFindMode(findstring);
+        }
+        
+        public System.Threading.Tasks.Task<Client.Server.LogerDTO[]> GetUserListByFindModeAsync(string findstring) {
+            return base.Channel.GetUserListByFindModeAsync(findstring);
         }
     }
 }

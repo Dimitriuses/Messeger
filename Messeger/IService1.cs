@@ -47,6 +47,8 @@ namespace Messeger
         bool PushMessage(string text, Loger loger,int ChatId);
         [OperationContract]
         string GetLoginById(int id);
+        [OperationContract]
+        List<LogerDTO> GetUserListByFindMode(string findstring);
         // TODO: Add your service operations here
     }
 

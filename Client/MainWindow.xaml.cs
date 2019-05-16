@@ -130,6 +130,19 @@ namespace Client
             
         }
 
+        private void Button2_Click(object sender, RoutedEventArgs e)
+        {
+            if (UserLoger.Login != null)
+            {
+                AddNewChat dlg = new AddNewChat();
+                if(dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    Update_Chat_List();
+                }
+            }
+
+        }
+
         //private List<Message> bletMassage()
         //{
         //    User TestUser = new User() { Login = "VASA_TEST" };

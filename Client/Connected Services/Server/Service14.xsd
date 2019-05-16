@@ -18,4 +18,17 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="MessageDTO" nillable="true" type="tns:MessageDTO" />
+  <xs:complexType name="ArrayOfLogerDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="LogerDTO" nillable="true" type="tns:LogerDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLogerDTO" nillable="true" type="tns:ArrayOfLogerDTO" />
+  <xs:complexType name="LogerDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Login" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LogerDTO" nillable="true" type="tns:LogerDTO" />
 </xs:schema>

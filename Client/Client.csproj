@@ -60,6 +60,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddNewChat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddNewChat.Designer.cs">
+      <DependentUpon>AddNewChat.cs</DependentUpon>
+    </Compile>
     <Compile Include="Registr.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,6 +110,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="AddNewChat.resx">
+      <DependentUpon>AddNewChat.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -115,6 +124,9 @@
       <DependentUpon>SingIN.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Connected Services\Server\Client.Server.CompositeType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\Server\Client.Server.LogerDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\Server\Client.Server.MessageDTO.datasource">

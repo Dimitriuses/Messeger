@@ -180,4 +180,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetUserListByFindMode">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="findstring" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUserListByFindModeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Messeger.DTO" minOccurs="0" name="GetUserListByFindModeResult" nillable="true" type="q15:ArrayOfLogerDTO" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>
