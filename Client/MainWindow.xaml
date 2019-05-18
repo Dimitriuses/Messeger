@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="768" Width="1360" Background="#FF009688">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -17,37 +18,94 @@
                 <RowDefinition/>
                 <RowDefinition Height="9*"/>
             </Grid.RowDefinitions>
-            <ListBox x:Name="listBoxChats" Grid.Row="1" SelectionChanged="ListBoxChats_SelectionChanged" ItemsSource="{Binding}">
+            <materialDesign:ColorZone Mode="PrimaryMid" Padding="16">
+                <DockPanel>
+                    <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges">
+                        <ListBox>
+                            <ListBoxItem>
+                                Hello World
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                Nice Popup
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                Goodbye.
+                            </ListBoxItem>
+                        </ListBox>
+                    </materialDesign:PopupBox>
+                    <StackPanel Orientation="Horizontal" materialDesign:RippleAssist.IsCentered="True">
+                        <ToggleButton Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
+                        <materialDesign:ColorZone Mode="Standard" Padding="8 4 8 4" CornerRadius="2" Panel.ZIndex="1" Margin="16 0 0 0" materialDesign:ShadowAssist.ShadowDepth="Depth1" Width="554">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Button Style="{DynamicResource MaterialDesignToolButton}">
+                                    <materialDesign:PackIcon Kind="Magnify" Opacity=".56" />
+                                </Button>
+                                <TextBox Grid.Column="1" Margin="8 0 0 0" materialDesign:HintAssist.Hint="Build a search bar" materialDesign:TextFieldAssist.DecorationVisibility="Hidden" BorderThickness="0" MinWidth="200" VerticalAlignment="Center" />
+                            </Grid>
+                        </materialDesign:ColorZone>
+                    </StackPanel>
+                </DockPanel>
+            </materialDesign:ColorZone>
+            <ListBox x:Name="listBoxChats" Grid.Row="1" SelectionChanged="ListBoxChats_SelectionChanged" ItemsSource="{Binding}" Background="{DynamicResource PrimaryHueLightBrush}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button x:Name="button" Content="≡" HorizontalAlignment="Left" Width="38" Height="38" FontSize="22" Click="Button_Click"/>
-            <Button x:Name="button2" Content="Add new Chat" HorizontalAlignment="Left" Margin="283,10,0,0" VerticalAlignment="Top" Width="75" Click="Button2_Click"/>
+            <Button x:Name="button" Content="≡" HorizontalAlignment="Left" Width="38" Height="38" FontSize="22" Click="Button_Click" Margin="30,58,0,281" Grid.Row="1"/>
+            <Button x:Name="button2" Content="Add new Chat" HorizontalAlignment="Left" Margin="197,37,0,0" VerticalAlignment="Top" Width="150" Click="Button2_Click" Grid.Row="1"/>
 
         </Grid>
-        <GridSplitter Grid.Column="1" ShowsPreview="False" Width="3"
-        HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+        <GridSplitter Grid.Column="1" ShowsPreview="False" Width="5"
+        HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="#FF009688" BorderBrush="#FF009688"/>
         <Grid Grid.Column="2" Margin="0">
             <Grid.RowDefinitions>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid Margin="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="9*"/>
-                    <RowDefinition/>
+                    <RowDefinition Height="8*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <RichTextBox x:Name="richMessageBox">
+                <materialDesign:ColorZone Mode="PrimaryMid" Padding="16" Grid.Row="1">
+                    <DockPanel>
+                        <Button Style="{DynamicResource MaterialDesignToolForegroundButton}" Margin="8 0 0 0" DockPanel.Dock="Right">
+                            <materialDesign:PackIcon Kind="Send" />
+                        </Button>
+                        <!--<ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" VerticalAlignment="Center" DockPanel.Dock="Right" />-->
+                        <StackPanel Orientation="Horizontal" materialDesign:RippleAssist.IsCentered="True">
+
+                            <!--<ToggleButton Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />-->
+                            <materialDesign:ColorZone Mode="Standard" Padding="8 4 8 4" CornerRadius="2" Panel.ZIndex="1" Margin="16,0,0,0" materialDesign:ShadowAssist.ShadowDepth="Depth1">
+                                <Grid Width="566">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <ToggleButton Style="{StaticResource MaterialDesignFlatToggleButton}" ToolTip="MaterialDesignFlatToggleButton" Height="32" Margin="0,0,0,0" Width="32">
+                                        <materialDesign:PackIcon Kind="Paperclip" Height="21" Width="21" />
+                                    </ToggleButton>
+                                    <TextBox Grid.Column="1" Margin="8,5,0,5" materialDesign:HintAssist.Hint="Build a search bar" materialDesign:TextFieldAssist.DecorationVisibility="Hidden" BorderThickness="0" MinWidth="200" VerticalAlignment="Center" Height="24" />
+                                </Grid>
+                            </materialDesign:ColorZone>
+                        </StackPanel>
+                    </DockPanel>
+                </materialDesign:ColorZone>
+                <RichTextBox x:Name="richMessageBox" Background="{DynamicResource PrimaryHueLightBrush}">
                     <FlowDocument x:Name="Messages">
                         <Paragraph>
                             <Run ></Run>
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
-                <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="0,5,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="304"/>
-                <Button x:Name="button1" Content="&gt;&gt;&gt;" HorizontalAlignment="Left" Margin="320,5,0,0" Grid.Row="1" VerticalAlignment="Top" Width="65" Height="23" Click="Button1_Click"/>
+                <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="10,494,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="304"/>
+                <Button x:Name="button1" Content="&gt;&gt;&gt;" HorizontalAlignment="Left" Margin="377,511,0,0" VerticalAlignment="Top" Width="65" Height="23" Click="Button1_Click"/>
             </Grid>
 
         </Grid>
