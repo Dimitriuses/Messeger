@@ -143,6 +143,25 @@ namespace Client
 
         }
 
+        private void ToggleIn_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleOn.IsChecked = false;
+        }
+
+        private void ToggleOn_Click(object sender, RoutedEventArgs e)
+        {
+            ToggleIn.IsChecked = true;
+        }
+
+        private void TextBox_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (!textBox.IsEnabled)
+            {
+                ToggleOn.IsChecked = false;
+                ToggleIn.IsChecked = false;
+            }
+        }
+
         //private List<Message> bletMassage()
         //{
         //    User TestUser = new User() { Login = "VASA_TEST" };
