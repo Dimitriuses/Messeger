@@ -6,14 +6,23 @@
         xmlns:local="clr-namespace:Client"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="768" Width="1360" Background="#FF009688">
+        Title="MainWindow" Height="550" Width="1300" Background="#FF009688">
     <Grid>
+        <materialDesign:DialogHost x:Name="Login">
+            <materialDesign:DialogHost.DialogContent>
+                <Grid>
+                    
+                </Grid>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
         <materialDesign:DrawerHost BorderBrush="{DynamicResource MaterialDesignDivider}">
             <materialDesign:DrawerHost.LeftDrawerContent>
                 <StackPanel Margin="0,17,0,0">
                     <ToggleButton x:Name="ToggleIn" Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}" CommandParameter="{x:Static Dock.Left}" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ToggleIn_Click"/>
-                    <materialDesign:Card x:Name="LoginCard" Width="200" Height="100" materialDesign:ShadowAssist.ShadowDepth="Depth2">
-
+                    <materialDesign:Card x:Name="ProfileCard" Width="200" Height="100" materialDesign:ShadowAssist.ShadowDepth="Depth2">
+                        <StackPanel x:Name="ProfilePanel">
+                            
+                        </StackPanel>
                     </materialDesign:Card>
                     <ListBox>
                         <TextBlock>
@@ -46,19 +55,6 @@
                 <Grid>
                     <materialDesign:ColorZone Mode="PrimaryMid" Padding="16">
                         <DockPanel>
-                            <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges">
-                                <ListBox>
-                                    <ListBoxItem>
-                                        Hello World
-                                    </ListBoxItem>
-                                    <ListBoxItem>
-                                        Nice Popup
-                                    </ListBoxItem>
-                                    <ListBoxItem>
-                                        Goodbye.
-                                    </ListBoxItem>
-                                </ListBox>
-                            </materialDesign:PopupBox>
                             <StackPanel Orientation="Horizontal" materialDesign:RippleAssist.IsCentered="True">
                                 <ToggleButton x:Name="ToggleOn" Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" CommandParameter="{x:Static Dock.Left}" Click="ToggleOn_Click"/>
                                 <materialDesign:ColorZone Mode="Standard" Padding="8 4 8 4" CornerRadius="2" Panel.ZIndex="1" Margin="16 0 0 0" materialDesign:ShadowAssist.ShadowDepth="Depth1" Width="554">
@@ -84,8 +80,6 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    <Button x:Name="button" Content="≡" HorizontalAlignment="Left" Width="38" Height="38" FontSize="22" Click="Button_Click" Margin="30,58,0,281" Grid.Row="1"/>
-                    <Button x:Name="button2" Content="Add new Chat" HorizontalAlignment="Left" Margin="226,163,0,0" VerticalAlignment="Top" Width="150" Click="Button2_Click"/>
 
                 </Grid>
                 <GridSplitter Grid.Column="1" ShowsPreview="False" Width="5" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="#FF009688" BorderBrush="#FF009688"/>
@@ -97,15 +91,15 @@
 
                         <materialDesign:ColorZone Mode="PrimaryMid" Padding="16" VerticalAlignment="Bottom">
                             <DockPanel>
-                                <Button Style="{DynamicResource MaterialDesignToolForegroundButton}" Margin="8 0 0 0" DockPanel.Dock="Right">
+                                <Button Style="{DynamicResource MaterialDesignToolForegroundButton}" Margin="8 0 0 0" DockPanel.Dock="Right" Click="Button1_Click">
                                     <materialDesign:PackIcon Kind="Send" Width="21" Height="21" />
                                 </Button>
                                 <!--<ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" VerticalAlignment="Center" DockPanel.Dock="Right" />-->
                                 <StackPanel Orientation="Horizontal" materialDesign:RippleAssist.IsCentered="True">
 
                                     <!--<ToggleButton Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />-->
-                                    <materialDesign:ColorZone Mode="Standard" Padding="8 4 8 4" CornerRadius="2" Panel.ZIndex="1" Margin="16,0,0,0" materialDesign:ShadowAssist.ShadowDepth="Depth1">
-                                        <Grid Width="566">
+                                    <materialDesign:ColorZone Mode="Standard" Padding="8 4 8 4" CornerRadius="2" Panel.ZIndex="1" Margin="0" materialDesign:ShadowAssist.ShadowDepth="Depth1">
+                                        <Grid MinWidth="555">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition />
@@ -119,14 +113,29 @@
                                 </StackPanel>
                             </DockPanel>
                         </materialDesign:ColorZone>
-                        <RichTextBox x:Name="richMessageBox" Background="{DynamicResource PrimaryHueLightBrush}" Margin="0,0,0,74">
+                        <materialDesign:ColorZone Mode="Accent" Padding="23">
+                            <DockPanel>
+                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                                    <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges">
+                                        <ListBox>
+                                            <ListBoxItem>Hello World</ListBoxItem>
+                                            <ListBoxItem>Nice Popup</ListBoxItem>
+                                            <ListBoxItem>Goodbye.</ListBoxItem>
+                                        </ListBox>
+                                    </materialDesign:PopupBox>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock VerticalAlignment="Center" Margin="16 0 0 0" FontSize="20">Тут буде ім'я чату</TextBlock>
+                                </StackPanel>
+                            </DockPanel>
+                        </materialDesign:ColorZone>
+                        <RichTextBox x:Name="richMessageBox" Background="{DynamicResource PrimaryHueLightBrush}" Margin="0,72,0,74">
                             <FlowDocument x:Name="Messages">
                                 <Paragraph>
                                     <Run ></Run>
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
-                        <Button x:Name="button1" Content="&gt;&gt;&gt;" HorizontalAlignment="Left" Margin="377,511,0,0" VerticalAlignment="Top" Width="65" Height="23" Click="Button1_Click"/>
                     </Grid>
 
                 </Grid>
