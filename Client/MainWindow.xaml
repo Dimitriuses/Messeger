@@ -7,27 +7,99 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="MainWindow" Height="550" Width="1300" Background="#FF009688">
+    <Window.Resources>
+        <ControlTemplate x:Key="validationFailed">
+            <StackPanel Orientation="Horizontal">
+                <Border BorderBrush="Red" BorderThickness="2">
+                    <AdornedElementPlaceholder />
+                </Border>
+                <TextBlock Foreground="Red" FontSize="26" FontWeight="Bold">!</TextBlock>
+            </StackPanel>
+        </ControlTemplate>
+    </Window.Resources>
     <Grid>
-        <materialDesign:DialogHost x:Name="DialogHost">
+        <materialDesign:DialogHost x:Name="LoginDialogHost" >
             <materialDesign:DialogHost.DialogContent>
-                <StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Account" Width="60" Height="60"/>
-                        <TextBox Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"  AcceptsReturn="True" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Login" MinWidth="200"/>
+                <materialDesign:DialogHost x:Name="RegisterDialogHost">
+                    <materialDesign:DialogHost.DialogContent>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Account" Height="25" Width="25"/>
+                                <TextBox x:Name="Login" materialDesign:HintAssist.Hint="Login" MinWidth="235" Validation.ErrorTemplate="{StaticResource validationFailed}"  >
+                                    <TextBox.Text>
+                                        <Binding Path="Login" NotifyOnValidationError="True">
+                                            <Binding.ValidationRules>
+                                                <DataErrorValidationRule />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <!--<Label x:Name="labelExist"/>-->
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Key" Height="25" Width="25"/>
+                                <StackPanel>
+                                    <PasswordBox x:Name="Pass" materialDesign:HintAssist.Hint="Password" MinWidth="235"/>
+                                    <PasswordBox x:Name="PassConfirm" materialDesign:HintAssist.Hint="Confirm Password" MinWidth="235"/>
+                                    <!--<local:PasswordValidator Box1="{Binding ElementName=Pass}" Box2="{Binding ElementName=PassConfirm}"/>-->
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Email" Height="25" Width="25"/>
+                                <TextBox x:Name="EmailTextBlock" materialDesign:HintAssist.Hint="Email" MinWidth="235" Validation.ErrorTemplate="{StaticResource validationFailed}">
+                                    <TextBox.Text>
+                                        <Binding Path="Email" NotifyOnValidationError="True">
+                                            <Binding.ValidationRules>
+                                                <DataErrorValidationRule />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Phone" Height="25" Width="25"/>
+                                <TextBox x:Name="PhoneTextBlock" materialDesign:HintAssist.Hint="(999)123-4567" MinWidth="235" Validation.ErrorTemplate="{StaticResource validationFailed}">
+                                    <TextBox.Text>
+                                        <Binding Path="Phone" NotifyOnValidationError="True">
+                                            <Binding.ValidationRules>
+                                                <DataErrorValidationRule />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,45,0">
+                                    Прийняти
+                                </Button>
+                                <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Margin="45,0,0,0">
+                                    Відміна
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </materialDesign:DialogHost.DialogContent>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Account" Width="60" Height="60"/>
+                            <TextBox Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"  AcceptsReturn="True" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Login" MinWidth="200"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Key" Width="60" Height="60"/>
+                            <PasswordBox Style="{StaticResource MaterialDesignFilledPasswordFieldPasswordBox}"  materialDesign:HintAssist.Hint="Password" MinWidth="200"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{StaticResource MaterialDesignFlatButton}"  Margin="0,0,0,0">
+                                Увійти
+                            </Button>
+                            <Button Style="{StaticResource MaterialDesignFlatButton}"  Margin="0,0,0,0" Click="Button_Click_1">
+                                Реєстрація
+                            </Button>
+                            <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"  Margin="0,0,0,0">
+                                Відміна
+                            </Button>
+                        </StackPanel>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Key" Width="60" Height="60"/>
-                        <PasswordBox Style="{StaticResource MaterialDesignFilledPasswordFieldPasswordBox}"  materialDesign:HintAssist.Hint="Password" MinWidth="200"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Button Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" Margin="0,0,50,0">
-                            ACCEPT
-                        </Button>
-                        <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" ToolTip="MaterialDesignFlatButton" Margin="50,0,0,0">
-                            CANCEL
-                        </Button>
-                    </StackPanel>
-                </StackPanel>
+                </materialDesign:DialogHost>
             </materialDesign:DialogHost.DialogContent>
             <!--<materialDesign:DialogHost.DialogContent x:Name="Register">
                 <StackPanel>

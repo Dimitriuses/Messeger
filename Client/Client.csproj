@@ -81,6 +81,8 @@
     <Compile Include="AddNewChat.Designer.cs">
       <DependentUpon>AddNewChat.cs</DependentUpon>
     </Compile>
+    <Compile Include="IDataErrorInfo.cs" />
+    <Compile Include="PasswordValidator.cs" />
     <Compile Include="Registr.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +95,7 @@
     <Compile Include="SingIN.Designer.cs">
       <DependentUpon>SingIN.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserValidator.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
