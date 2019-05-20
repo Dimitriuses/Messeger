@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Client.Server;
+using MaterialDesignThemes.Wpf;
 
 namespace Client
 {
@@ -160,6 +161,13 @@ namespace Client
                 ToggleOn.IsChecked = false;
                 ToggleIn.IsChecked = false;
             }
+        }
+
+        private void TextBlock_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            DialogHosts.IsOpen = true;
+             
+            DialogHost.Show(DialogHosts);
         }
 
         //private List<Message> bletMassage()
