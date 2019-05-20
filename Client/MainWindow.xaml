@@ -8,8 +8,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="550" Width="1300" Background="#FF009688">
     <Grid>
-        <materialDesign:DialogHost x:Name="DialogHosts">
-            <materialDesign:DialogHost.DialogContent x:Uid="Login">
+        <materialDesign:DialogHost x:Name="DialogHost">
+            <materialDesign:DialogHost.DialogContent>
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Account" Width="60" Height="60"/>

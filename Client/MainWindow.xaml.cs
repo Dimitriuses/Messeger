@@ -165,9 +165,22 @@ namespace Client
 
         private void TextBlock_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            DialogHosts.IsOpen = true;
+            StackPanel first = new StackPanel();
+            StackPanel panel1 = new StackPanel();
+            StackPanel panel2 = new StackPanel();
+            StackPanel panel3 = new StackPanel();
+            panel1.Orientation = Orientation.Horizontal;
+            panel2.Orientation = Orientation.Horizontal;
+            panel3.Orientation = Orientation.Horizontal;
+            PackIcon icon1 = new PackIcon();
+            PackIcon icon2 = new PackIcon();
+            icon1.Kind = PackIconKind.Account;
+            icon2.Kind = PackIconKind.Key;
+            TextBox textBoxLogin = new TextBox { AcceptsReturn = true, TextWrapping = TextWrapping.Wrap, MinWidth = 200 };
+            textBoxLogin.Text
+            DialogHost.IsOpen = true;
              
-            DialogHost.Show(DialogHosts);
+            DialogHost.Show(DialogHost);
         }
 
         //private List<Message> bletMassage()
