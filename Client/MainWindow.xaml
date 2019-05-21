@@ -23,50 +23,26 @@
                 <materialDesign:DialogHost x:Name="RegisterDialogHost">
                     <materialDesign:DialogHost.DialogContent>
                         <StackPanel>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" x:Name="LoginStackPanel">
                                 <materialDesign:PackIcon Kind="Account" Height="25" Width="25"/>
-                                <TextBox x:Name="Login" materialDesign:HintAssist.Hint="Login" MinWidth="235" Validation.ErrorTemplate="{StaticResource validationFailed}"  >
-                                    <TextBox.Text>
-                                        <Binding Path="Login" NotifyOnValidationError="True">
-                                            <Binding.ValidationRules>
-                                                <DataErrorValidationRule />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                <TextBox x:Name="Login" materialDesign:HintAssist.Hint="Login" MinWidth="235" Validation.ErrorTemplate="{StaticResource validationFailed}" TextChanged="Login_TextChanged"/>
                                 <!--<Label x:Name="labelExist"/>-->
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" x:Name="PasswordStackPanel">
                                 <materialDesign:PackIcon Kind="Key" Height="25" Width="25"/>
                                 <StackPanel>
-                                    <PasswordBox x:Name="Pass" materialDesign:HintAssist.Hint="Password" MinWidth="235"/>
-                                    <PasswordBox x:Name="PassConfirm" materialDesign:HintAssist.Hint="Confirm Password" MinWidth="235"/>
+                                    <PasswordBox x:Name="Pass" materialDesign:HintAssist.Hint="Password" MinWidth="235" PasswordChanged="Pass_PasswordChanged"/>
+                                    <PasswordBox x:Name="PassConfirm" materialDesign:HintAssist.Hint="Confirm Password" MinWidth="235" PasswordChanged="PassConfirm_PasswordChanged"/>
                                     <!--<local:PasswordValidator Box1="{Binding ElementName=Pass}" Box2="{Binding ElementName=PassConfirm}"/>-->
                                 </StackPanel>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" x:Name="EmailStackPanel">
                                 <materialDesign:PackIcon Kind="Email" Height="25" Width="25"/>
-                                <TextBox x:Name="EmailTextBlock" materialDesign:HintAssist.Hint="Email" MinWidth="235" Validation.ErrorTemplate="{StaticResource validationFailed}">
-                                    <TextBox.Text>
-                                        <Binding Path="Email" NotifyOnValidationError="True">
-                                            <Binding.ValidationRules>
-                                                <DataErrorValidationRule />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                <TextBox x:Name="EmailTextBlock" materialDesign:HintAssist.Hint="Email" MinWidth="235" Validation.ErrorTemplate="{StaticResource validationFailed}" TextChanged="EmailTextBlock_TextChanged"/>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" x:Name="PhoneStackPanel">
                                 <materialDesign:PackIcon Kind="Phone" Height="25" Width="25"/>
-                                <TextBox x:Name="PhoneTextBlock" materialDesign:HintAssist.Hint="(999)123-4567" MinWidth="235" Validation.ErrorTemplate="{StaticResource validationFailed}">
-                                    <TextBox.Text>
-                                        <Binding Path="Phone" NotifyOnValidationError="True">
-                                            <Binding.ValidationRules>
-                                                <DataErrorValidationRule />
-                                            </Binding.ValidationRules>
-                                        </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                <TextBox x:Name="PhoneTextBlock" materialDesign:HintAssist.Hint="(999)123-4567" MinWidth="235" Validation.ErrorTemplate="{StaticResource validationFailed}" TextChanged="PhoneTextBlock_TextChanged"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,45,0">
@@ -81,11 +57,11 @@
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Account" Width="60" Height="60"/>
-                            <TextBox Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"  AcceptsReturn="True" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Login" MinWidth="200"/>
+                            <TextBox x:Name="LogerLogin" Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"  AcceptsReturn="True" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Login" MinWidth="200"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Key" Width="60" Height="60"/>
-                            <PasswordBox Style="{StaticResource MaterialDesignFilledPasswordFieldPasswordBox}"  materialDesign:HintAssist.Hint="Password" MinWidth="200"/>
+                            <PasswordBox x:Name="LogerPassword" Style="{StaticResource MaterialDesignFilledPasswordFieldPasswordBox}"  materialDesign:HintAssist.Hint="Password" MinWidth="200"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Button Style="{StaticResource MaterialDesignFlatButton}"  Margin="0,0,0,0">

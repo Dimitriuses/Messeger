@@ -193,6 +193,68 @@ namespace Client
             DialogHost.Show(RegisterDialogHost);
         }
 
+        private void Login_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Service1Client client = new Service1Client();
+            bool Exist = client.UserExists(new Loger { Login = Login.Text });
+            client.Close();
+            if (!Exist)
+            {
+                var palette = new PaletteHelper().QueryPalette();
+                var hue = palette.AccentSwatch.AccentHues.ToArray()[palette.AccentHueIndex];
+                LoginStackPanel.Background = new SolidColorBrush(hue.Color);
+            }
+            else
+            {
+                LoginStackPanel.Background = new SolidColorBrush(Colors.LightCoral);
+                LoginStackPanel.ToolTip = "Даний логін вже існує";
+            }
+        }
+
+        private void PassConfirm_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if(Pass.Password == PassConfirm.Password)
+            {
+                var palette = new PaletteHelper().QueryPalette();
+                var hue = palette.AccentSwatch.AccentHues.ToArray()[palette.AccentHueIndex];
+                PasswordStackPanel.Background = new SolidColorBrush(hue.Color);
+            }
+            else
+            {
+                PasswordStackPanel.Background = new SolidColorBrush(Colors.LightCoral);
+                PasswordStackPanel.ToolTip = "Паролі неспівпадають";
+            }
+        }
+
+        private void Pass_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (PassConfirm.Password != String.Empty)
+            {
+                if (Pass.Password == PassConfirm.Password)
+                {
+                    var palette = new PaletteHelper().QueryPalette();
+                    var hue = palette.AccentSwatch.AccentHues.ToArray()[palette.AccentHueIndex];
+                    PasswordStackPanel.Background = new SolidColorBrush(hue.Color);
+                }
+                else
+                {
+                    PasswordStackPanel.Background = new SolidColorBrush(Colors.LightCoral);
+                    PasswordStackPanel.ToolTip = "Паролі неспівпадають";
+                }
+            }
+        }
+
+        private void EmailTextBlock_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //if()
+        }
+
+        private void PhoneTextBlock_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+
         //private List<Message> bletMassage()
         //{
         //    User TestUser = new User() { Login = "VASA_TEST" };
