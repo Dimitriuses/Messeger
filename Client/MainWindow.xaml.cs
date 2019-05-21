@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,13 +28,40 @@ namespace Client
         UserValidator userValidator;
         Loger UserLoger;
         int idChat = -1;
+        Brush DefaultStackPanelColor;
         public MainWindow()
         {
             UserLoger = new Loger(); 
             InitializeComponent();
             userValidator = new UserValidator();
             this.DataContext = userValidator;
+            DefaultStackPanelColor = EmailStackPanel.Background;
+            UpdateCardProfile();
             //listBoxChats.ItemsSource = new List<string>() { " test message ", " helow blet " };
+        }
+
+        private void UpdateCardProfile()
+        {
+            if(UserLoger.Login == null)
+            {
+                ProfileCard.Background = new SolidColorBrush(Colors.LightCoral);
+                //CardButtonProfile.Click = TextBlock_PreviewMouseDown;
+                CardButtonProfile.Background = new SolidColorBrush(Colors.LightCoral);
+                CardButtonProfile.BorderBrush = new SolidColorBrush(Colors.Red);
+                CardButtonProfile.Content = new PackIcon { Kind = PackIconKind.AccountWarning};
+                CardLoginProfile.Content = "Ви не увійшли, будьласка увійдіть або зареєструйтесь";
+            }
+            else
+            {
+                var palette = new PaletteHelper().QueryPalette();
+                var hue = palette.PrimarySwatch.PrimaryHues.ToArray()[palette.PrimaryMidHueIndex];
+                ProfileCard.Background = new SolidColorBrush(hue.Color);
+                hue = palette.PrimarySwatch.PrimaryHues.ToArray()[palette.PrimaryDarkHueIndex];
+                CardButtonProfile.Background = //new SolidColorBrush(hue.Color);
+                CardButtonProfile.BorderBrush = new SolidColorBrush(hue.Color);
+                CardButtonProfile.Content = $"{UserLoger.Login[0]}{UserLoger.Login[1]}".ToUpper();
+                CardLoginProfile.Content = UserLoger.Login;
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -182,32 +212,53 @@ namespace Client
             //textBoxLogin.Resources.Add(Resources, "MaterialDesignFilledTextFieldTextBox");
             //PasswordBox passwordBox = new PasswordBox { MinWidth = 200 };
             //passwordBox.Resources.Add(Resources, "MaterialDesignFilledPasswordFieldPasswordBox");
-            LoginDialogHost.IsOpen = true;
+            if(UserLoger.Login != null)
+            {
+
+            }
+            else
+            {
+                LoginDialogHost.IsOpen = true;
+            }
+
              
-            DialogHost.Show(LoginDialogHost);
+            //DialogHost.Show(LoginDialogHost);
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             RegisterDialogHost.IsOpen = true;
-            DialogHost.Show(RegisterDialogHost);
+            //DialogHost.Show(RegisterDialogHost);
         }
+
+        bool[] IsValid = new bool[4] { false, false, false, false };
+        
 
         private void Login_TextChanged(object sender, TextChangedEventArgs e)
         {
             Service1Client client = new Service1Client();
             bool Exist = client.UserExists(new Loger { Login = Login.Text });
             client.Close();
-            if (!Exist)
+            if (!Exist && Login.Text != String.Empty)
             {
                 var palette = new PaletteHelper().QueryPalette();
                 var hue = palette.AccentSwatch.AccentHues.ToArray()[palette.AccentHueIndex];
                 LoginStackPanel.Background = new SolidColorBrush(hue.Color);
+                LoginStackPanel.ToolTip = "";
+                IsValid[0] = true;
             }
             else
             {
                 LoginStackPanel.Background = new SolidColorBrush(Colors.LightCoral);
-                LoginStackPanel.ToolTip = "Даний логін вже існує";
+                if (Exist)
+                {
+                    LoginStackPanel.ToolTip = "Даний логін вже існує";
+                }
+                else if (Login.Text == String.Empty) 
+                {
+                    LoginStackPanel.ToolTip = "Поле обов'язково має бути заповнене";
+                }
+                IsValid[0] = false;
             }
         }
 
@@ -218,11 +269,14 @@ namespace Client
                 var palette = new PaletteHelper().QueryPalette();
                 var hue = palette.AccentSwatch.AccentHues.ToArray()[palette.AccentHueIndex];
                 PasswordStackPanel.Background = new SolidColorBrush(hue.Color);
+                PasswordStackPanel.ToolTip = "";
+                IsValid[1] = true;
             }
             else
             {
                 PasswordStackPanel.Background = new SolidColorBrush(Colors.LightCoral);
                 PasswordStackPanel.ToolTip = "Паролі неспівпадають";
+                IsValid[1] = false;
             }
         }
 
@@ -235,26 +289,222 @@ namespace Client
                     var palette = new PaletteHelper().QueryPalette();
                     var hue = palette.AccentSwatch.AccentHues.ToArray()[palette.AccentHueIndex];
                     PasswordStackPanel.Background = new SolidColorBrush(hue.Color);
+                    PasswordStackPanel.ToolTip = "";
+                    IsValid[1] = true;
                 }
                 else
                 {
                     PasswordStackPanel.Background = new SolidColorBrush(Colors.LightCoral);
                     PasswordStackPanel.ToolTip = "Паролі неспівпадають";
+                    IsValid[1] = false;
                 }
+            }
+            else
+            {
+                PasswordStackPanel.Background = new SolidColorBrush(Colors.LightCoral);
+                PasswordStackPanel.ToolTip = "Поля обов'язково мають бути заповненими";
+                IsValid[1] = false;
             }
         }
 
         private void EmailTextBlock_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //if()
+            
+            if(EmailTextBlock.Text != String.Empty)
+            {
+                try
+                {
+                    MailAddress m = new MailAddress(EmailTextBlock.Text);
+                }
+                catch (Exception error)
+                {
+                    EmailStackPanel.Background = new SolidColorBrush(Colors.LightCoral);
+                    EmailStackPanel.ToolTip = "Неправильний Email Error: " + error.Message;
+                    IsValid[2] = true;
+                    return;
+                }
+                var palette = new PaletteHelper().QueryPalette();
+                var hue = palette.AccentSwatch.AccentHues.ToArray()[palette.AccentHueIndex];
+                EmailStackPanel.Background = new SolidColorBrush(hue.Color);
+                EmailStackPanel.ToolTip = "";
+                IsValid[2] = false;
+                return;
+            }
+
+            EmailStackPanel.Background = DefaultStackPanelColor;
+            EmailTextBlock.ToolTip = "";
+            IsValid[2] = true;
         }
 
         private void PhoneTextBlock_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            if(PhoneTextBlock.Text != String.Empty && Regex.IsMatch(PhoneTextBlock.Text, @"^((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}$"))
+            {
+                var palette = new PaletteHelper().QueryPalette();
+                var hue = palette.AccentSwatch.AccentHues.ToArray()[palette.AccentHueIndex];
+                PhoneStackPanel.Background = new SolidColorBrush(hue.Color);
+                PhoneStackPanel.ToolTip = "";
+                IsValid[3] = true;
+            }
+            else if(PhoneTextBlock.Text == String.Empty) 
+            {
+                PhoneStackPanel.Background = DefaultStackPanelColor;
+                PhoneStackPanel.ToolTip = "";
+                IsValid[3] = true;
+            }
+            else if(!Regex.IsMatch(PhoneTextBlock.Text, @"^((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}$"))
+            {
+                PhoneStackPanel.Background = new SolidColorBrush(Colors.LightCoral);
+                PhoneTextBlock.ToolTip = "Неправильний формат телефону";
+                IsValid[3] = false;
+            }
         }
 
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            if (IsValid[0] && IsValid[1] && IsValid[2] && IsValid[3])
+            {
+                bool Complete = false;
+                Loger user = new Loger();
+                user.Login = Login.Text;
+                using (MD5 md5Hash = MD5.Create())
+                {
+                    user.PasswordHash = GetMd5Hash(md5Hash, Pass.Password);
+                }
+                Service1Client client = new Service1Client();
+                Complete = client.AddNewUser(user, EmailTextBlock.Text, PhoneTextBlock.Text);
+                client.Close();
+                if (Complete)
+                {
+                    Brush tmp = RegisterForm.Background;
+                    var palette = new PaletteHelper().QueryPalette();
+                    var hue = palette.AccentSwatch.AccentHues.ToArray()[palette.AccentHueIndex];
+                    RegisterForm.Background = new SolidColorBrush(hue.Color);
+                    System.Threading.Thread.Sleep(3000);
+                    RegisterForm.Background = tmp;
+                    Login.Text = "";
+                    Pass.Password = "";
+                    PassConfirm.Password = "";
+                    EmailTextBlock.Text = "";
+                    PhoneTextBlock.Text = "";
+                    RegisterDialogHost.IsOpen = false;
+                    //MessageBox.Show("Complete");
+                    //DialogResult = DialogResult.OK;
+                }
+                else
+                {
+                    //MessageBox.Show("Error");
+                }
+            }
+            else
+            {
+                if (!IsValid[0])
+                {
+                    Login_TextChanged(null, null);
+                }
+                if (!IsValid[1])
+                {
+                    PassConfirm_PasswordChanged(null, null);
+                    Pass_PasswordChanged(null, null);
+                }
+                if (!IsValid[2])
+                {
+                    EmailTextBlock_TextChanged(null, null);
+                }
+                if (!IsValid[3])
+                {
+                    PhoneTextBlock_TextChanged(null, null);
+                }
 
+            }
+        }
+
+        static string GetMd5Hash(MD5 md5Hash, string input)
+        {
+
+            // Convert the input string to a byte array and compute the hash.
+            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+
+            // Create a new Stringbuilder to collect the bytes
+            // and create a string.
+            StringBuilder sBuilder = new StringBuilder();
+
+            // Loop through each byte of the hashed data 
+            // and format each one as a hexadecimal string.
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+
+            // Return the hexadecimal string.
+            return sBuilder.ToString();
+        }
+
+        // Verify a hash against a string.
+        static bool VerifyMd5Hash(MD5 md5Hash, string input, string hash)
+        {
+            // Hash the input.
+            string hashOfInput = GetMd5Hash(md5Hash, input);
+
+            // Create a StringComparer an compare the hashes.
+            StringComparer comparer = StringComparer.OrdinalIgnoreCase;
+
+            if (0 == comparer.Compare(hashOfInput, hash))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void CardButtonProfile_Click(object sender, RoutedEventArgs e)
+        {
+            if(UserLoger.Login != null)
+            {
+
+            }
+            else
+            {
+                LoginDialogHost.IsOpen = true;
+            }
+        }
+
+        private void StackPanel_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(UserLoger.Login != null)
+            {
+
+            }
+            else
+            {
+                LoginDialogHost.IsOpen = true;
+            }
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            if(LogerLogin.Text != String.Empty &&LogerPassword.Password != String.Empty)
+            {
+                Loger User = new Loger();
+                User.Login = LogerLogin.Text;
+                using (MD5 md5Hash = MD5.Create())
+                {
+                    User.PasswordHash = GetMd5Hash(md5Hash, LogerPassword.Password);
+                }
+                Service1Client client = new Service1Client();
+                bool LoginComplete = client.UserLogin(User);
+                client.Close();
+                if (LoginComplete)
+                {
+                    LoginDialogHost.IsOpen = false;
+                    UserLoger = User;
+                    UpdateCardProfile();
+                }
+                else
+                {
+                   
+                }
+            }
+        }
         //private List<Message> bletMassage()
         //{
         //    User TestUser = new User() { Login = "VASA_TEST" };

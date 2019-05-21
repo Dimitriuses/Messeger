@@ -22,7 +22,7 @@
             <materialDesign:DialogHost.DialogContent>
                 <materialDesign:DialogHost x:Name="RegisterDialogHost">
                     <materialDesign:DialogHost.DialogContent>
-                        <StackPanel>
+                        <StackPanel x:Name="RegisterForm">
                             <StackPanel Orientation="Horizontal" x:Name="LoginStackPanel">
                                 <materialDesign:PackIcon Kind="Account" Height="25" Width="25"/>
                                 <TextBox x:Name="Login" materialDesign:HintAssist.Hint="Login" MinWidth="235" Validation.ErrorTemplate="{StaticResource validationFailed}" TextChanged="Login_TextChanged"/>
@@ -45,7 +45,7 @@
                                 <TextBox x:Name="PhoneTextBlock" materialDesign:HintAssist.Hint="(999)123-4567" MinWidth="235" Validation.ErrorTemplate="{StaticResource validationFailed}" TextChanged="PhoneTextBlock_TextChanged"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,45,0">
+                                <Button Style="{StaticResource MaterialDesignFlatButton}" Margin="0,0,45,0" Click="Button_Click_2">
                                     Прийняти
                                 </Button>
                                 <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Margin="45,0,0,0">
@@ -64,7 +64,7 @@
                             <PasswordBox x:Name="LogerPassword" Style="{StaticResource MaterialDesignFilledPasswordFieldPasswordBox}"  materialDesign:HintAssist.Hint="Password" MinWidth="200"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Button Style="{StaticResource MaterialDesignFlatButton}"  Margin="0,0,0,0">
+                            <Button Style="{StaticResource MaterialDesignFlatButton}"  Margin="0,0,0,0" Click="Button_Click_3">
                                 Увійти
                             </Button>
                             <Button Style="{StaticResource MaterialDesignFlatButton}"  Margin="0,0,0,0" Click="Button_Click_1">
@@ -88,13 +88,14 @@
                     <StackPanel Margin="0,17,0,0">
                         <ToggleButton x:Name="ToggleIn" Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}" CommandParameter="{x:Static Dock.Left}" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ToggleIn_Click"/>
                         <materialDesign:Card x:Name="ProfileCard" Width="200" Height="100" materialDesign:ShadowAssist.ShadowDepth="Depth2">
-                            <StackPanel x:Name="ProfilePanel">
-                            
+                            <StackPanel x:Name="ProfilePanel" VerticalAlignment="Center">
+                                <Button x:Name="CardButtonProfile" Style="{StaticResource MaterialDesignFloatingActionMiniButton}" HorizontalAlignment="Left" Click="CardButtonProfile_Click" FontSize="14"/>
+                                <Label x:Name="CardLoginProfile" FontSize="14"/>
                             </StackPanel>
                         </materialDesign:Card>
                         <ListBox>
                             <TextBlock>
-                                <StackPanel Orientation="Horizontal">
+                                <StackPanel Orientation="Horizontal" PreviewMouseDown="StackPanel_PreviewMouseDown">
                                     <materialDesign:PackIcon Kind="AccountMultipleOutline" Width="21" Height="21" />
                                     <TextBlock Text=" Створити новий чат" FontSize="14"/>
                                 </StackPanel>
