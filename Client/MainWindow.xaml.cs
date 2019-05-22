@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Client.Server;
+using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
 
 namespace Client
@@ -25,6 +26,13 @@ namespace Client
     /// </summary>
     public partial class MainWindow : Window
     {
+        enum DesignColor
+        {
+            PrimaryLight,
+            PrimaryMid,
+            PrimaryDark,
+            Accent
+        }
         UserValidator userValidator;
         Loger UserLoger;
         int idChat = -1;
@@ -53,15 +61,37 @@ namespace Client
             }
             else
             {
-                var palette = new PaletteHelper().QueryPalette();
-                var hue = palette.PrimarySwatch.PrimaryHues.ToArray()[palette.PrimaryMidHueIndex];
-                ProfileCard.Background = new SolidColorBrush(hue.Color);
-                hue = palette.PrimarySwatch.PrimaryHues.ToArray()[palette.PrimaryDarkHueIndex];
-                CardButtonProfile.Background = //new SolidColorBrush(hue.Color);
-                CardButtonProfile.BorderBrush = new SolidColorBrush(hue.Color);
+                ProfileCard.Background = GetDesignColorBrush(DesignColor.PrimaryMid);
+                CardButtonProfile.Background = GetDesignColorBrush(DesignColor.PrimaryDark);
+                CardButtonProfile.BorderBrush = GetDesignColorBrush(DesignColor.PrimaryDark);
                 CardButtonProfile.Content = $"{UserLoger.Login[0]}{UserLoger.Login[1]}".ToUpper();
                 CardLoginProfile.Content = UserLoger.Login;
             }
+        }
+
+        private SolidColorBrush GetDesignColorBrush(DesignColor color)
+        {
+            var palette = new PaletteHelper().QueryPalette();
+            Hue hue;
+            switch (color)
+            {
+                case DesignColor.PrimaryLight:
+                    hue = palette.PrimarySwatch.PrimaryHues.ToArray()[palette.PrimaryLightHueIndex];
+                    break;
+                case DesignColor.PrimaryMid:
+                    hue = palette.PrimarySwatch.PrimaryHues.ToArray()[palette.PrimaryMidHueIndex];
+                    break;
+                case DesignColor.PrimaryDark:
+                    hue = palette.PrimarySwatch.PrimaryHues.ToArray()[palette.PrimaryDarkHueIndex];
+                    break;
+                case DesignColor.Accent:
+                    hue = palette.AccentSwatch.AccentHues.ToArray()[palette.AccentHueIndex];
+                    break;
+                default:
+                    hue = palette.PrimarySwatch.PrimaryHues.ToArray()[palette.PrimaryMidHueIndex];
+                    break;
+            }
+            return new SolidColorBrush(hue.Color);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -131,7 +161,8 @@ namespace Client
             {
                 string SenderLogin = client.GetLoginById(item.SenderId);
                 //SenderLogin = (SenderLogin == null) ? "Server" : SenderLogin;
-                Paragraph paragraph = new Paragraph(new Run(SenderLogin + ": " + item.Text));
+                Paragraph paragraph = new Paragraph(/*new Run(SenderLogin + ": " + item.Text)*/);
+                Card card = new Card { };
                 ThicknessConverter tc = new ThicknessConverter();
                 paragraph.BorderThickness = (Thickness)tc.ConvertFromString("1px");
                 if (SenderLogin == UserLoger.Login)
@@ -241,9 +272,7 @@ namespace Client
             client.Close();
             if (!Exist && Login.Text != String.Empty)
             {
-                var palette = new PaletteHelper().QueryPalette();
-                var hue = palette.AccentSwatch.AccentHues.ToArray()[palette.AccentHueIndex];
-                LoginStackPanel.Background = new SolidColorBrush(hue.Color);
+                LoginStackPanel.Background = GetDesignColorBrush(DesignColor.Accent);
                 LoginStackPanel.ToolTip = "";
                 IsValid[0] = true;
             }
@@ -266,9 +295,7 @@ namespace Client
         {
             if(Pass.Password == PassConfirm.Password)
             {
-                var palette = new PaletteHelper().QueryPalette();
-                var hue = palette.AccentSwatch.AccentHues.ToArray()[palette.AccentHueIndex];
-                PasswordStackPanel.Background = new SolidColorBrush(hue.Color);
+                PasswordStackPanel.Background = GetDesignColorBrush(DesignColor.Accent);
                 PasswordStackPanel.ToolTip = "";
                 IsValid[1] = true;
             }
@@ -286,9 +313,7 @@ namespace Client
             {
                 if (Pass.Password == PassConfirm.Password)
                 {
-                    var palette = new PaletteHelper().QueryPalette();
-                    var hue = palette.AccentSwatch.AccentHues.ToArray()[palette.AccentHueIndex];
-                    PasswordStackPanel.Background = new SolidColorBrush(hue.Color);
+                    PasswordStackPanel.Background = GetDesignColorBrush(DesignColor.Accent);
                     PasswordStackPanel.ToolTip = "";
                     IsValid[1] = true;
                 }
@@ -323,9 +348,7 @@ namespace Client
                     IsValid[2] = true;
                     return;
                 }
-                var palette = new PaletteHelper().QueryPalette();
-                var hue = palette.AccentSwatch.AccentHues.ToArray()[palette.AccentHueIndex];
-                EmailStackPanel.Background = new SolidColorBrush(hue.Color);
+                EmailStackPanel.Background = GetDesignColorBrush(DesignColor.Accent);
                 EmailStackPanel.ToolTip = "";
                 IsValid[2] = false;
                 return;
@@ -340,9 +363,7 @@ namespace Client
         {
             if(PhoneTextBlock.Text != String.Empty && Regex.IsMatch(PhoneTextBlock.Text, @"^((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}$"))
             {
-                var palette = new PaletteHelper().QueryPalette();
-                var hue = palette.AccentSwatch.AccentHues.ToArray()[palette.AccentHueIndex];
-                PhoneStackPanel.Background = new SolidColorBrush(hue.Color);
+                PhoneStackPanel.Background = GetDesignColorBrush(DesignColor.Accent);
                 PhoneStackPanel.ToolTip = "";
                 IsValid[3] = true;
             }
@@ -377,9 +398,7 @@ namespace Client
                 if (Complete)
                 {
                     Brush tmp = RegisterForm.Background;
-                    var palette = new PaletteHelper().QueryPalette();
-                    var hue = palette.AccentSwatch.AccentHues.ToArray()[palette.AccentHueIndex];
-                    RegisterForm.Background = new SolidColorBrush(hue.Color);
+                    RegisterForm.Background = GetDesignColorBrush(DesignColor.Accent);
                     System.Threading.Thread.Sleep(3000);
                     RegisterForm.Background = tmp;
                     Login.Text = "";
@@ -498,6 +517,7 @@ namespace Client
                     LoginDialogHost.IsOpen = false;
                     UserLoger = User;
                     UpdateCardProfile();
+                    Update_Chat_List();
                 }
                 else
                 {
