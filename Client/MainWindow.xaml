@@ -176,7 +176,7 @@
                                                 <Button Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="32" Margin="0,0,0,0" Width="32">
                                                     <materialDesign:PackIcon Kind="Paperclip" Height="21" Width="21" />
                                                 </Button>
-                                                <TextBox x:Name="textBox" Grid.Column="1" Margin="8,5,0,5" materialDesign:HintAssist.Hint="Написати повідомлення" materialDesign:TextFieldAssist.DecorationVisibility="Hidden" BorderThickness="0" MinWidth="200" VerticalAlignment="Center" Height="24" FontSize="14" />
+                                                <TextBox x:Name="textBox" Grid.Column="1" Margin="8,5,0,5" materialDesign:HintAssist.Hint="Написати повідомлення" materialDesign:TextFieldAssist.DecorationVisibility="Hidden" BorderThickness="0" MinWidth="200" VerticalAlignment="Center" Height="24" FontSize="14" PreviewKeyDown="TextBox_PreviewKeyDown" />
                                             </Grid>
                                         </materialDesign:ColorZone>
                                     </StackPanel>

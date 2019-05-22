@@ -152,7 +152,7 @@ namespace Client
         private void RenderMessage(MessageDTO[] messages)
         {
             Messages.Blocks.Clear();
-            if(messages == null ||messages.Length == 0)
+            if(messages == null || messages.Length == 0)
             {
                 return;
             }
@@ -161,9 +161,15 @@ namespace Client
             {
                 string SenderLogin = client.GetLoginById(item.SenderId);
                 //SenderLogin = (SenderLogin == null) ? "Server" : SenderLogin;
-                Paragraph paragraph = new Paragraph(/*new Run(SenderLogin + ": " + item.Text)*/);
-                Card card = new Card { };
                 ThicknessConverter tc = new ThicknessConverter();
+                Card card = new Card {
+                    Background = GetDesignColorBrush(DesignColor.PrimaryDark),
+                    Foreground = new SolidColorBrush(Colors.White),
+                    Padding = (Thickness)tc.ConvertFromString("8px"),
+                    UniformCornerRadius = 6,
+                    Content = new TextBlock { Text = $"{item.Text}", TextWrapping = TextWrapping.Wrap }
+                };
+                Paragraph paragraph = new Paragraph(new InlineUIContainer( card ));
                 paragraph.BorderThickness = (Thickness)tc.ConvertFromString("1px");
                 if (SenderLogin == UserLoger.Login)
                 {
@@ -270,7 +276,7 @@ namespace Client
             Service1Client client = new Service1Client();
             bool Exist = client.UserExists(new Loger { Login = Login.Text });
             client.Close();
-            if (!Exist && Login.Text != String.Empty)
+            if (!Exist && Login.Text != String.Empty && Login.Text.Length >= 3) 
             {
                 LoginStackPanel.Background = GetDesignColorBrush(DesignColor.Accent);
                 LoginStackPanel.ToolTip = "";
@@ -286,6 +292,10 @@ namespace Client
                 else if (Login.Text == String.Empty) 
                 {
                     LoginStackPanel.ToolTip = "Поле обов'язково має бути заповнене";
+                }
+                else if(Login.Text.Length < 3)
+                {
+                    LoginStackPanel.ToolTip = "Логін черезчур малий";
                 }
                 IsValid[0] = false;
             }
@@ -523,6 +533,14 @@ namespace Client
                 {
                    
                 }
+            }
+        }
+
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+            {
+                Button1_Click(null, null);
             }
         }
         //private List<Message> bletMassage()
