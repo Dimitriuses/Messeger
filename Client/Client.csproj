@@ -150,6 +150,9 @@
     <None Include="Connected Services\Server\Client.Server.MessageDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\Server\Client.Server.UserDTO.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\Server\Service1.wsdl" />
     <None Include="Connected Services\Server\Service1.xsd">
       <SubType>Designer</SubType>

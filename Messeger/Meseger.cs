@@ -24,6 +24,8 @@ namespace Messeger
         public virtual DbSet<Sender> Senders { get; set; }
         public virtual DbSet<Receiver> Receivers { get; set; }
 
+        public virtual DbSet<File> Files { get; set; }
+
     }
 
 

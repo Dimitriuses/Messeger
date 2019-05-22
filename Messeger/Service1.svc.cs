@@ -89,26 +89,54 @@ namespace Messeger
             return false;
         }
         
-        public bool ThisLoginIsUnique(string Login)
+        public bool RenameUser(Loger loger, string name, string surname)
         {
-            if(Login != null)
+            if(UserLogin(loger))
             {
                 using(Meseger ctx = new Meseger())
                 {
-                    var user = ctx.Users;
-                    foreach (User item in user)
+                    var user = ctx.Users.SingleOrDefault(a=> a.Login == loger.Login);
+                    if(user.Name != name)
                     {
-                        if(item.Login == Login)
-                        {
-                            return false;
-                        }
+                        user.Name = name;
+                    }
+                    if(user.SurName != surname)
+                    {
+                        user.SurName = surname;
                     }
                     return true;
                 }
             }
             return false;
         }
-
+        public string GetEmail(Loger loger)
+        {
+            if (UserLogin(loger))
+            {
+                string tmp = "";
+                using (Meseger ctx = new Meseger())
+                {
+                    User user = ctx.Users.SingleOrDefault<User>(a => a.Login == loger.Login);
+                    tmp = user.Email;
+                }
+                return tmp;
+            }
+            return null;
+        }
+        public string GetPhone(Loger loger)
+        {
+            if (UserLogin(loger))
+            {
+                string tmp = "";
+                using (Meseger ctx = new Meseger())
+                {
+                    User user = ctx.Users.SingleOrDefault<User>(a => a.Login == loger.Login);
+                    tmp = user.Phone;
+                }
+                return tmp;
+            }
+            return null;
+        }
         public bool ReloadEmailUser(Loger Userloger,string Email)
         {
             if(Userloger != null && Email != null)
@@ -191,7 +219,7 @@ namespace Messeger
                         {
                             Name = name,
                             Administrator = administrator,
-                            Participants = par 
+                            Participants = par
                         };
 
                         //user.Chats.Add(chat);
@@ -280,7 +308,7 @@ namespace Messeger
             }
             else if (Secure && messages.Count == 0)
             {
-                messageDTOs.Add(new MessageDTO { Text = "This chat is empty", SenderId = 4 });
+                messageDTOs.Add(new MessageDTO { Text = "This chat is empty", SenderId = 1 });
                 return messageDTOs;
             }
             return null;
@@ -434,6 +462,20 @@ namespace Messeger
                 return true;
             }
             return false;
+        }
+
+        public UserDTO GetUserProfile(Loger loger)
+        {
+            if (UserLogin(loger))
+            {
+                UserDTO user;
+                using (Meseger ctx = new Meseger())
+                {
+                    user = new UserDTO(ctx.Users.SingleOrDefault(a => a.Login == loger.Login));
+                }
+                return user;
+            }
+            return null;
         }
     }
 }

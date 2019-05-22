@@ -33,23 +33,23 @@ namespace Client
             PrimaryDark,
             Accent
         }
-        UserValidator userValidator;
+        //UserValidator userValidator;
         Loger UserLoger;
         int idChat = -1;
         Brush DefaultStackPanelColor;
         public MainWindow()
         {
             InitializeComponent();
-            UserLoger = new Loger { Login = "Dmitrius"}; 
-            using (MD5 md5Hash = MD5.Create())
-            {
-                UserLoger.PasswordHash = GetMd5Hash(md5Hash, "PAROL");
-            }
-            userValidator = new UserValidator();
-            this.DataContext = userValidator;
+            UserLoger = new Loger(); //{ Login = "Dmitrius"}; 
+            //using (MD5 md5Hash = MD5.Create())
+            //{
+            //    UserLoger.PasswordHash = GetMd5Hash(md5Hash, "PAROL");
+            //}
+            //userValidator = new UserValidator();
+            //this.DataContext = userValidator;
             DefaultStackPanelColor = EmailStackPanel.Background;
             UpdateCardProfile();
-            Update_Chat_List();
+            //Update_Chat_List();
             //listBoxChats.ItemsSource = new List<string>() { " test message ", " helow blet " };
         }
 
@@ -376,7 +376,7 @@ namespace Client
 
         private void PhoneTextBlock_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(PhoneTextBlock.Text != String.Empty && Regex.IsMatch(PhoneTextBlock.Text, @"^((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}$"))
+            if (PhoneTextBlock.Text != String.Empty && ValidPhone(PhoneTextBlock.Text)) 
             {
                 PhoneStackPanel.Background = GetDesignColorBrush(DesignColor.Accent);
                 PhoneStackPanel.ToolTip = "";
@@ -388,13 +388,29 @@ namespace Client
                 PhoneStackPanel.ToolTip = "";
                 IsValid[3] = true;
             }
-            else if(!Regex.IsMatch(PhoneTextBlock.Text, @"^((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}$"))
+            else if(!ValidPhone(PhoneTextBlock.Text))
             {
                 PhoneStackPanel.Background = new SolidColorBrush(Colors.LightCoral);
                 PhoneTextBlock.ToolTip = "Неправильний формат телефону";
                 IsValid[3] = false;
             }
         }
+
+        private bool ValidEmail(string Email)
+        {
+            try
+            {
+                MailAddress m = new MailAddress(Email);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+        private bool ValidPhone(string Phone) => Regex.IsMatch(Phone, @"^((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}$");
+        
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
@@ -490,11 +506,21 @@ namespace Client
             return false;
         }
 
+        UserDTO ProfileDTO = new UserDTO();
+
         private void CardButtonProfile_Click(object sender, RoutedEventArgs e)
         {
             if(UserLoger.Login != null)
             {
                 ProfileDialogHost.IsOpen = true;
+
+                Service1Client client = new Service1Client();
+                ProfileDTO = client.GetUserProfile(UserLoger);
+                ProfileEditEmail.Text = client.GetEmail(UserLoger);
+                ProfileEditPhone.Text = client.GetPhone(UserLoger);
+                client.Close();
+                ProfileEditName.Text = ProfileDTO.Name;
+                ProfileEditSurName.Text = ProfileDTO.SurName;
             }
             else
             {
@@ -547,6 +573,102 @@ namespace Client
             {
                 Button1_Click(null, null);
             }
+        }
+
+        string Name = "";
+        string SurName = "";
+        bool[] ProfileEditValidator = new bool[3] { false, false, false }; 
+
+        private void ProfileEditName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Name = ProfileEditName.Text;
+            UpdateNames();
+        }
+
+        private void ProfileEditSurName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SurName = ProfileEditSurName.Text;
+            UpdateNames();
+        }
+
+        void UpdateNames()
+        {
+            ProfileNames.Text = $"{Name} {SurName}";
+            if (Name != ProfileDTO.Name || SurName != ProfileDTO.SurName) 
+            {
+                ProfileNamesPanel.Background = new SolidColorBrush(Colors.LightYellow);
+                ProfileEditValidator[0] = true;
+            }
+            else
+            {
+                ProfileNamesPanel.Background = DefaultStackPanelColor;
+                ProfileEditValidator[0] = false;
+            }
+            UpdateEditButton();
+        }
+
+        void UpdateEditButton()
+        {
+            if (ProfileEditValidator[0] || ProfileEditValidator[1] || ProfileEditValidator[2])
+            {
+                ProfileButtonSave.IsEnabled = true;
+            }
+            else
+            {
+                ProfileButtonSave.IsEnabled = false;
+            }
+        }
+
+        private void ProfileEditEmail_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (ValidEmail(ProfileEditEmail.Text)||ProfileEditEmail.Text == String.Empty)
+            {
+                Service1Client client = new Service1Client();
+                string realEmail = client.GetEmail(UserLoger);
+                client.Close();
+                if(realEmail != ProfileEditEmail.Text)
+                {
+                    ProfileEmailPanel.Background = new SolidColorBrush(Colors.LightYellow);
+                    ProfileEditValidator[1] = true;
+                }
+                else
+                {
+                    ProfileEmailPanel.Background = DefaultStackPanelColor;
+                    ProfileEditValidator[1] = false;
+                }
+            }
+            else
+            {
+                ProfileEmailPanel.Background = new SolidColorBrush(Colors.LightCoral);
+                ProfileEditValidator[1] = false;
+            }
+            UpdateEditButton();
+        }
+
+        private void ProfileEditPhone_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (ValidPhone(ProfileEditPhone.Text) || ProfileEditPhone.Text == String.Empty)
+            {
+                Service1Client client = new Service1Client();
+                string realPhone = client.GetEmail(UserLoger);
+                client.Close();
+                if (realPhone != ProfileEditPhone.Text)
+                {
+                    ProfilePhonePanel.Background = new SolidColorBrush(Colors.LightYellow);
+                    ProfileEditValidator[2] = true;
+                }
+                else
+                {
+                    ProfilePhonePanel.Background = DefaultStackPanelColor;
+                    ProfileEditValidator[2] = false;
+                }
+            }
+            else
+            {
+                ProfilePhonePanel.Background = new SolidColorBrush(Colors.LightCoral);
+                ProfileEditValidator[2] = false;
+            }
+            UpdateEditButton();
         }
         //private List<Message> bletMassage()
         //{

@@ -32,9 +32,11 @@ namespace Messeger
 
         //[ForeignKey("Recivers")]
         //public virtual ICollection<User> Users { get; set; }
+
         [DataMember]
         public virtual Sender Sender { get; set; }
         public virtual ICollection<Receiver> Receivers { get; set; }
         public virtual Chat Chat { get; set; }
+        public virtual File File { get; set; }
     }
 }

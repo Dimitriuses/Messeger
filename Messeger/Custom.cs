@@ -6,6 +6,7 @@ namespace Messeger
     {
         protected override void Seed(Meseger context)
         {
+            context.Users.Add(new User { Login = "Server" });
             base.Seed(context);
         }
     }

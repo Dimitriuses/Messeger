@@ -77,9 +77,11 @@
     <Compile Include="Custom.cs" />
     <Compile Include="DTO\LogerDTO.cs" />
     <Compile Include="DTO\MessageDTO.cs" />
+    <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Meseger.cs" />
     <Compile Include="Model\Administrator.cs" />
     <Compile Include="Model\Chat.cs" />
+    <Compile Include="Model\File.cs" />
     <Compile Include="Model\Message.cs" />
     <Compile Include="Model\Loger.cs" />
     <Compile Include="Model\Participant.cs" />

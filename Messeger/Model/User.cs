@@ -16,6 +16,10 @@ namespace Messeger
         //    Chats = new HashSet<Chat>();
         //}
         [DataMember]
+        public string Name { get; set; }
+        [DataMember]
+        public string SurName { get; set; }
+        [DataMember]
         public string Email { get; set; }
         [DataMember]
         public string Phone { get; set; }

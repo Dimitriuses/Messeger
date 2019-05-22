@@ -280,6 +280,7 @@ namespace Client.Server {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="LogerDTO", Namespace="http://schemas.datacontract.org/2004/07/Messeger.DTO")]
     [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Client.Server.UserDTO))]
     public partial class LogerDTO : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -333,6 +334,45 @@ namespace Client.Server {
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UserDTO", Namespace="http://schemas.datacontract.org/2004/07/Messeger.DTO")]
+    [System.SerializableAttribute()]
+    public partial class UserDTO : Client.Server.LogerDTO {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SurNameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SurName {
+            get {
+                return this.SurNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SurNameField, value) != true)) {
+                    this.SurNameField = value;
+                    this.RaisePropertyChanged("SurName");
+                }
             }
         }
     }
@@ -418,6 +458,30 @@ namespace Client.Server {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetUserListByFindMode", ReplyAction="http://tempuri.org/IService1/GetUserListByFindModeResponse")]
         System.Threading.Tasks.Task<Client.Server.LogerDTO[]> GetUserListByFindModeAsync(string findstring);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetUserProfile", ReplyAction="http://tempuri.org/IService1/GetUserProfileResponse")]
+        Client.Server.UserDTO GetUserProfile(Client.Server.Loger loger);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetUserProfile", ReplyAction="http://tempuri.org/IService1/GetUserProfileResponse")]
+        System.Threading.Tasks.Task<Client.Server.UserDTO> GetUserProfileAsync(Client.Server.Loger loger);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/RenameUser", ReplyAction="http://tempuri.org/IService1/RenameUserResponse")]
+        bool RenameUser(Client.Server.Loger loger, string name, string surname);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/RenameUser", ReplyAction="http://tempuri.org/IService1/RenameUserResponse")]
+        System.Threading.Tasks.Task<bool> RenameUserAsync(Client.Server.Loger loger, string name, string surname);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetEmail", ReplyAction="http://tempuri.org/IService1/GetEmailResponse")]
+        string GetEmail(Client.Server.Loger loger);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetEmail", ReplyAction="http://tempuri.org/IService1/GetEmailResponse")]
+        System.Threading.Tasks.Task<string> GetEmailAsync(Client.Server.Loger loger);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetPhone", ReplyAction="http://tempuri.org/IService1/GetPhoneResponse")]
+        string GetPhone(Client.Server.Loger loger);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetPhone", ReplyAction="http://tempuri.org/IService1/GetPhoneResponse")]
+        System.Threading.Tasks.Task<string> GetPhoneAsync(Client.Server.Loger loger);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -549,6 +613,38 @@ namespace Client.Server {
         
         public System.Threading.Tasks.Task<Client.Server.LogerDTO[]> GetUserListByFindModeAsync(string findstring) {
             return base.Channel.GetUserListByFindModeAsync(findstring);
+        }
+        
+        public Client.Server.UserDTO GetUserProfile(Client.Server.Loger loger) {
+            return base.Channel.GetUserProfile(loger);
+        }
+        
+        public System.Threading.Tasks.Task<Client.Server.UserDTO> GetUserProfileAsync(Client.Server.Loger loger) {
+            return base.Channel.GetUserProfileAsync(loger);
+        }
+        
+        public bool RenameUser(Client.Server.Loger loger, string name, string surname) {
+            return base.Channel.RenameUser(loger, name, surname);
+        }
+        
+        public System.Threading.Tasks.Task<bool> RenameUserAsync(Client.Server.Loger loger, string name, string surname) {
+            return base.Channel.RenameUserAsync(loger, name, surname);
+        }
+        
+        public string GetEmail(Client.Server.Loger loger) {
+            return base.Channel.GetEmail(loger);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetEmailAsync(Client.Server.Loger loger) {
+            return base.Channel.GetEmailAsync(loger);
+        }
+        
+        public string GetPhone(Client.Server.Loger loger) {
+            return base.Channel.GetPhone(loger);
+        }
+        
+        public System.Threading.Tasks.Task<string> GetPhoneAsync(Client.Server.Loger loger) {
+            return base.Channel.GetPhoneAsync(loger);
         }
     }
 }

@@ -49,6 +49,14 @@ namespace Messeger
         string GetLoginById(int id);
         [OperationContract]
         List<LogerDTO> GetUserListByFindMode(string findstring);
+        [OperationContract]
+        UserDTO GetUserProfile(Loger loger);
+        [OperationContract]
+        bool RenameUser(Loger loger, string name, string surname);
+        [OperationContract]
+        string GetEmail(Loger loger);
+        [OperationContract]
+        string GetPhone(Loger loger);
         // TODO: Add your service operations here
     }
 

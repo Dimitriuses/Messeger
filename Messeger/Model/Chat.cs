@@ -15,11 +15,14 @@ namespace Messeger
         {
             Messages = new HashSet<Message>();
             Participants = new HashSet<Participant>();
+            Guid = Guid.NewGuid();
         }
         [DataMember]
         public int Id { get; set; }
         [DataMember]
         public string Name { get; set; }
+        [DataMember]
+        public Guid Guid { get; set; }
         //[DataMember]
         //public int Admin { get; set; }
         //[DataMember]
