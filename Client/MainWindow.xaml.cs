@@ -39,12 +39,17 @@ namespace Client
         Brush DefaultStackPanelColor;
         public MainWindow()
         {
-            UserLoger = new Loger(); 
             InitializeComponent();
+            UserLoger = new Loger { Login = "Dmitrius"}; 
+            using (MD5 md5Hash = MD5.Create())
+            {
+                UserLoger.PasswordHash = GetMd5Hash(md5Hash, "PAROL");
+            }
             userValidator = new UserValidator();
             this.DataContext = userValidator;
             DefaultStackPanelColor = EmailStackPanel.Background;
             UpdateCardProfile();
+            Update_Chat_List();
             //listBoxChats.ItemsSource = new List<string>() { " test message ", " helow blet " };
         }
 
@@ -489,7 +494,7 @@ namespace Client
         {
             if(UserLoger.Login != null)
             {
-
+                ProfileDialogHost.IsOpen = true;
             }
             else
             {
