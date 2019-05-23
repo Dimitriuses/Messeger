@@ -532,7 +532,7 @@ namespace Client
         {
             if(UserLoger.Login != null)
             {
-
+                NewChatDialodHost.IsOpen = true;
             }
             else
             {
@@ -669,6 +669,64 @@ namespace Client
                 ProfileEditValidator[2] = false;
             }
             UpdateEditButton();
+        }
+
+        private void ProfileButtonSave_Click(object sender, RoutedEventArgs e)
+        {
+            Service1Client client = new Service1Client();
+            if (ProfileEditValidator[0])
+            {
+                client.RenameUser(UserLoger, ProfileEditName.Text, ProfileEditSurName.Text);
+            }
+            if (ProfileEditValidator[1])
+            {
+                client.ReloadEmailUser(UserLoger, ProfileEditEmail.Text);
+            }
+            if (ProfileEditValidator[2])
+            {
+                client.ReloadPhonelUser(UserLoger, ProfileEditPhone.Text);
+            }
+            ProfileDTO = client.GetUserProfile(UserLoger);
+            ProfileEditEmail.Text = client.GetEmail(UserLoger);
+            ProfileEditPhone.Text = client.GetPhone(UserLoger);
+            client.Close();
+            ProfileEditName.Text = ProfileDTO.Name;
+            ProfileEditSurName.Text = ProfileDTO.SurName;
+            ProfileEditName_TextChanged(null, null);
+            ProfileEditSurName_TextChanged(null, null);
+            ProfileEditEmail_TextChanged(null, null);
+            ProfileEditPhone_TextChanged(null, null);
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            Service1Client client = new Service1Client();
+            bool complete = client.AddNewChat(UserLoger, ChatName.Text);
+            client.Close();
+            Update_Chat_List();
+            if (complete)
+            {
+                NewChatDialodHost.IsOpen = false;
+            }
+        }
+
+        private void ChatName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(ChatName.Text != String.Empty)
+            {
+                CreateNewChat.IsEnabled = true;
+                ChatNamePanel.Background = DefaultStackPanelColor;
+            }
+            else
+            {
+                CreateNewChat.IsEnabled = false;
+                ChatNamePanel.Background = new SolidColorBrush(Colors.LightCoral);
+            }
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
         //private List<Message> bletMassage()
         //{

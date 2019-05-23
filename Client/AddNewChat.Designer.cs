@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Logins = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.add = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.Logins = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.add = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
@@ -53,6 +53,18 @@
             this.dataGridView1.Size = new System.Drawing.Size(240, 150);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // Logins
+            // 
+            this.Logins.HeaderText = "Logins";
+            this.Logins.Name = "Logins";
+            this.Logins.ReadOnly = true;
+            // 
+            // add
+            // 
+            this.add.HeaderText = "";
+            this.add.Name = "add";
+            this.add.ReadOnly = true;
             // 
             // dataGridView2
             // 
@@ -106,18 +118,7 @@
             this.button1.TabIndex = 6;
             this.button1.Text = "Add New User";
             this.button1.UseVisualStyleBackColor = true;
-            // 
-            // Logins
-            // 
-            this.Logins.HeaderText = "Logins";
-            this.Logins.Name = "Logins";
-            this.Logins.ReadOnly = true;
-            // 
-            // add
-            // 
-            this.add.HeaderText = "";
-            this.add.Name = "add";
-            this.add.ReadOnly = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // AddNewChat
             // 

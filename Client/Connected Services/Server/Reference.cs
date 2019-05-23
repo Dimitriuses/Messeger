@@ -412,10 +412,10 @@ namespace Client.Server {
         System.Threading.Tasks.Task<bool> ReloadPhonelUserAsync(Client.Server.Loger Userloger, string phone);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddNewChat", ReplyAction="http://tempuri.org/IService1/AddNewChatResponse")]
-        bool AddNewChat(Client.Server.Loger login, string name, int[] participants);
+        bool AddNewChat(Client.Server.Loger login, string name);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddNewChat", ReplyAction="http://tempuri.org/IService1/AddNewChatResponse")]
-        System.Threading.Tasks.Task<bool> AddNewChatAsync(Client.Server.Loger login, string name, int[] participants);
+        System.Threading.Tasks.Task<bool> AddNewChatAsync(Client.Server.Loger login, string name);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetChatList", ReplyAction="http://tempuri.org/IService1/GetChatListResponse")]
         string[] GetChatList(Client.Server.Loger Userloger);
@@ -551,12 +551,12 @@ namespace Client.Server {
             return base.Channel.ReloadPhonelUserAsync(Userloger, phone);
         }
         
-        public bool AddNewChat(Client.Server.Loger login, string name, int[] participants) {
-            return base.Channel.AddNewChat(login, name, participants);
+        public bool AddNewChat(Client.Server.Loger login, string name) {
+            return base.Channel.AddNewChat(login, name);
         }
         
-        public System.Threading.Tasks.Task<bool> AddNewChatAsync(Client.Server.Loger login, string name, int[] participants) {
-            return base.Channel.AddNewChatAsync(login, name, participants);
+        public System.Threading.Tasks.Task<bool> AddNewChatAsync(Client.Server.Loger login, string name) {
+            return base.Channel.AddNewChatAsync(login, name);
         }
         
         public string[] GetChatList(Client.Server.Loger Userloger) {

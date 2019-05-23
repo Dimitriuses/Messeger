@@ -104,6 +104,7 @@ namespace Messeger
                     {
                         user.SurName = surname;
                     }
+                    ctx.SaveChanges();
                     return true;
                 }
             }
@@ -200,40 +201,51 @@ namespace Messeger
         //    }
         //    return false;
         //}
-        public bool AddNewChat(Loger login, string name, List<int> participants)
+        public bool AddNewChat(Loger login, string name)
         {
-            if (login != null && name != null && participants.Count > 0)
+            if (UserLogin(login) && name != null)
             {
                 using (Meseger meseger = new Meseger())
                 {
                     User user = meseger.Users.SingleOrDefault<User>(a => a.Login == login.Login);
                     meseger.Entry(user).State = System.Data.Entity.EntityState.Unchanged;
-                    if(UserLogin(login))
+                    //if(UserLogin(login))
+                    //{
+                    //List<User> users = meseger.Users.Where(a => participants.Contains(a.Id)).ToList();
+                    //users.Add(user);
+                    Administrator administrator;
+                    administrator = meseger.Administrators.SingleOrDefault(a => a.User.Login == user.Login);
+                    if(administrator == null)
                     {
-                        List<User> users = meseger.Users.Where(a => participants.Contains(a.Id)).ToList();
-                        users.Add(user);
-                        Administrator administrator = new Administrator { User = user };
-                        List<Participant> par = new List<Participant>();
-                        par.Add(new Participant { Users = users});
-                        Chat chat = new Chat
-                        {
-                            Name = name,
-                            Administrator = administrator,
-                            Participants = par
-                        };
+                        administrator = new Administrator { User = user };
 
-                        //user.Chats.Add(chat);
-                        meseger.SaveChanges();
+                    }
+                    Participant par;
+                    par = user.Participant;
+                    if(par == null)
+                    {
+                        par = new Participant { Users = new List<User> { user } };
+                    }
+                    Chat chat = new Chat
+                    {
+                        Name = name,
+                        Administrator = administrator,
+                        Participants = new List<Participant> { par }
+                    };
+
+                    //user.Chats.Add(chat);
+                    meseger.Chats.Add(chat);
+                    meseger.SaveChanges();
                         //AddChatToParticipants(participants, chat);
                         //users.ForEach(p => p.Chats.Add(chat));
                         
                         //user.Chats.Add(chat); 
                        // chat.Messages = new List<Message>();
-                        chat.Messages.Add(new Message { Chat = chat, Text = $"hello and welcome" });
-                        meseger.SaveChanges(); // Multiplicity constraint violated. The role 'User_Chats_Source' of the relationship 'Messeger.User_Chats' has multiplicity 1 or 0..1.
+                        //chat.Messages.Add(new Message { Chat = chat, Text = $"hello and welcome" });
+                        //meseger.SaveChanges(); // Multiplicity constraint violated. The role 'User_Chats_Source' of the relationship 'Messeger.User_Chats' has multiplicity 1 or 0..1.
                         return true;
-                    }
-                    return false;
+                   //}
+                    //return false;
                 }
             }
             return false;
