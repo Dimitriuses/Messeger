@@ -723,11 +723,62 @@ namespace Client
                 ChatNamePanel.Background = new SolidColorBrush(Colors.LightCoral);
             }
         }
-
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void AdderParticipant_Selected(object sender, RoutedEventArgs e)
         {
-
+            if(idChat != -1 && UserLoger != null)
+            {
+                AddParticipantsDialogHost.IsOpen = true;
+            }
         }
+        private void FindUsersByParticipans_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            List<SelectableVievModel> TMP = new List<SelectableVievModel>();
+            if (pararara.Items.Count > 0)
+            {
+                foreach (SelectableVievModel item in pararara.Items)
+                {
+                    if (item != null && item.IsSelected)
+                    {
+                        TMP.Add(item);
+                    }
+                }
+            }
+            pararara.Items.Clear();
+            foreach (SelectableVievModel item in TMP)
+            {
+                pararara.Items.Add(item);
+            }
+            Service1Client client = new Service1Client();
+            List<UserDTO> find = client.GetUserListByFindMode(FindUsersByParticipans.Text).ToList();
+            client.Close();
+            List<SelectableVievModel> selectables = new List<SelectableVievModel>();
+            find.ForEach(f => selectables.Add(new SelectableVievModel(f)));
+            if(selectables.Count > 0)
+            {
+                foreach (SelectableVievModel item in selectables)
+                {
+                    if (item != null && !FindIdenticalItemForList(TMP, item))
+                    {
+                        pararara.Items.Add(item);
+                    }
+                }
+            }
+        }
+
+        private bool FindIdenticalItemForList(List<SelectableVievModel> list, SelectableVievModel Finditem)
+        {
+            foreach (SelectableVievModel item in list)
+            {
+                if (Finditem.Id == item.Id)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+
         //private List<Message> bletMassage()
         //{
         //    User TestUser = new User() { Login = "VASA_TEST" };

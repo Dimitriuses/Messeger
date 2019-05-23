@@ -18,19 +18,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="MessageDTO" nillable="true" type="tns:MessageDTO" />
-  <xs:complexType name="ArrayOfLogerDTO">
+  <xs:complexType name="ArrayOfUserDTO">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="LogerDTO" nillable="true" type="tns:LogerDTO" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UserDTO" nillable="true" type="tns:UserDTO" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfLogerDTO" nillable="true" type="tns:ArrayOfLogerDTO" />
-  <xs:complexType name="LogerDTO">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Id" type="xs:int" />
-      <xs:element minOccurs="0" name="Login" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="LogerDTO" nillable="true" type="tns:LogerDTO" />
+  <xs:element name="ArrayOfUserDTO" nillable="true" type="tns:ArrayOfUserDTO" />
   <xs:complexType name="UserDTO">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:LogerDTO">
@@ -42,4 +35,11 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="UserDTO" nillable="true" type="tns:UserDTO" />
+  <xs:complexType name="LogerDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Login" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LogerDTO" nillable="true" type="tns:LogerDTO" />
 </xs:schema>

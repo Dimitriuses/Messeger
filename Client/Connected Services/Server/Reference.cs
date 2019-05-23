@@ -278,6 +278,45 @@ namespace Client.Server {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UserDTO", Namespace="http://schemas.datacontract.org/2004/07/Messeger.DTO")]
+    [System.SerializableAttribute()]
+    public partial class UserDTO : Client.Server.LogerDTO {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SurNameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SurName {
+            get {
+                return this.SurNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SurNameField, value) != true)) {
+                    this.SurNameField = value;
+                    this.RaisePropertyChanged("SurName");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="LogerDTO", Namespace="http://schemas.datacontract.org/2004/07/Messeger.DTO")]
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(Client.Server.UserDTO))]
@@ -334,45 +373,6 @@ namespace Client.Server {
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UserDTO", Namespace="http://schemas.datacontract.org/2004/07/Messeger.DTO")]
-    [System.SerializableAttribute()]
-    public partial class UserDTO : Client.Server.LogerDTO {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string SurNameField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
-            get {
-                return this.NameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SurName {
-            get {
-                return this.SurNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SurNameField, value) != true)) {
-                    this.SurNameField = value;
-                    this.RaisePropertyChanged("SurName");
-                }
             }
         }
     }
@@ -454,10 +454,10 @@ namespace Client.Server {
         System.Threading.Tasks.Task<string> GetLoginByIdAsync(int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetUserListByFindMode", ReplyAction="http://tempuri.org/IService1/GetUserListByFindModeResponse")]
-        Client.Server.LogerDTO[] GetUserListByFindMode(string findstring);
+        Client.Server.UserDTO[] GetUserListByFindMode(string findstring);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetUserListByFindMode", ReplyAction="http://tempuri.org/IService1/GetUserListByFindModeResponse")]
-        System.Threading.Tasks.Task<Client.Server.LogerDTO[]> GetUserListByFindModeAsync(string findstring);
+        System.Threading.Tasks.Task<Client.Server.UserDTO[]> GetUserListByFindModeAsync(string findstring);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetUserProfile", ReplyAction="http://tempuri.org/IService1/GetUserProfileResponse")]
         Client.Server.UserDTO GetUserProfile(Client.Server.Loger loger);
@@ -607,11 +607,11 @@ namespace Client.Server {
             return base.Channel.GetLoginByIdAsync(id);
         }
         
-        public Client.Server.LogerDTO[] GetUserListByFindMode(string findstring) {
+        public Client.Server.UserDTO[] GetUserListByFindMode(string findstring) {
             return base.Channel.GetUserListByFindMode(findstring);
         }
         
-        public System.Threading.Tasks.Task<Client.Server.LogerDTO[]> GetUserListByFindModeAsync(string findstring) {
+        public System.Threading.Tasks.Task<Client.Server.UserDTO[]> GetUserListByFindModeAsync(string findstring) {
             return base.Channel.GetUserListByFindModeAsync(findstring);
         }
         

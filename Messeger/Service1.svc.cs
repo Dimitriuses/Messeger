@@ -401,27 +401,75 @@ namespace Messeger
             }
         }
 
-        public List<LogerDTO> GetUserListByFindMode(string findstring)
+        public List<UserDTO> GetUserListByFindMode(string findstring)
         {
-            List<LogerDTO> logers = new List<LogerDTO>();
+            List<UserDTO> logers = new List<UserDTO>();
             if (findstring != string.Empty)
             {
+                HashSet<User> tmp = new HashSet<User>();
                 using (Meseger ctx = new Meseger())
                 {
-                    List<User> tmp = new List<User>();
-                    tmp = ctx.Users.Where(t => t.Login.ToUpper().StartsWith(findstring)).ToList();
-                    if (tmp.Count > 0)
-                    {
-                        foreach (User item in tmp)
-                        {
-                            logers.Add(new LogerDTO(item));
-                        }
-                        return logers;
-                    }
+                    //tmp = ctx.Users.Where(t => t.Login.ToUpper().StartsWith(findstring)).ToList();
+                    //foreach (User item in ctx.Users)
+                    //{
+                    //    if (item.Login.Contains(findstring) || item.Name.Contains(findstring) || item.SurName.Contains(findstring))
+                    //    {
+                    //        tmp.Add(item);
+                    //    }
+                    //}
+                    tmp.UnionWith(ctx.Users.Where(a => a.Login.Contains(findstring)));
+                    tmp.UnionWith(ctx.Users.Where(a => a.Name.Contains(findstring)));
+                    tmp.UnionWith(ctx.Users.Where(a => a.SurName.Contains(findstring)));
+                    
+
                 }
+                if (tmp.Count > 0)
+                {
+                    foreach (User item in tmp)
+                    {
+                        if(item.Id != 1)
+                        {
+                            logers.Add(new UserDTO(item));
+                        }
+                    }
+                    return logers;
+                }
+
             }
-            logers.Add(new LogerDTO { Login = "Users not find" , Id = -1});
+            //logers.Add(new LogerDTO { Login = "Users not find" , Id = -1});
             return logers;
+        }
+
+        List<UserDTO> DeleteCloneItems(List<UserDTO> users)
+        {
+            if(users!=null && users.Count > 0)
+            {
+                List<UserDTO> tmp = new List<UserDTO>();
+                //foreach (UserDTO item in users)
+                //{
+                //    bool IsClone = false;
+                //    int count = 0;
+                //    foreach (UserDTO item2 in users)
+                //    {
+                //        if(item.Id == item2.Id)
+                //        {
+                //            count++;
+                //        }
+                //        if ((item.Id == item2.Id && count > 1) || item.Id == 1)
+                //        {
+                //            IsClone = true;
+                //            break;
+                //        }
+                //    }
+                //    if (!IsClone)
+                //    {
+                //        tmp.Add(item);
+                //    }
+                //}
+                //tmp = users.Distinct(new ItemEqualityComparer())
+                return tmp;
+            }
+            return users;
         }
 
         //public Message GetMessageById(int id)

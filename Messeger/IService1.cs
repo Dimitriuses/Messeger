@@ -48,7 +48,7 @@ namespace Messeger
         [OperationContract]
         string GetLoginById(int id);
         [OperationContract]
-        List<LogerDTO> GetUserListByFindMode(string findstring);
+        List<UserDTO> GetUserListByFindMode(string findstring);
         [OperationContract]
         UserDTO GetUserProfile(Loger loger);
         [OperationContract]

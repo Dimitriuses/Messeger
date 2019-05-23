@@ -89,6 +89,7 @@
     <Compile Include="Registr.Designer.cs">
       <DependentUpon>Registr.cs</DependentUpon>
     </Compile>
+    <Compile Include="SelectableVievModel.cs" />
     <Compile Include="SingIN.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -142,9 +143,6 @@
       <DependentUpon>SingIN.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Connected Services\Server\Client.Server.CompositeType.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\Server\Client.Server.LogerDTO.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\Server\Client.Server.MessageDTO.datasource">
