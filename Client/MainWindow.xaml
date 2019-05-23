@@ -89,14 +89,14 @@
                             <materialDesign:PackIcon Kind="AccountCircle" Height="128" Width="128" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </materialDesign:ColorZone>
                         <CheckBox Name="PopupEnabled" HorizontalAlignment="Right" Margin="0,0,16,0">
-                            Edit Profile
+                            Редагування профілю
                         </CheckBox>
                         <StackPanel x:Name="ProfileNamesPanel" Orientation="Horizontal">
                             <TextBlock x:Name="ProfileNames" FontSize="14" Margin="8,0,0,0" Width="200"/>
                             <materialDesign:PopupBox Margin="16,0,16,0" StaysOpen="True" IsEnabled="{Binding IsChecked, ElementName=PopupEnabled}">
                                 <StackPanel>
-                                    <TextBox x:Name="ProfileEditName" Text="Dmitrius" Style="{StaticResource MaterialDesignFilledTextFieldTextBox}" VerticalAlignment="Top" AcceptsReturn="True" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Ім'я" TextChanged="ProfileEditName_TextChanged"/>
-                                    <TextBox x:Name="ProfileEditSurName" Text="Shpak" Style="{StaticResource MaterialDesignFilledTextFieldTextBox}" VerticalAlignment="Top" AcceptsReturn="True" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Призвіще" TextChanged="ProfileEditSurName_TextChanged"/>
+                                    <TextBox x:Name="ProfileEditName" Style="{StaticResource MaterialDesignFilledTextFieldTextBox}" VerticalAlignment="Top" AcceptsReturn="True" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Ім'я" TextChanged="ProfileEditName_TextChanged"/>
+                                    <TextBox x:Name="ProfileEditSurName" Style="{StaticResource MaterialDesignFilledTextFieldTextBox}" VerticalAlignment="Top" AcceptsReturn="True" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Призвіще" TextChanged="ProfileEditSurName_TextChanged"/>
                                 </StackPanel>
                             </materialDesign:PopupBox>
                         </StackPanel>
@@ -104,7 +104,7 @@
                             <TextBlock Text="{Binding ElementName=ProfileEditEmail,Path=Text}" FontSize="14" Margin="8,0,0,0" Width="200"/>
                             <materialDesign:PopupBox Margin="16,0,16,0" StaysOpen="True" IsEnabled="{Binding IsChecked, ElementName=PopupEnabled}">
                                 <StackPanel>
-                                    <TextBox x:Name="ProfileEditEmail" Text="Email.email@email.com" Style="{StaticResource MaterialDesignFilledTextFieldTextBox}" VerticalAlignment="Top" AcceptsReturn="True" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Email" TextChanged="ProfileEditEmail_TextChanged"/>
+                                    <TextBox x:Name="ProfileEditEmail" Style="{StaticResource MaterialDesignFilledTextFieldTextBox}" VerticalAlignment="Top" AcceptsReturn="True" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Email" TextChanged="ProfileEditEmail_TextChanged"/>
                                 </StackPanel>
                             </materialDesign:PopupBox>
                         </StackPanel>
@@ -112,7 +112,7 @@
                             <TextBlock Text="{Binding ElementName=ProfileEditPhone,Path=Text}" FontSize="14" Margin="8,0,0,0" Width="200"/>
                             <materialDesign:PopupBox Margin="16,0,16,0" StaysOpen="True" IsEnabled="{Binding IsChecked, ElementName=PopupEnabled}">
                                 <StackPanel>
-                                    <TextBox x:Name="ProfileEditPhone" Text="(999)123-4567" Style="{StaticResource MaterialDesignFilledTextFieldTextBox}" VerticalAlignment="Top" AcceptsReturn="True" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Телефон" TextChanged="ProfileEditPhone_TextChanged"/>
+                                    <TextBox x:Name="ProfileEditPhone" Style="{StaticResource MaterialDesignFilledTextFieldTextBox}" VerticalAlignment="Top" AcceptsReturn="True" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Телефон" TextChanged="ProfileEditPhone_TextChanged"/>
                                 </StackPanel>
                             </materialDesign:PopupBox>
                         </StackPanel>
