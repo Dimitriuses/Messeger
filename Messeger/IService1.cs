@@ -27,7 +27,8 @@ namespace Messeger
         bool ReloadEmailUser(Loger Userloger, string Email);
         [OperationContract]
         bool ReloadPhonelUser(Loger Userloger, string phone);
-
+        [OperationContract]
+        bool AddChatToParticipants(Loger loger, int[] participants, int chatId);
         [OperationContract]
         bool AddNewChat(Loger login, string name);
         //decimal SimpleCalculator(decimal a, decimal b, char @operator);
@@ -35,7 +36,8 @@ namespace Messeger
         [OperationContract]
         List<string> GetChatList(Loger Userloger);
         //Message GetMessageById(int id);
-
+        [OperationContract]
+        List<UserDTO> GetChatParticipant(Loger loger, int chatId);
         [OperationContract]
         List<MessageDTO> GetMessages(Loger Userloger, int chatID);
         //bool Add(Message message);

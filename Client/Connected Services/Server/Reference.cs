@@ -153,6 +153,107 @@ namespace Client.Server {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UserDTO", Namespace="http://schemas.datacontract.org/2004/07/Messeger.DTO")]
+    [System.SerializableAttribute()]
+    public partial class UserDTO : Client.Server.LogerDTO {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SurNameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SurName {
+            get {
+                return this.SurNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SurNameField, value) != true)) {
+                    this.SurNameField = value;
+                    this.RaisePropertyChanged("SurName");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="LogerDTO", Namespace="http://schemas.datacontract.org/2004/07/Messeger.DTO")]
+    [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Client.Server.UserDTO))]
+    public partial class LogerDTO : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LoginField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Login {
+            get {
+                return this.LoginField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LoginField, value) != true)) {
+                    this.LoginField = value;
+                    this.RaisePropertyChanged("Login");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="MessageDTO", Namespace="http://schemas.datacontract.org/2004/07/Messeger.DTO")]
     [System.SerializableAttribute()]
     public partial class MessageDTO : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -276,107 +377,6 @@ namespace Client.Server {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="UserDTO", Namespace="http://schemas.datacontract.org/2004/07/Messeger.DTO")]
-    [System.SerializableAttribute()]
-    public partial class UserDTO : Client.Server.LogerDTO {
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string SurNameField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Name {
-            get {
-                return this.NameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NameField, value) != true)) {
-                    this.NameField = value;
-                    this.RaisePropertyChanged("Name");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SurName {
-            get {
-                return this.SurNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SurNameField, value) != true)) {
-                    this.SurNameField = value;
-                    this.RaisePropertyChanged("SurName");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="LogerDTO", Namespace="http://schemas.datacontract.org/2004/07/Messeger.DTO")]
-    [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Client.Server.UserDTO))]
-    public partial class LogerDTO : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string LoginField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((this.IdField.Equals(value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Login {
-            get {
-                return this.LoginField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.LoginField, value) != true)) {
-                    this.LoginField = value;
-                    this.RaisePropertyChanged("Login");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Server.IService1")]
     public interface IService1 {
@@ -411,6 +411,12 @@ namespace Client.Server {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ReloadPhonelUser", ReplyAction="http://tempuri.org/IService1/ReloadPhonelUserResponse")]
         System.Threading.Tasks.Task<bool> ReloadPhonelUserAsync(Client.Server.Loger Userloger, string phone);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddChatToParticipants", ReplyAction="http://tempuri.org/IService1/AddChatToParticipantsResponse")]
+        bool AddChatToParticipants(Client.Server.Loger loger, int[] participants, int chatId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddChatToParticipants", ReplyAction="http://tempuri.org/IService1/AddChatToParticipantsResponse")]
+        System.Threading.Tasks.Task<bool> AddChatToParticipantsAsync(Client.Server.Loger loger, int[] participants, int chatId);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddNewChat", ReplyAction="http://tempuri.org/IService1/AddNewChatResponse")]
         bool AddNewChat(Client.Server.Loger login, string name);
         
@@ -422,6 +428,12 @@ namespace Client.Server {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetChatList", ReplyAction="http://tempuri.org/IService1/GetChatListResponse")]
         System.Threading.Tasks.Task<string[]> GetChatListAsync(Client.Server.Loger Userloger);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetChatParticipant", ReplyAction="http://tempuri.org/IService1/GetChatParticipantResponse")]
+        Client.Server.UserDTO[] GetChatParticipant(Client.Server.Loger loger, int chatId);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetChatParticipant", ReplyAction="http://tempuri.org/IService1/GetChatParticipantResponse")]
+        System.Threading.Tasks.Task<Client.Server.UserDTO[]> GetChatParticipantAsync(Client.Server.Loger loger, int chatId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetMessages", ReplyAction="http://tempuri.org/IService1/GetMessagesResponse")]
         Client.Server.MessageDTO[] GetMessages(Client.Server.Loger Userloger, int chatID);
@@ -551,6 +563,14 @@ namespace Client.Server {
             return base.Channel.ReloadPhonelUserAsync(Userloger, phone);
         }
         
+        public bool AddChatToParticipants(Client.Server.Loger loger, int[] participants, int chatId) {
+            return base.Channel.AddChatToParticipants(loger, participants, chatId);
+        }
+        
+        public System.Threading.Tasks.Task<bool> AddChatToParticipantsAsync(Client.Server.Loger loger, int[] participants, int chatId) {
+            return base.Channel.AddChatToParticipantsAsync(loger, participants, chatId);
+        }
+        
         public bool AddNewChat(Client.Server.Loger login, string name) {
             return base.Channel.AddNewChat(login, name);
         }
@@ -565,6 +585,14 @@ namespace Client.Server {
         
         public System.Threading.Tasks.Task<string[]> GetChatListAsync(Client.Server.Loger Userloger) {
             return base.Channel.GetChatListAsync(Userloger);
+        }
+        
+        public Client.Server.UserDTO[] GetChatParticipant(Client.Server.Loger loger, int chatId) {
+            return base.Channel.GetChatParticipant(loger, chatId);
+        }
+        
+        public System.Threading.Tasks.Task<Client.Server.UserDTO[]> GetChatParticipantAsync(Client.Server.Loger loger, int chatId) {
+            return base.Channel.GetChatParticipantAsync(loger, chatId);
         }
         
         public Client.Server.MessageDTO[] GetMessages(Client.Server.Loger Userloger, int chatID) {

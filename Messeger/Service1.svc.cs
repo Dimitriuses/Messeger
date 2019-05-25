@@ -60,7 +60,7 @@ namespace Messeger
             {
                 using(var ctx = new Meseger())
                 {
-                    User user = new User { Login = login.Login, Email = email, Phone = phone, PasswordHash = login.PasswordHash };
+                    User user = new User { Login = login.Login, Email = email, Phone = phone, PasswordHash = login.PasswordHash, Name = "", SurName = "" };
                     //ctx.Users.Add(user);
                     //ctx.SaveChanges();
                     Administrator admin = new Administrator { User = user };
@@ -175,32 +175,35 @@ namespace Messeger
             return false;
         }
 
-        //private bool AddChatToParticipants (List<User> participants, Chat chat)
-        //{
-        //    if(participants != null && participants.Count > 0 && chat != null)
-        //    {
-        //        foreach (User item in participants)
-        //        {
-        //            if (UserExists(item))
-        //            {
-        //                if (item.Chats == null)
-        //                {
-        //                    item.Chats = new List<Chat>();
-        //                }
-        //                item.Chats.Add(chat);
-        //                if (chat.Participants == null)
-        //                {
-        //                    chat.Participants = new List<User>();
-        //                }
-        //                chat.Participants.Add(item);
-                        
-        //            }
+        public bool AddChatToParticipants(Loger loger, int[] participants, int chatId)
+        {
+            if (UserLogin(loger) && participants != null && participants.Length > 0 && chatId != -1)
+            {
+                int realChatId = GetChat(loger, chatId);
+                if(realChatId != -1)
+                {
+                    using (Meseger ctx = new Meseger())
+                    {
+                        User user = ctx.Users.SingleOrDefault(a => a.Login == loger.Login);
+                        Chat chat = ctx.Chats.Find(realChatId);
+                        if(user.Administrator == chat.Administrator)
+                        {
+                            //Participant participant = new Participant();
+                            foreach (int item in participants)
+                            {
+                                chat.Participants.Add(ctx.Users.Find(item).Participant);
 
-        //        }
-        //        return true;
-        //    }
-        //    return false;
-        //}
+                                //participant.Users.Add(ctx.Users.Find(item));
+                            }
+                            //participants.ForEach(p => participant.Users.Add(ctx.Users.Find(p)));
+                            ctx.SaveChanges();
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
         public bool AddNewChat(Loger login, string name)
         {
             if (UserLogin(login) && name != null)
@@ -273,6 +276,31 @@ namespace Messeger
             }
         }
 
+        public List<UserDTO> GetChatParticipant(Loger loger, int chatId)
+        {
+            if (UserLogin(loger) && chatId != -1) 
+            {
+                List<UserDTO> userDTOs = new List<UserDTO>();
+                int realChatId = GetChat(loger, chatId);
+                if (realChatId != -1)
+                {
+                    HashSet<User> users = new HashSet<User>();
+                    using(Meseger ctx = new Meseger())
+                    {
+                        //Chat chat = ctx.Chats.Find(realChatId);
+                        List<Participant> participants = ctx.Chats.Find(realChatId).Participants.ToList();
+                        participants.ForEach(a => users.UnionWith(a.Users));
+                    }
+                    foreach (User item in users)
+                    {
+                        userDTOs.Add(new UserDTO(item));
+                    }
+                }
+                return userDTOs;
+            }
+            return null;
+        }
+
         public int GetChat(Loger Userloger,int id)
         {
             using (Meseger meseger = new Meseger())
@@ -294,35 +322,39 @@ namespace Messeger
 
         public List<MessageDTO> GetMessages(Loger Userloger,int chatID)
         {
-            bool Secure = false;
-            List<Message> messages = new List<Message>();
-            using (Meseger meseger = new Meseger())
+            if (chatID != -1 && Userloger != null)
             {
-                int id = GetChat(Userloger, chatID);
-                Chat chat = meseger.Chats.SingleOrDefault(a=> a.Id == id);
-                //bool admin = chat.Administrator.User == Userloger;
-                //bool participant = chat.Participants.SingleOrDefault(a => Userloger == a.Users) != null;
-                //bool all = admin || participant;
-                if (UserLogin(Userloger) && ChatUserExists(Userloger, id))
+                bool Secure = false;
+                List<Message> messages = new List<Message>();
+                using (Meseger meseger = new Meseger())
                 {
-                    messages = chat.Messages.ToList<Message>();
-                    Secure = true;
+                    int id = GetChat(Userloger, chatID);
+                    Chat chat = meseger.Chats.SingleOrDefault(a=> a.Id == id);
+                    //bool admin = chat.Administrator.User == Userloger;
+                    //bool participant = chat.Participants.SingleOrDefault(a => Userloger == a.Users) != null;
+                    //bool all = admin || participant;
+                    if (UserLogin(Userloger) && ChatUserExists(Userloger, id))
+                    {
+                        messages = chat.Messages.ToList<Message>();
+                        Secure = true;
+                    }
+                }
+                List<MessageDTO> messageDTOs = new List<MessageDTO>();
+                if (Secure && messages.Count > 0) 
+                {
+                    foreach (Message item in messages)
+                    {
+                        messageDTOs.Add(new MessageDTO(item));
+                    }
+                    return messageDTOs;
+                }
+                else if (Secure && messages.Count == 0)
+                {
+                    messageDTOs.Add(new MessageDTO { Text = "This chat is empty", SenderId = 1 });
+                    return messageDTOs;
                 }
             }
-            List<MessageDTO> messageDTOs = new List<MessageDTO>();
-            if (Secure && messages.Count > 0) 
-            {
-                foreach (Message item in messages)
-                {
-                    messageDTOs.Add(new MessageDTO(item));
-                }
-                return messageDTOs;
-            }
-            else if (Secure && messages.Count == 0)
-            {
-                messageDTOs.Add(new MessageDTO { Text = "This chat is empty", SenderId = 1 });
-                return messageDTOs;
-            }
+           
             return null;
         }
         
@@ -341,15 +373,19 @@ namespace Messeger
 
         public bool UserLogin(Loger loger)
         {
-            using (Meseger meseger = new Meseger())
+            if(loger != null)
             {
-                User user = meseger.Users.SingleOrDefault(a => a.Login == loger.Login);
-                if (user != null && user.PasswordHash == loger.PasswordHash )
+                using (Meseger meseger = new Meseger())
                 {
-                    return true;
+                    User user = meseger.Users.SingleOrDefault(a => a.Login == loger.Login);
+                    if (user != null && user.PasswordHash == loger.PasswordHash )
+                    {
+                        return true;
+                    }
                 }
-                return false;
             }
+            return false;
+
         }
         
         public bool ChatUserExists(Loger loger, int Chatid)
@@ -358,7 +394,15 @@ namespace Messeger
             {
                 User user = meseger.Users.SingleOrDefault(a => a.Login == loger.Login);
                 Chat chat = meseger.Chats.SingleOrDefault(a => a.Id == Chatid);
-                if (chat.Administrator.User == user || chat.Participants.SingleOrDefault(a=> user == a.Users) != null)
+                List<Participant> participants = chat.Participants.ToList();
+                foreach (Participant item in participants)
+                {
+                    if(item == user.Participant)
+                    {
+                        return true;
+                    }
+                }
+                if (chat.Administrator.User == user)
                 {
                     return true;
                 }

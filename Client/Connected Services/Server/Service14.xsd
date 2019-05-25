@@ -1,23 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Messeger.DTO" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Messeger.DTO" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:63716/Service1.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-  <xs:complexType name="ArrayOfMessageDTO">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="MessageDTO" nillable="true" type="tns:MessageDTO" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfMessageDTO" nillable="true" type="tns:ArrayOfMessageDTO" />
-  <xs:complexType name="MessageDTO">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="ChatId" type="xs:int" />
-      <xs:element minOccurs="0" name="DateTime" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="Id" type="xs:int" />
-      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ReciversId" nillable="true" type="q1:ArrayOfint" />
-      <xs:element minOccurs="0" name="SenderId" type="xs:int" />
-      <xs:element minOccurs="0" name="Text" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="MessageDTO" nillable="true" type="tns:MessageDTO" />
   <xs:complexType name="ArrayOfUserDTO">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="UserDTO" nillable="true" type="tns:UserDTO" />
@@ -42,4 +25,21 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="LogerDTO" nillable="true" type="tns:LogerDTO" />
+  <xs:complexType name="ArrayOfMessageDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MessageDTO" nillable="true" type="tns:MessageDTO" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMessageDTO" nillable="true" type="tns:ArrayOfMessageDTO" />
+  <xs:complexType name="MessageDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ChatId" type="xs:int" />
+      <xs:element minOccurs="0" name="DateTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ReciversId" nillable="true" type="q1:ArrayOfint" />
+      <xs:element minOccurs="0" name="SenderId" type="xs:int" />
+      <xs:element minOccurs="0" name="Text" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MessageDTO" nillable="true" type="tns:MessageDTO" />
 </xs:schema>

@@ -155,7 +155,7 @@
                                 <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth2">
                                     <StackPanel Orientation="Horizontal">
                                         <materialDesign:PackIcon Kind="Magnify" Height="16" Width="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        <TextBox x:Name="FindUsersByParticipans" Width="215" Margin="9,0,0,0" materialDesign:TextFieldAssist.DecorationVisibility="Hidden" BorderThickness="0" TextChanged="FindUsersByParticipans_TextChanged"/>
+                                        <TextBox x:Name="FindUsersByParticipans"  Width="215" Margin="9,0,0,0" materialDesign:TextFieldAssist.DecorationVisibility="Hidden" BorderThickness="0" TextChanged="FindUsersByParticipans_TextChanged"/>
                                     </StackPanel>
                                 </materialDesign:Card>
                                 <!-- and here's another -->
@@ -186,7 +186,7 @@
                                     </ItemsControl>
                                 </ScrollViewer>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Style="{StaticResource MaterialDesignFlatButton}">
+                                    <Button Style="{StaticResource MaterialDesignFlatButton}" Click="Button_Click_5">
                                         Додати
                                     </Button>
                                     <Button Style="{StaticResource MaterialDesignFlatButton}" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Margin="88,0,0,0">
@@ -203,7 +203,7 @@
                                     <materialDesign:Card x:Name="ProfileCard" Width="200" Height="100" materialDesign:ShadowAssist.ShadowDepth="Depth2">
                                         <StackPanel x:Name="ProfilePanel" VerticalAlignment="Center">
                                             <Button x:Name="CardButtonProfile" Style="{StaticResource MaterialDesignFloatingActionMiniButton}" HorizontalAlignment="Left" Click="CardButtonProfile_Click" FontSize="14"/>
-                                            <Label x:Name="CardLoginProfile" FontSize="14"/>
+                                            <TextBlock x:Name="CardLoginProfile" TextWrapping="Wrap" FontSize="14"/>
                                         </StackPanel>
                                     </materialDesign:Card>
                                     <ListBox>

@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -37,10 +38,13 @@ namespace Client
         Loger UserLoger;
         int idChat = -1;
         Brush DefaultStackPanelColor;
+        Thread thread;
         public MainWindow()
         {
             InitializeComponent();
             UserLoger = new Loger(); //{ Login = "Dmitrius"}; 
+            thread = new Thread(new ThreadStart(Updater));
+            thread.Start();
             //using (MD5 md5Hash = MD5.Create())
             //{
             //    UserLoger.PasswordHash = GetMd5Hash(md5Hash, "PAROL");
@@ -53,6 +57,32 @@ namespace Client
             //listBoxChats.ItemsSource = new List<string>() { " test message ", " helow blet " };
         }
 
+        private void Updater()
+        {
+            while (true)
+            {
+                Thread.Sleep(1000);
+                bool login = false;
+                try
+                {
+                    Service1Client client = new Service1Client();
+                    login = client.UserLogin(UserLoger);
+                    client.Close();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("error conection :" + e);
+                    //throw;
+                }
+                
+                if (login)
+                {
+                    Update_Chat_List();
+                    UpdateMessages();
+                }
+            }
+        }
+
         private void UpdateCardProfile()
         {
             if(UserLoger.Login == null)
@@ -62,7 +92,7 @@ namespace Client
                 CardButtonProfile.Background = new SolidColorBrush(Colors.LightCoral);
                 CardButtonProfile.BorderBrush = new SolidColorBrush(Colors.Red);
                 CardButtonProfile.Content = new PackIcon { Kind = PackIconKind.AccountWarning};
-                CardLoginProfile.Content = "Ви не увійшли, будьласка увійдіть або зареєструйтесь";
+                CardLoginProfile.Text = "Ви не авторизовані";
             }
             else
             {
@@ -70,7 +100,7 @@ namespace Client
                 CardButtonProfile.Background = GetDesignColorBrush(DesignColor.PrimaryDark);
                 CardButtonProfile.BorderBrush = GetDesignColorBrush(DesignColor.PrimaryDark);
                 CardButtonProfile.Content = $"{UserLoger.Login[0]}{UserLoger.Login[1]}".ToUpper();
-                CardLoginProfile.Content = UserLoger.Login;
+                CardLoginProfile.Text = UserLoger.Login;
             }
         }
 
@@ -105,7 +135,7 @@ namespace Client
             if(dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 UserLoger = dlg.User;
-                Update_Chat_List();
+                //Update_Chat_List();
             }
         }
 
@@ -118,7 +148,7 @@ namespace Client
                 client.Close();
                 if (CompleteOparation)
                 {
-                    UpdateMessages();
+                    //UpdateMessages();
                     textBox.Text = "";
                 }
                 else
@@ -133,8 +163,8 @@ namespace Client
         private void ListBoxChats_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             idChat = listBoxChats.SelectedIndex;
-            
-            UpdateMessages();
+            //Update_Chat_List();
+            //UpdateMessages();
             
             //if(e.AddedItems[0] == " helow blet ")
             //{
@@ -147,11 +177,28 @@ namespace Client
 
         private void UpdateMessages()
         {
+
             MessageDTO[] messages;
             Service1Client client = new Service1Client();
             messages = client.GetMessages(UserLoger, idChat);
             client.Close();
-            RenderMessage(messages);
+            if(messages != null)
+            {
+                try
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        RenderMessage(messages);
+                    });
+
+                }
+                catch (Exception)
+                {
+
+                    //throw;
+                }
+
+            }
         }
 
         private void RenderMessage(MessageDTO[] messages)
@@ -197,12 +244,34 @@ namespace Client
             Service1Client client = new Service1Client();
             tmp = client.GetChatList(UserLoger);
             client.Close();
-            listBoxChats.Items.Clear();
-            foreach (string item in tmp)
+            //int tmpIdSelected = idChat;
+            //listBoxChats.Items.Clear();
+            //foreach (string item in tmp)
+            //{
+            //    listBoxChats.Items.Add(item);
+            //}
+            ////idChat = tmpIdSelected;
+            //listBoxChats.SelectedIndex = tmpIdSelected;
+            try
             {
-                listBoxChats.Items.Add(item);
+                this.Dispatcher.Invoke(() =>
+                {
+                    int tmpIdSelected = idChat;
+                    listBoxChats.Items.Clear();
+                    foreach (string item in tmp)
+                    {
+                        listBoxChats.Items.Add(item);
+                    }
+                    //idChat = tmpIdSelected;
+                    listBoxChats.SelectedIndex = tmpIdSelected;
+                });
             }
-            
+            catch (Exception)
+            {
+
+                //throw;
+            }
+
         }
 
         private void Button2_Click(object sender, RoutedEventArgs e)
@@ -212,7 +281,7 @@ namespace Client
                 AddNewChat dlg = new AddNewChat();
                 if(dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    Update_Chat_List();
+                    //Update_Chat_List();
                 }
             }
 
@@ -558,7 +627,7 @@ namespace Client
                     LoginDialogHost.IsOpen = false;
                     UserLoger = User;
                     UpdateCardProfile();
-                    Update_Chat_List();
+                    //Update_Chat_List();
                 }
                 else
                 {
@@ -703,7 +772,7 @@ namespace Client
             Service1Client client = new Service1Client();
             bool complete = client.AddNewChat(UserLoger, ChatName.Text);
             client.Close();
-            Update_Chat_List();
+            //Update_Chat_List();
             if (complete)
             {
                 NewChatDialodHost.IsOpen = false;
@@ -750,14 +819,17 @@ namespace Client
             }
             Service1Client client = new Service1Client();
             List<UserDTO> find = client.GetUserListByFindMode(FindUsersByParticipans.Text).ToList();
+            List<UserDTO> exist = client.GetChatParticipant(UserLoger, idChat).ToList();
             client.Close();
             List<SelectableVievModel> selectables = new List<SelectableVievModel>();
+            List<SelectableVievModel> tableExist = new List<SelectableVievModel>();
             find.ForEach(f => selectables.Add(new SelectableVievModel(f)));
+            exist.ForEach(f => tableExist.Add(new SelectableVievModel(f)));
             if(selectables.Count > 0)
             {
                 foreach (SelectableVievModel item in selectables)
                 {
-                    if (item != null && !FindIdenticalItemForList(TMP, item))
+                    if (item != null && !FindIdenticalItemForList(TMP, item) && !FindIdenticalItemForList(tableExist, item))
                     {
                         pararara.Items.Add(item);
                     }
@@ -775,6 +847,21 @@ namespace Client
                 }
             }
             return false;
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+           List<int> selectables = new List<int>();
+            foreach (SelectableVievModel item in pararara.Items)
+            {
+                if (item.IsSelected)
+                {
+                    selectables.Add(item.Id);
+                }
+            }
+            Service1Client client = new Service1Client();
+            client.AddChatToParticipants(UserLoger, selectables.ToArray(), idChat);
+            client.Close();
         }
 
 
