@@ -63,6 +63,8 @@ namespace Messeger
     }
 
 
+
+
     // Use a data contract as illustrated in the sample below to add composite types to service operations.
     [DataContract]
     public class CompositeType
@@ -82,6 +84,45 @@ namespace Messeger
         {
             get { return stringValue; }
             set { stringValue = value; }
+        }
+    }
+
+
+    [ServiceContract]
+    public interface ITransferService
+    {
+        [OperationContract]
+        RemoteFileInfo DownloadFile(DownloadRequest request);
+
+        [OperationContract]
+        void UploadFile(RemoteFileInfo request);
+    }
+    [MessageContract]
+    public class DownloadRequest
+    {
+        [MessageBodyMember]
+        public string FileName;
+    }
+
+    [MessageContract]
+    public class RemoteFileInfo : IDisposable
+    {
+        [MessageHeader(MustUnderstand = true)]
+        public string FileName;
+
+        [MessageHeader(MustUnderstand = true)]
+        public long Length;
+
+        [MessageBodyMember(Order = 1)]
+        public System.IO.Stream FileByteStream;
+
+        public void Dispose()
+        {
+            if (FileByteStream != null)
+            {
+                FileByteStream.Close();
+                FileByteStream = null;
+            }
         }
     }
 }

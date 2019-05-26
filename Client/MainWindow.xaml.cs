@@ -862,6 +862,7 @@ namespace Client
             Service1Client client = new Service1Client();
             client.AddChatToParticipants(UserLoger, selectables.ToArray(), idChat);
             client.Close();
+            AddParticipantsDialogHost.IsOpen = false;
         }
 
 
