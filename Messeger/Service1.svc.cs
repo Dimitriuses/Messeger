@@ -306,9 +306,9 @@ namespace Messeger
         {
             using (Meseger meseger = new Meseger())
             {
-                User user = meseger.Users.SingleOrDefault<User>(a => a.Login == Userloger.Login);
                 if (UserLogin(Userloger))
                 {
+                    User user = meseger.Users.SingleOrDefault<User>(a => a.Login == Userloger.Login);
                     List<Chat> tmp = new List<Chat>();
                     var chats = user.Participant.Chats.ToList();
                     foreach (Chat item in chats)
@@ -582,17 +582,42 @@ namespace Messeger
             }
             return null;
         }
+
+        public bool UploadFile(Loger loger, Stream stream, int ChatId)
+        {
+            if (UserLogin(loger) && stream != null && ChatId != -1)
+            {
+                int realChatId = GetChat(loger, ChatId);
+                Chat chat = new Chat();
+                string path = null;
+                using(Meseger ctx = new Meseger())
+                {
+                    chat = ctx.Chats.Find(realChatId);
+                    path = $"./{chat.Guid}";
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                }
+            }
+            return false;
+        }
     }
 
 
     public class TransferService : ITransferService
     {
+        public TransferService(string filepach)
+        {
+            FilePath = filepach;
+        }
+        public string FilePath { get; set; }
         public RemoteFileInfo DownloadFile(DownloadRequest request)
         {
             RemoteFileInfo result = new RemoteFileInfo();
             try
             {
-                string filePath = Path.Combine(@"c:\Uploadfiles", request.FileName);
+                string filePath = Path.Combine(FilePath, request.FileName);
                 FileInfo fileInfo = new FileInfo(filePath);
 
                 // check if exists
@@ -620,9 +645,9 @@ namespace Messeger
             FileStream targetStream = null;
             Stream sourceStream = request.FileByteStream;
 
-            string uploadFolder = @"C:\upload\";
+            //string uploadFolder = @"C:\upload\";
 
-            string filePath = Path.Combine(uploadFolder, request.FileName);
+            string filePath = Path.Combine(FilePath, request.FileName);
 
             using (targetStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None))
             {
