@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Client"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="1300" Background="#FF009688">
+        Title="MainWindow" Height="550" Width="1300" Background="{DynamicResource PrimaryHueMidBrush}">
     <Window.Resources>
         <ControlTemplate x:Key="validationFailed">
             <StackPanel Orientation="Horizontal">
@@ -221,7 +221,7 @@
                                         </TextBlock>
                                         <TextBlock>
                                             <StackPanel Orientation="Horizontal">
-                                                <materialDesign:PackIcon Kind="SettingsOutline" Width="21" Height="21"/>
+                                                <materialDesign:PackIcon Kind="SettingsOutline" Width="21" Height="21" PreviewMouseDown="StackPanel_PreviewMouseDown_1"/>
                                                 <TextBlock Text=" Налаштування" FontSize="14"/>
                                             </StackPanel>
                                         </TextBlock>
@@ -265,7 +265,7 @@
                                     </ListBox>
 
                                 </Grid>
-                                <GridSplitter Grid.Column="1" ShowsPreview="False" Width="5" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="#FF009688" BorderBrush="#FF009688"/>
+                                <GridSplitter Grid.Column="1" ShowsPreview="False" Width="5" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="{DynamicResource PrimaryHueMidBrush}" BorderBrush="{DynamicResource PrimaryHueMidBrush}"/>
                                 <Grid Grid.Column="2" Margin="0">
                                     <Grid.RowDefinitions>
                                         <RowDefinition/>

@@ -44,9 +44,9 @@ namespace Client
         {
             InitializeComponent();
             UserLoger = new Loger(); //{ Login = "Dmitrius"}; 
-            thread = new Thread(new ThreadStart(Updater));
-            thread.IsBackground = true;
-            thread.Start();
+            //thread = new Thread(new ThreadStart(Updater));
+            //thread.IsBackground = true;
+            //thread.Start();
             //using (MD5 md5Hash = MD5.Create())
             //{
             //    UserLoger.PasswordHash = GetMd5Hash(md5Hash, "PAROL");
@@ -904,10 +904,16 @@ namespace Client
                 if (openFile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     path = openFile.FileName;
-                    RemoteFileInfo
+                    //RemoteFileInfo
                     MessageBox.Show($"{openFile.SafeFileName} /n{openFile.FileName} /n{openFile.ValidateNames}");
                 }
             }
+        }
+
+        private void StackPanel_PreviewMouseDown_1(object sender, MouseButtonEventArgs e)
+        {
+            ColorChange change = new ColorChange();
+            change.Show();
         }
 
 
