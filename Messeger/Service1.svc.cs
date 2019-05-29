@@ -583,9 +583,9 @@ namespace Messeger
             return null;
         }
 
-        public bool UploadFile(Loger loger, Stream stream, int ChatId)
+        public bool UploadFile(Loger loger,RemoteFileInfo fileInfo, int ChatId)
         {
-            if (UserLogin(loger) && stream != null && ChatId != -1)
+            if (UserLogin(loger) && fileInfo != null && ChatId != -1)
             {
                 int realChatId = GetChat(loger, ChatId);
                 Chat chat = new Chat();
@@ -598,6 +598,8 @@ namespace Messeger
                     {
                         Directory.CreateDirectory(path);
                     }
+                    TransferService transfer = new TransferService(path);
+                    transfer.UploadFile(fileInfo);
                 }
             }
             return false;

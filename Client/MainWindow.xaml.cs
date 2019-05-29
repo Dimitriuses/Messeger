@@ -39,11 +39,13 @@ namespace Client
         int idChat = -1;
         Brush DefaultStackPanelColor;
         Thread thread;
+        //bool Closet = false;
         public MainWindow()
         {
             InitializeComponent();
             UserLoger = new Loger(); //{ Login = "Dmitrius"}; 
             thread = new Thread(new ThreadStart(Updater));
+            thread.IsBackground = true;
             thread.Start();
             //using (MD5 md5Hash = MD5.Create())
             //{
@@ -57,12 +59,27 @@ namespace Client
             //listBoxChats.ItemsSource = new List<string>() { " test message ", " helow blet " };
         }
 
+        //~MainWindow()
+        //{
+        //    Closet = true;
+        //    Thread.Sleep(1000);
+        //}
+
         private void Updater()
         {
             while (true)
             {
                 Thread.Sleep(1000);
                 bool login = false;
+                //if (!this.Dispatcher.Invoke(() => { Application.Current.Windows.OfType<MainWindow>().Any(); }))
+                //{
+                //    return;
+                //}
+                //if (Closet)
+                //{
+                //    return;
+                //}
+
                 try
                 {
                     Service1Client client = new Service1Client();
@@ -82,6 +99,18 @@ namespace Client
                 }
             }
         }
+
+        //public bool IsWindowOpen<T>(string name = "") where T : Window
+        //{
+        //    bool rezult = true;
+        //    this.Dispatcher.Invoke(() =>
+        //    {
+        //        rezult = string.IsNullOrEmpty(name)
+        //           ? Application.Current.Windows.OfType<T>().Any()
+        //           : Application.Current.Windows.OfType<T>().Any(w => w.Name.Equals(name));
+        //    });
+        //    return rezult;
+        //}
 
         private void UpdateCardProfile()
         {
@@ -863,6 +892,22 @@ namespace Client
             client.AddChatToParticipants(UserLoger, selectables.ToArray(), idChat);
             client.Close();
             AddParticipantsDialogHost.IsOpen = false;
+        }
+
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            if (idChat != -1)
+            {
+                string path;
+                System.Windows.Forms.OpenFileDialog openFile = new System.Windows.Forms.OpenFileDialog();
+                openFile.Filter = "All files (*.*)|*.*";
+                if (openFile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    path = openFile.FileName;
+                    RemoteFileInfo
+                    MessageBox.Show($"{openFile.SafeFileName} /n{openFile.FileName} /n{openFile.ValidateNames}");
+                }
+            }
         }
 
 

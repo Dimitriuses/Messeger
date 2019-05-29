@@ -59,6 +59,8 @@ namespace Messeger
         string GetEmail(Loger loger);
         [OperationContract]
         string GetPhone(Loger loger);
+        [OperationContract]
+        bool UploadFile(Loger loger, RemoteFileInfo fileInfo, int ChatId);
         // TODO: Add your service operations here
     }
 
