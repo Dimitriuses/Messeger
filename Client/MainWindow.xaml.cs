@@ -957,6 +957,12 @@ namespace Client
             return false;
         }
 
+        private void StackPanel_PreviewMouseDown_1(object sender, MouseButtonEventArgs e)
+        {
+            ColorChange change = new ColorChange();
+            change.Show();
+        }
+
 
         //private List<Message> bletMassage()
         //{

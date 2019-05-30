@@ -220,7 +220,7 @@
                                         </StackPanel>
                                         </TextBlock>
                                         <TextBlock>
-                                            <StackPanel Orientation="Horizontal">
+                                            <StackPanel Orientation="Horizontal" PreviewMouseDown="StackPanel_PreviewMouseDown_1" >
                                                 <materialDesign:PackIcon Kind="SettingsOutline" Width="21" Height="21" PreviewMouseDown="StackPanel_PreviewMouseDown_1"/>
                                                 <TextBlock Text=" Налаштування" FontSize="14"/>
                                             </StackPanel>
