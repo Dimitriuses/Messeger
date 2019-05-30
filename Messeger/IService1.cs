@@ -49,7 +49,7 @@ namespace Messeger
         [OperationContract]
         bool UserExists(Loger loger);
         [OperationContract]
-        bool PushMessage(string text, Loger loger,int ChatId);
+        bool PushMessage(string text, Loger loger,int ChatId, FileDTO file);
         [OperationContract]
         string GetLoginById(int id);
         [OperationContract]
@@ -62,8 +62,8 @@ namespace Messeger
         string GetEmail(Loger loger);
         [OperationContract]
         string GetPhone(Loger loger);
-        [OperationContract]
-        bool UploaderFile(Loger loger,FileDTO file);
+        //[OperationContract]
+        //bool UploaderFile(Loger loger,FileDTO file);
         // TODO: Add your service operations here
     }
 

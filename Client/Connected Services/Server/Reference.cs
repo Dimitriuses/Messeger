@@ -268,6 +268,9 @@ namespace Client.Server {
         private System.DateTime DateTimeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Client.Server.FileDTO FileField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -311,6 +314,19 @@ namespace Client.Server {
                 if ((this.DateTimeField.Equals(value) != true)) {
                     this.DateTimeField = value;
                     this.RaisePropertyChanged("DateTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Client.Server.FileDTO File {
+            get {
+                return this.FileField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FileField, value) != true)) {
+                    this.FileField = value;
+                    this.RaisePropertyChanged("File");
                 }
             }
         }
@@ -547,10 +563,10 @@ namespace Client.Server {
         System.Threading.Tasks.Task<bool> UserExistsAsync(Client.Server.Loger loger);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/PushMessage", ReplyAction="http://tempuri.org/IService1/PushMessageResponse")]
-        bool PushMessage(string text, Client.Server.Loger loger, int ChatId);
+        bool PushMessage(string text, Client.Server.Loger loger, int ChatId, Client.Server.FileDTO file);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/PushMessage", ReplyAction="http://tempuri.org/IService1/PushMessageResponse")]
-        System.Threading.Tasks.Task<bool> PushMessageAsync(string text, Client.Server.Loger loger, int ChatId);
+        System.Threading.Tasks.Task<bool> PushMessageAsync(string text, Client.Server.Loger loger, int ChatId, Client.Server.FileDTO file);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetLoginById", ReplyAction="http://tempuri.org/IService1/GetLoginByIdResponse")]
         string GetLoginById(int id);
@@ -718,12 +734,12 @@ namespace Client.Server {
             return base.Channel.UserExistsAsync(loger);
         }
         
-        public bool PushMessage(string text, Client.Server.Loger loger, int ChatId) {
-            return base.Channel.PushMessage(text, loger, ChatId);
+        public bool PushMessage(string text, Client.Server.Loger loger, int ChatId, Client.Server.FileDTO file) {
+            return base.Channel.PushMessage(text, loger, ChatId, file);
         }
         
-        public System.Threading.Tasks.Task<bool> PushMessageAsync(string text, Client.Server.Loger loger, int ChatId) {
-            return base.Channel.PushMessageAsync(text, loger, ChatId);
+        public System.Threading.Tasks.Task<bool> PushMessageAsync(string text, Client.Server.Loger loger, int ChatId, Client.Server.FileDTO file) {
+            return base.Channel.PushMessageAsync(text, loger, ChatId, file);
         }
         
         public string GetLoginById(int id) {

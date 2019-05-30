@@ -411,7 +411,7 @@ namespace Messeger
             }
         }
 
-        public bool PushMessage(string text,Loger loger,int ChatId)
+        public bool PushMessage(string text,Loger loger,int ChatId,FileDTO file)
         {
             using (Meseger ctx = new Meseger())
             {
@@ -419,7 +419,6 @@ namespace Messeger
                 User user = ctx.Users.SingleOrDefault(a => a.Login == loger.Login);
                 int id = GetChat(loger, ChatId);
                 Chat chat = ctx.Chats.SingleOrDefault(a => a.Id == id);
-
                 if (ChatUserExists(loger, chat.Id)&&UserLogin(loger))
                 {
                     Sender sender = ctx.Senders.SingleOrDefault(a => a.Id == user.Id);
@@ -429,6 +428,15 @@ namespace Messeger
                     }
                     
                     Message msg = new Message { Text = text, Sender = sender, DateTime = DateTime.Now, Chat = chat };
+                    if(file != null)
+                    {
+                        file.ChatId = chat.Id;
+                        Model.File MessageFile = UploaderFile(loger, file);
+                        if(MessageFile != null)
+                        {
+                            msg.File = MessageFile;
+                        }
+                    }
                     ctx.Messages.Add(msg);
                     ctx.SaveChanges();
                     return true;
@@ -583,7 +591,7 @@ namespace Messeger
             return null;
         }
 
-        public bool UploaderFile(Loger loger,FileDTO file)
+        public Model.File UploaderFile(Loger loger,FileDTO file)
         {
             if (UserLogin(loger) && file.FileStream != null && file.ChatId != -1)
             {
@@ -605,8 +613,13 @@ namespace Messeger
                     fileInfo.Length = file.FileInfo.Length;
                     transfer.UploadFile(fileInfo);
                 }
+                FileInfo info = new FileInfo(path + "/" + file.FileName);
+                if (info.Exists)
+                {
+                    return new Model.File { Path = info.FullName };
+                }
             }
-            return false;
+            return null;
         }
     }
 

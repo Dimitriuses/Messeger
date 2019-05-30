@@ -38,5 +38,7 @@ namespace Messeger.DTO
         public int[] ReciversId { get; set; }
         [DataMember]
         public int ChatId { get; set; }
+        [DataMember]
+        public FileDTO File { get; set; }
     }
 }

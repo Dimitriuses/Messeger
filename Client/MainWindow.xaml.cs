@@ -186,8 +186,9 @@ namespace Client
         {
             if (idChat != -1 && UserLoger != null)
             {
+
                 Service1Client client = new Service1Client();
-                bool CompleteOparation = client.PushMessage(textBox.Text, UserLoger, idChat);
+                bool CompleteOparation = client.PushMessage(textBox.Text, UserLoger, idChat, GetFile());
                 client.Close();
                 if (CompleteOparation)
                 {
@@ -919,10 +920,12 @@ namespace Client
                 {
                     path = openFile.FileName;
                     FileInfo info = new FileInfo(path);
-                    FileDTO file;
+                    FileDTO file;// = new FileDTO(path);
                     using (System.IO.FileStream stream = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read))
                     {
                         file = new FileDTO { ChatId = idChat, FileName = openFile.SafeFileName, FileInfo = info, FileStream = stream };
+                        
+                        //MessageBox.Show(info.Name);
                     }
                     if (file.FileStream != null)
                     {
@@ -955,6 +958,18 @@ namespace Client
                 }
             }
             return false;
+        }
+
+        private FileDTO GetFile()
+        {
+            foreach (FileDTO item in files)
+            {
+                if(item.ChatId == idChat)
+                {
+                    return item;
+                }
+            }
+            return null;
         }
 
         private void StackPanel_PreviewMouseDown_1(object sender, MouseButtonEventArgs e)
