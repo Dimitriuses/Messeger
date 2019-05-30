@@ -93,6 +93,18 @@ namespace Client
                     MessageBox.Show("error conection :" + e);
                     //throw;
                 }
+                this.Dispatcher.Invoke(() =>
+                {
+                    if (FileExixt()&& fileAddIcon.IsEnabled)
+                    {
+                        fileAddIcon.Kind = PackIconKind.RemoveCircle;
+                    }
+                    else if(!FileExixt() && fileAddIcon.IsEnabled)
+                    {
+                        fileAddIcon.Kind = PackIconKind.Paperclip;
+                    }
+                });
+
                 
                 if (login)
                 {
@@ -898,7 +910,7 @@ namespace Client
 
         private void Button_Click_6(object sender, RoutedEventArgs e)
         {
-            if (idChat != -1)
+            if (idChat != -1&&!FileExixt())
             {
                 string path;
                 System.Windows.Forms.OpenFileDialog openFile = new System.Windows.Forms.OpenFileDialog();
@@ -918,6 +930,18 @@ namespace Client
                     }
                     //MessageBox.Show($"{openFile.SafeFileName} /n{openFile.FileName} /n{openFile.ValidateNames}");
                 }
+            }
+            else if (FileExixt())
+            {
+                FileDTO tmp = new FileDTO();
+                foreach (FileDTO item in files)
+                {
+                    if(item.ChatId == idChat)
+                    {
+                        tmp = item;
+                    }
+                }
+                files.Remove(tmp);
             }
         }
 
