@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Security.Cryptography;
@@ -40,13 +41,14 @@ namespace Client
         Brush DefaultStackPanelColor;
         Thread thread;
         //bool Closet = false;
+        List<FileDTO> files = new List<FileDTO>();
         public MainWindow()
         {
             InitializeComponent();
             UserLoger = new Loger(); //{ Login = "Dmitrius"}; 
-            //thread = new Thread(new ThreadStart(Updater));
-            //thread.IsBackground = true;
-            //thread.Start();
+            thread = new Thread(new ThreadStart(Updater));
+            thread.IsBackground = true;
+            thread.Start();
             //using (MD5 md5Hash = MD5.Create())
             //{
             //    UserLoger.PasswordHash = GetMd5Hash(md5Hash, "PAROL");
@@ -91,6 +93,18 @@ namespace Client
                     MessageBox.Show("error conection :" + e);
                     //throw;
                 }
+                this.Dispatcher.Invoke(() =>
+                {
+                    if (FileExixt()&& fileAddIcon.IsEnabled)
+                    {
+                        fileAddIcon.Kind = PackIconKind.RemoveCircle;
+                    }
+                    else if(!FileExixt() && fileAddIcon.IsEnabled)
+                    {
+                        fileAddIcon.Kind = PackIconKind.Paperclip;
+                    }
+                });
+
                 
                 if (login)
                 {
@@ -896,7 +910,7 @@ namespace Client
 
         private void Button_Click_6(object sender, RoutedEventArgs e)
         {
-            if (idChat != -1)
+            if (idChat != -1&&!FileExixt())
             {
                 string path;
                 System.Windows.Forms.OpenFileDialog openFile = new System.Windows.Forms.OpenFileDialog();
@@ -904,18 +918,44 @@ namespace Client
                 if (openFile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     path = openFile.FileName;
-                    //RemoteFileInfo
-                    MessageBox.Show($"{openFile.SafeFileName} /n{openFile.FileName} /n{openFile.ValidateNames}");
+                    FileInfo info = new FileInfo(path);
+                    FileDTO file;
+                    using (System.IO.FileStream stream = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                    {
+                        file = new FileDTO { ChatId = idChat, FileName = openFile.SafeFileName, FileInfo = info, FileStream = stream };
+                    }
+                    if (file.FileStream != null)
+                    {
+                        files.Add(file);
+                    }
+                    //MessageBox.Show($"{openFile.SafeFileName} /n{openFile.FileName} /n{openFile.ValidateNames}");
                 }
+            }
+            else if (FileExixt())
+            {
+                FileDTO tmp = new FileDTO();
+                foreach (FileDTO item in files)
+                {
+                    if(item.ChatId == idChat)
+                    {
+                        tmp = item;
+                    }
+                }
+                files.Remove(tmp);
             }
         }
 
-        private void StackPanel_PreviewMouseDown_1(object sender, MouseButtonEventArgs e)
+        private bool FileExixt()
         {
-            ColorChange change = new ColorChange();
-            change.Show();
+            foreach (FileDTO item in files)
+            {
+                if(item.ChatId == idChat)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
-
 
 
         //private List<Message> bletMassage()

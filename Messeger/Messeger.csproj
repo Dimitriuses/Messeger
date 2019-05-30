@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Custom.cs" />
+    <Compile Include="DTO\FileDTO.cs" />
     <Compile Include="DTO\LogerDTO.cs" />
     <Compile Include="DTO\MessageDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
