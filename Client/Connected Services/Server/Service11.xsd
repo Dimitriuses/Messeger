@@ -282,4 +282,19 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="UploaderFile">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="loger" nillable="true" type="q24:Loger" />
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/Messeger.DTO" minOccurs="0" name="file" nillable="true" type="q25:FileDTO" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UploaderFileResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UploaderFileResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

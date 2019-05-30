@@ -583,11 +583,11 @@ namespace Messeger
             return null;
         }
 
-        public bool UploadFile(Loger loger,RemoteFileInfo fileInfo, int ChatId)
+        public bool UploaderFile(Loger loger,FileDTO file)
         {
-            if (UserLogin(loger) && fileInfo != null && ChatId != -1)
+            if (UserLogin(loger) && file.FileStream != null && file.ChatId != -1)
             {
-                int realChatId = GetChat(loger, ChatId);
+                int realChatId = GetChat(loger, file.ChatId);
                 Chat chat = new Chat();
                 string path = null;
                 using(Meseger ctx = new Meseger())
@@ -599,6 +599,10 @@ namespace Messeger
                         Directory.CreateDirectory(path);
                     }
                     TransferService transfer = new TransferService(path);
+                    RemoteFileInfo fileInfo = new RemoteFileInfo();
+                    fileInfo.FileByteStream = file.FileStream;
+                    fileInfo.FileName = file.FileName;
+                    fileInfo.Length = file.FileInfo.Length;
                     transfer.UploadFile(fileInfo);
                 }
             }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Security.Cryptography;
@@ -40,6 +41,7 @@ namespace Client
         Brush DefaultStackPanelColor;
         Thread thread;
         //bool Closet = false;
+        List<FileDTO> files = new List<FileDTO>();
         public MainWindow()
         {
             InitializeComponent();
@@ -904,12 +906,32 @@ namespace Client
                 if (openFile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     path = openFile.FileName;
-                    RemoteFileInfo
-                    MessageBox.Show($"{openFile.SafeFileName} /n{openFile.FileName} /n{openFile.ValidateNames}");
+                    FileInfo info = new FileInfo(path);
+                    FileDTO file;
+                    using (System.IO.FileStream stream = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                    {
+                        file = new FileDTO { ChatId = idChat, FileName = openFile.SafeFileName, FileInfo = info, FileStream = stream };
+                    }
+                    if (file.FileStream != null)
+                    {
+                        files.Add(file);
+                    }
+                    //MessageBox.Show($"{openFile.SafeFileName} /n{openFile.FileName} /n{openFile.ValidateNames}");
                 }
             }
         }
 
+        private bool FileExixt()
+        {
+            foreach (FileDTO item in files)
+            {
+                if(item.ChatId == idChat)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
 
         //private List<Message> bletMassage()

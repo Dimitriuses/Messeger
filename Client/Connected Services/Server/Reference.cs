@@ -377,6 +377,99 @@ namespace Client.Server {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FileDTO", Namespace="http://schemas.datacontract.org/2004/07/Messeger.DTO")]
+    [System.SerializableAttribute()]
+    public partial class FileDTO : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ChatIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.IO.FileInfo FileInfoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FileNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.IO.Stream FileStreamField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ChatId {
+            get {
+                return this.ChatIdField;
+            }
+            set {
+                if ((this.ChatIdField.Equals(value) != true)) {
+                    this.ChatIdField = value;
+                    this.RaisePropertyChanged("ChatId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.IO.FileInfo FileInfo {
+            get {
+                return this.FileInfoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FileInfoField, value) != true)) {
+                    this.FileInfoField = value;
+                    this.RaisePropertyChanged("FileInfo");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FileName {
+            get {
+                return this.FileNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FileNameField, value) != true)) {
+                    this.FileNameField = value;
+                    this.RaisePropertyChanged("FileName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.IO.Stream FileStream {
+            get {
+                return this.FileStreamField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FileStreamField, value) != true)) {
+                    this.FileStreamField = value;
+                    this.RaisePropertyChanged("FileStream");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Server.IService1")]
     public interface IService1 {
@@ -494,6 +587,12 @@ namespace Client.Server {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetPhone", ReplyAction="http://tempuri.org/IService1/GetPhoneResponse")]
         System.Threading.Tasks.Task<string> GetPhoneAsync(Client.Server.Loger loger);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UploaderFile", ReplyAction="http://tempuri.org/IService1/UploaderFileResponse")]
+        bool UploaderFile(Client.Server.Loger loger, Client.Server.FileDTO file);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UploaderFile", ReplyAction="http://tempuri.org/IService1/UploaderFileResponse")]
+        System.Threading.Tasks.Task<bool> UploaderFileAsync(Client.Server.Loger loger, Client.Server.FileDTO file);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -673,6 +772,14 @@ namespace Client.Server {
         
         public System.Threading.Tasks.Task<string> GetPhoneAsync(Client.Server.Loger loger) {
             return base.Channel.GetPhoneAsync(loger);
+        }
+        
+        public bool UploaderFile(Client.Server.Loger loger, Client.Server.FileDTO file) {
+            return base.Channel.UploaderFile(loger, file);
+        }
+        
+        public System.Threading.Tasks.Task<bool> UploaderFileAsync(Client.Server.Loger loger, Client.Server.FileDTO file) {
+            return base.Channel.UploaderFileAsync(loger, file);
         }
     }
 }

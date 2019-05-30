@@ -1,14 +1,17 @@
 ﻿using Messeger.DTO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.ServiceModel.Activation;
 using System.ServiceModel.Web;
 using System.Text;
 
 namespace Messeger
 {
+    
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IService1" in both code and config file together.
     [ServiceContract]
     public interface IService1
@@ -60,7 +63,7 @@ namespace Messeger
         [OperationContract]
         string GetPhone(Loger loger);
         [OperationContract]
-        bool UploadFile(Loger loger, RemoteFileInfo fileInfo, int ChatId);
+        bool UploaderFile(Loger loger,FileDTO file);
         // TODO: Add your service operations here
     }
 
@@ -89,6 +92,7 @@ namespace Messeger
         }
     }
 
+    
 
     [ServiceContract]
     public interface ITransferService
