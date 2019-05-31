@@ -49,7 +49,7 @@ namespace Messeger
         [OperationContract]
         bool UserExists(Loger loger);
         [OperationContract]
-        bool PushMessage(string text, Loger loger,int ChatId, FileDTO file);
+        bool PushMessage(string text, Loger loger,int ChatId, string fileName);
         [OperationContract]
         string GetLoginById(int id);
         [OperationContract]
@@ -65,6 +65,12 @@ namespace Messeger
         //[OperationContract]
         //bool UploaderFile(Loger loger,FileDTO file);
         // TODO: Add your service operations here
+
+        [OperationContract]
+        RemoteFileInfo DownloadFile(DownloadRequest request);
+
+        [OperationContract]
+        void UploadFile(RemoteFileInfo request);
     }
 
 
@@ -91,18 +97,7 @@ namespace Messeger
             set { stringValue = value; }
         }
     }
-
     
-
-    [ServiceContract]
-    public interface ITransferService
-    {
-        [OperationContract]
-        RemoteFileInfo DownloadFile(DownloadRequest request);
-
-        [OperationContract]
-        void UploadFile(RemoteFileInfo request);
-    }
     [MessageContract]
     public class DownloadRequest
     {

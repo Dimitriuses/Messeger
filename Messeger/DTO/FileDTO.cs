@@ -17,12 +17,12 @@ namespace Messeger.DTO
         }
         public FileDTO(string path)
         {
-            FileInfo f = new FileInfo(path);
+            FileInfo = new FileInfo(path);
             using (System.IO.FileStream stream = new System.IO.FileStream(path, System.IO.FileMode.Open, System.IO.FileAccess.Read))
             {
-                FileStream = ReadFully(stream);
+                FileStream = stream;
             }
-            FileName = f.Name;
+            FileName = FileInfo.Name;
         }
         public FileDTO(Model.File file)
         {
@@ -39,24 +39,10 @@ namespace Messeger.DTO
         [DataMember]
         public string FileName { get; set; }
         [DataMember]
-        public byte[] FileStream { get; set; }
+        public Stream FileStream { get; set; }
         [DataMember]
-        public byte[] FileInfo { get; set; }
+        public FileInfo FileInfo { get; set; }
         [DataMember]
         public int ChatId { get; set; }
-
-        public static byte[] ReadFully(Stream input)
-        {
-            byte[] buffer = new byte[1024*1024];
-            using (MemoryStream ms = new MemoryStream())
-            {
-                int read;
-                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    ms.Write(buffer, 0, read);
-                }
-                return ms.ToArray();
-            }
-        }
     }
 }

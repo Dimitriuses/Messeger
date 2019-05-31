@@ -3,6 +3,7 @@
   <xs:import schemaLocation="http://localhost:63716/Service1.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Messeger" />
   <xs:import schemaLocation="http://localhost:63716/Service1.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:import schemaLocation="http://localhost:63716/Service1.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Messeger.DTO" />
+  <xs:import schemaLocation="http://localhost:63716/Service1.svc?xsd=xsd7" namespace="http://schemas.microsoft.com/Message" />
   <xs:element name="GetData">
     <xs:complexType>
       <xs:sequence>
@@ -186,7 +187,7 @@
         <xs:element minOccurs="0" name="text" nillable="true" type="xs:string" />
         <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="loger" nillable="true" type="q17:Loger" />
         <xs:element minOccurs="0" name="ChatId" type="xs:int" />
-        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Messeger.DTO" minOccurs="0" name="file" nillable="true" type="q18:FileDTO" />
+        <xs:element minOccurs="0" name="fileName" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -221,28 +222,28 @@
   <xs:element name="GetUserListByFindModeResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/Messeger.DTO" minOccurs="0" name="GetUserListByFindModeResult" nillable="true" type="q19:ArrayOfUserDTO" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Messeger.DTO" minOccurs="0" name="GetUserListByFindModeResult" nillable="true" type="q18:ArrayOfUserDTO" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetUserProfile">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="loger" nillable="true" type="q20:Loger" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="loger" nillable="true" type="q19:Loger" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetUserProfileResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/Messeger.DTO" minOccurs="0" name="GetUserProfileResult" nillable="true" type="q21:UserDTO" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Messeger.DTO" minOccurs="0" name="GetUserProfileResult" nillable="true" type="q20:UserDTO" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RenameUser">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="loger" nillable="true" type="q22:Loger" />
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="loger" nillable="true" type="q21:Loger" />
         <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="surname" nillable="true" type="xs:string" />
       </xs:sequence>
@@ -258,7 +259,7 @@
   <xs:element name="GetEmail">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="loger" nillable="true" type="q23:Loger" />
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="loger" nillable="true" type="q22:Loger" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -272,7 +273,7 @@
   <xs:element name="GetPhone">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="loger" nillable="true" type="q24:Loger" />
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="loger" nillable="true" type="q23:Loger" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -283,19 +284,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="UploaderFile">
+  <xs:element name="DownloadRequest">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="loger" nillable="true" type="q25:Loger" />
-        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/Messeger.DTO" minOccurs="0" name="file" nillable="true" type="q26:FileDTO" />
+        <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="UploaderFileResponse">
+  <xs:element name="RemoteFileInfo">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="UploaderFileResult" type="xs:boolean" />
+        <xs:element xmlns:q24="http://schemas.microsoft.com/Message" name="FileByteStream" type="q24:StreamBody" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="FileName" nillable="true" type="xs:string" />
+  <xs:element name="Length" type="xs:long" />
 </xs:schema>

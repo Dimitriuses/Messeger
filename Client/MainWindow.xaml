@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Client"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="1300" Background="{DynamicResource PrimaryHueMidBrush}">
+        Title="Interaction" Height="550" Width="1300" Background="{DynamicResource PrimaryHueMidBrush}">
     <Window.Resources>
         <ControlTemplate x:Key="validationFailed">
             <StackPanel Orientation="Horizontal">

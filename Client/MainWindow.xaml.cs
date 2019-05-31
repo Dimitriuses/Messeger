@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -186,9 +187,29 @@ namespace Client
         {
             if (idChat != -1 && UserLoger != null)
             {
-
                 Service1Client client = new Service1Client();
-                bool CompleteOparation = client.PushMessage(textBox.Text, UserLoger, idChat, GetFile());
+                FileDTO file = GetFile();
+                if (file != null)
+                {
+                    //MessageBox.Show(file.FileInfo.FullName);
+                    using (FileStream stream = new FileStream(file.FileInfo.FullName, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+                    {
+                        try
+                        {
+                            client.UploadFile(file.FileName, file.FileInfo.Length, stream);
+                        }
+                        catch (Exception error)
+                        {
+                            MessageBox.Show("error: " + error.Message);
+                            //throw;
+                        }
+
+                        Button_Click_6(null, null);
+                    }
+                    //RemoteFileInfo fileInfo = new RemoteFileInfo(file.FileName, file.FileInfo.Length, file.FileStream);
+                }
+
+                bool CompleteOparation = true; //= client.PushMessage(textBox.Text, UserLoger, idChat, file.FileName);
                 client.Close();
                 if (CompleteOparation)
                 {

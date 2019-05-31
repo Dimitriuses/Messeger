@@ -397,6 +397,7 @@ namespace Client.Server {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="FileDTO", Namespace="http://schemas.datacontract.org/2004/07/Messeger.DTO")]
     [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.IO.FileStream))]
     public partial class FileDTO : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -563,10 +564,10 @@ namespace Client.Server {
         System.Threading.Tasks.Task<bool> UserExistsAsync(Client.Server.Loger loger);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/PushMessage", ReplyAction="http://tempuri.org/IService1/PushMessageResponse")]
-        bool PushMessage(string text, Client.Server.Loger loger, int ChatId, Client.Server.FileDTO file);
+        bool PushMessage(string text, Client.Server.Loger loger, int ChatId, string fileName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/PushMessage", ReplyAction="http://tempuri.org/IService1/PushMessageResponse")]
-        System.Threading.Tasks.Task<bool> PushMessageAsync(string text, Client.Server.Loger loger, int ChatId, Client.Server.FileDTO file);
+        System.Threading.Tasks.Task<bool> PushMessageAsync(string text, Client.Server.Loger loger, int ChatId, string fileName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetLoginById", ReplyAction="http://tempuri.org/IService1/GetLoginByIdResponse")]
         string GetLoginById(int id);
@@ -604,11 +605,71 @@ namespace Client.Server {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/GetPhone", ReplyAction="http://tempuri.org/IService1/GetPhoneResponse")]
         System.Threading.Tasks.Task<string> GetPhoneAsync(Client.Server.Loger loger);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UploaderFile", ReplyAction="http://tempuri.org/IService1/UploaderFileResponse")]
-        bool UploaderFile(Client.Server.Loger loger, Client.Server.FileDTO file);
+        // CODEGEN: Generating message contract since the wrapper name (DownloadRequest) of message DownloadRequest does not match the default value (DownloadFile)
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/DownloadFile", ReplyAction="http://tempuri.org/IService1/DownloadFileResponse")]
+        Client.Server.RemoteFileInfo DownloadFile(Client.Server.DownloadRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UploaderFile", ReplyAction="http://tempuri.org/IService1/UploaderFileResponse")]
-        System.Threading.Tasks.Task<bool> UploaderFileAsync(Client.Server.Loger loger, Client.Server.FileDTO file);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/DownloadFile", ReplyAction="http://tempuri.org/IService1/DownloadFileResponse")]
+        System.Threading.Tasks.Task<Client.Server.RemoteFileInfo> DownloadFileAsync(Client.Server.DownloadRequest request);
+        
+        // CODEGEN: Generating message contract since the operation UploadFile is neither RPC nor document wrapped.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UploadFile", ReplyAction="http://tempuri.org/IService1/UploadFileResponse")]
+        Client.Server.UploadFileResponse UploadFile(Client.Server.RemoteFileInfo request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/UploadFile", ReplyAction="http://tempuri.org/IService1/UploadFileResponse")]
+        System.Threading.Tasks.Task<Client.Server.UploadFileResponse> UploadFileAsync(Client.Server.RemoteFileInfo request);
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="DownloadRequest", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class DownloadRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public string FileName;
+        
+        public DownloadRequest() {
+        }
+        
+        public DownloadRequest(string FileName) {
+            this.FileName = FileName;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="RemoteFileInfo", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class RemoteFileInfo {
+        
+        [System.ServiceModel.MessageHeaderAttribute(Namespace="http://tempuri.org/")]
+        public string FileName;
+        
+        [System.ServiceModel.MessageHeaderAttribute(Namespace="http://tempuri.org/")]
+        public long Length;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public System.IO.Stream FileByteStream;
+        
+        public RemoteFileInfo() {
+        }
+        
+        public RemoteFileInfo(string FileName, long Length, System.IO.Stream FileByteStream) {
+            this.FileName = FileName;
+            this.Length = Length;
+            this.FileByteStream = FileByteStream;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class UploadFileResponse {
+        
+        public UploadFileResponse() {
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -734,12 +795,12 @@ namespace Client.Server {
             return base.Channel.UserExistsAsync(loger);
         }
         
-        public bool PushMessage(string text, Client.Server.Loger loger, int ChatId, Client.Server.FileDTO file) {
-            return base.Channel.PushMessage(text, loger, ChatId, file);
+        public bool PushMessage(string text, Client.Server.Loger loger, int ChatId, string fileName) {
+            return base.Channel.PushMessage(text, loger, ChatId, fileName);
         }
         
-        public System.Threading.Tasks.Task<bool> PushMessageAsync(string text, Client.Server.Loger loger, int ChatId, Client.Server.FileDTO file) {
-            return base.Channel.PushMessageAsync(text, loger, ChatId, file);
+        public System.Threading.Tasks.Task<bool> PushMessageAsync(string text, Client.Server.Loger loger, int ChatId, string fileName) {
+            return base.Channel.PushMessageAsync(text, loger, ChatId, fileName);
         }
         
         public string GetLoginById(int id) {
@@ -790,12 +851,55 @@ namespace Client.Server {
             return base.Channel.GetPhoneAsync(loger);
         }
         
-        public bool UploaderFile(Client.Server.Loger loger, Client.Server.FileDTO file) {
-            return base.Channel.UploaderFile(loger, file);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Client.Server.RemoteFileInfo Client.Server.IService1.DownloadFile(Client.Server.DownloadRequest request) {
+            return base.Channel.DownloadFile(request);
         }
         
-        public System.Threading.Tasks.Task<bool> UploaderFileAsync(Client.Server.Loger loger, Client.Server.FileDTO file) {
-            return base.Channel.UploaderFileAsync(loger, file);
+        public long DownloadFile(ref string FileName, out System.IO.Stream FileByteStream) {
+            Client.Server.DownloadRequest inValue = new Client.Server.DownloadRequest();
+            inValue.FileName = FileName;
+            Client.Server.RemoteFileInfo retVal = ((Client.Server.IService1)(this)).DownloadFile(inValue);
+            FileName = retVal.FileName;
+            FileByteStream = retVal.FileByteStream;
+            return retVal.Length;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<Client.Server.RemoteFileInfo> Client.Server.IService1.DownloadFileAsync(Client.Server.DownloadRequest request) {
+            return base.Channel.DownloadFileAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<Client.Server.RemoteFileInfo> DownloadFileAsync(string FileName) {
+            Client.Server.DownloadRequest inValue = new Client.Server.DownloadRequest();
+            inValue.FileName = FileName;
+            return ((Client.Server.IService1)(this)).DownloadFileAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Client.Server.UploadFileResponse Client.Server.IService1.UploadFile(Client.Server.RemoteFileInfo request) {
+            return base.Channel.UploadFile(request);
+        }
+        
+        public void UploadFile(string FileName, long Length, System.IO.Stream FileByteStream) {
+            Client.Server.RemoteFileInfo inValue = new Client.Server.RemoteFileInfo();
+            inValue.FileName = FileName;
+            inValue.Length = Length;
+            inValue.FileByteStream = FileByteStream;
+            Client.Server.UploadFileResponse retVal = ((Client.Server.IService1)(this)).UploadFile(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<Client.Server.UploadFileResponse> Client.Server.IService1.UploadFileAsync(Client.Server.RemoteFileInfo request) {
+            return base.Channel.UploadFileAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<Client.Server.UploadFileResponse> UploadFileAsync(string FileName, long Length, System.IO.Stream FileByteStream) {
+            Client.Server.RemoteFileInfo inValue = new Client.Server.RemoteFileInfo();
+            inValue.FileName = FileName;
+            inValue.Length = Length;
+            inValue.FileByteStream = FileByteStream;
+            return ((Client.Server.IService1)(this)).UploadFileAsync(inValue);
         }
     }
 }

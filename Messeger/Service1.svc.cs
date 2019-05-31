@@ -10,6 +10,7 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Web.Script.Serialization;
 
 namespace Messeger
 {
@@ -411,8 +412,9 @@ namespace Messeger
             }
         }
 
-        public bool PushMessage(string text,Loger loger,int ChatId,FileDTO file)
+        public bool PushMessage(string text,Loger loger,int ChatId,string fileName)
         {
+            //FileDTO file = new JavaScriptSerializer().Deserialize<FileDTO>(JSONfile);
             using (Meseger ctx = new Meseger())
             {
                 
@@ -428,15 +430,15 @@ namespace Messeger
                     }
                     
                     Message msg = new Message { Text = text, Sender = sender, DateTime = DateTime.Now, Chat = chat };
-                    if(file != null)
-                    {
-                        file.ChatId = chat.Id;
-                        Model.File MessageFile = UploaderFile(loger, file);
-                        if(MessageFile != null)
-                        {
-                            msg.File = MessageFile;
-                        }
-                    }
+                    //if(file != null)
+                    //{
+                    //    file.ChatId = chat.Id;
+                    //    Model.File MessageFile = UploaderFile(loger, file);
+                    //    if(MessageFile != null)
+                    //    {
+                    //        msg.File = MessageFile;
+                    //    }
+                    //}
                     ctx.Messages.Add(msg);
                     ctx.SaveChanges();
                     return true;
@@ -606,12 +608,12 @@ namespace Messeger
                     {
                         Directory.CreateDirectory(path);
                     }
-                    TransferService transfer = new TransferService(path);
-                    RemoteFileInfo fileInfo = new RemoteFileInfo();
-                    fileInfo.FileByteStream = file.FileStream;
-                    fileInfo.FileName = file.FileName;
-                    fileInfo.Length = file.FileInfo.Length;
-                    transfer.UploadFile(fileInfo);
+                    //TransferService transfer = new TransferService(path);
+                    //RemoteFileInfo fileInfo = new RemoteFileInfo();
+                    //fileInfo.FileByteStream = file.FileStream;
+                    //fileInfo.FileName = file.FileName;
+                    //fileInfo.Length = file.FileInfo.Length;
+                    //transfer.UploadFile(fileInfo);
                 }
                 FileInfo info = new FileInfo(path + "/" + file.FileName);
                 if (info.Exists)
@@ -621,22 +623,21 @@ namespace Messeger
             }
             return null;
         }
-    }
 
 
-    public class TransferService : ITransferService
-    {
-        public TransferService(string filepach)
-        {
-            FilePath = filepach;
-        }
-        public string FilePath { get; set; }
+
+
+
+
+
+
+
         public RemoteFileInfo DownloadFile(DownloadRequest request)
         {
             RemoteFileInfo result = new RemoteFileInfo();
             try
             {
-                string filePath = Path.Combine(FilePath, request.FileName);
+                string filePath = Path.Combine(request.FileName, request.FileName);
                 FileInfo fileInfo = new FileInfo(filePath);
 
                 // check if exists
@@ -663,10 +664,13 @@ namespace Messeger
         {
             FileStream targetStream = null;
             Stream sourceStream = request.FileByteStream;
-
-            //string uploadFolder = @"C:\upload\";
-
-            string filePath = Path.Combine(FilePath, request.FileName);
+            string domain = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
+            string uploadFolder = domain + @"\upload\";
+            if (!Directory.Exists(uploadFolder))
+            {
+                Directory.CreateDirectory(uploadFolder);
+            }
+            string filePath = Path.Combine(uploadFolder, request.FileName);
 
             using (targetStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None))
             {

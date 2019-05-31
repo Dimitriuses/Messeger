@@ -23,4 +23,12 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="Stream" nillable="true" type="tns:Stream" />
+  <xs:complexType name="FileStream">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Stream">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="FileStream" nillable="true" type="tns:FileStream" />
 </xs:schema>
