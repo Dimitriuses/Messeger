@@ -3,7 +3,7 @@
   <xs:import schemaLocation="http://localhost:63716/Service1.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Messeger" />
   <xs:import schemaLocation="http://localhost:63716/Service1.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
   <xs:import schemaLocation="http://localhost:63716/Service1.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Messeger.DTO" />
-  <xs:import schemaLocation="http://localhost:63716/Service1.svc?xsd=xsd7" namespace="http://schemas.microsoft.com/Message" />
+  <xs:import schemaLocation="http://localhost:63716/Service1.svc?xsd=xsd5" namespace="http://schemas.microsoft.com/Message" />
   <xs:element name="GetData">
     <xs:complexType>
       <xs:sequence>

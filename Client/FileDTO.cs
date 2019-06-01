@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Messeger.DTO
+namespace Client
 {
-    
-    [DataContract]
     public class FileDTO
     {
         public FileDTO()
@@ -24,25 +22,9 @@ namespace Messeger.DTO
             }
             FileName = FileInfo.Name;
         }
-        public FileDTO(Model.File file)
-        {
-            Model.File tmp;
-            using(Meseger ctx = new Meseger())
-            {
-                tmp = ctx.Files.SingleOrDefault(a => a.Id == file.Id);
-                ChatId = tmp.Message.Chat.Id;
-            }
-            FileInfo = new FileInfo(tmp.Path);
-            FileStream = new FileStream(tmp.Path, System.IO.FileMode.Open, System.IO.FileAccess.Read);
-            FileName = FileInfo.Name;
-        }
-        [DataMember]
         public string FileName { get; set; }
-        [DataMember]
         public Stream FileStream { get; set; }
-        [DataMember]
         public FileInfo FileInfo { get; set; }
-        [DataMember]
         public int ChatId { get; set; }
     }
 }

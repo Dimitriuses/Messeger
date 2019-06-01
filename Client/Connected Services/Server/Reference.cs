@@ -268,7 +268,7 @@ namespace Client.Server {
         private System.DateTime DateTimeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Client.Server.FileDTO FileField;
+        private string FileNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int IdField;
@@ -319,14 +319,14 @@ namespace Client.Server {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public Client.Server.FileDTO File {
+        public string FileName {
             get {
-                return this.FileField;
+                return this.FileNameField;
             }
             set {
-                if ((object.ReferenceEquals(this.FileField, value) != true)) {
-                    this.FileField = value;
-                    this.RaisePropertyChanged("File");
+                if ((object.ReferenceEquals(this.FileNameField, value) != true)) {
+                    this.FileNameField = value;
+                    this.RaisePropertyChanged("FileName");
                 }
             }
         }
@@ -379,100 +379,6 @@ namespace Client.Server {
                 if ((object.ReferenceEquals(this.TextField, value) != true)) {
                     this.TextField = value;
                     this.RaisePropertyChanged("Text");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="FileDTO", Namespace="http://schemas.datacontract.org/2004/07/Messeger.DTO")]
-    [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.IO.FileStream))]
-    public partial class FileDTO : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int ChatIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.IO.FileInfo FileInfoField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FileNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.IO.Stream FileStreamField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int ChatId {
-            get {
-                return this.ChatIdField;
-            }
-            set {
-                if ((this.ChatIdField.Equals(value) != true)) {
-                    this.ChatIdField = value;
-                    this.RaisePropertyChanged("ChatId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.IO.FileInfo FileInfo {
-            get {
-                return this.FileInfoField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FileInfoField, value) != true)) {
-                    this.FileInfoField = value;
-                    this.RaisePropertyChanged("FileInfo");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FileName {
-            get {
-                return this.FileNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FileNameField, value) != true)) {
-                    this.FileNameField = value;
-                    this.RaisePropertyChanged("FileName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.IO.Stream FileStream {
-            get {
-                return this.FileStreamField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FileStreamField, value) != true)) {
-                    this.FileStreamField = value;
-                    this.RaisePropertyChanged("FileStream");
                 }
             }
         }

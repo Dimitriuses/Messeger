@@ -430,15 +430,25 @@ namespace Messeger
                     }
                     
                     Message msg = new Message { Text = text, Sender = sender, DateTime = DateTime.Now, Chat = chat };
-                    //if(file != null)
-                    //{
-                    //    file.ChatId = chat.Id;
-                    //    Model.File MessageFile = UploaderFile(loger, file);
-                    //    if(MessageFile != null)
-                    //    {
-                    //        msg.File = MessageFile;
-                    //    }
-                    //}
+                    if (fileName != String.Empty)
+                    {
+                        string domain = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
+                        string uploadFolder = domain + @"\upload\";
+                        if (System.IO.File.Exists(uploadFolder + fileName))
+                        {
+                            string path = domain + $@"\{chat.Guid}\";
+                            if (!Directory.Exists(path))
+                            {
+                                Directory.CreateDirectory(path);
+                            }
+                            System.IO.File.Move(uploadFolder + fileName, path + fileName);
+                            if (System.IO.File.Exists(path + fileName))
+                            {
+                                Model.File file = new Model.File { Path = path + fileName };
+                                msg.File = file;
+                            }
+                        }
+                    }
                     ctx.Messages.Add(msg);
                     ctx.SaveChanges();
                     return true;
@@ -593,36 +603,36 @@ namespace Messeger
             return null;
         }
 
-        public Model.File UploaderFile(Loger loger,FileDTO file)
-        {
-            if (UserLogin(loger) && file.FileStream != null && file.ChatId != -1)
-            {
-                int realChatId = GetChat(loger, file.ChatId);
-                Chat chat = new Chat();
-                string path = null;
-                using(Meseger ctx = new Meseger())
-                {
-                    chat = ctx.Chats.Find(realChatId);
-                    path = $"./{chat.Guid}";
-                    if (!Directory.Exists(path))
-                    {
-                        Directory.CreateDirectory(path);
-                    }
-                    //TransferService transfer = new TransferService(path);
-                    //RemoteFileInfo fileInfo = new RemoteFileInfo();
-                    //fileInfo.FileByteStream = file.FileStream;
-                    //fileInfo.FileName = file.FileName;
-                    //fileInfo.Length = file.FileInfo.Length;
-                    //transfer.UploadFile(fileInfo);
-                }
-                FileInfo info = new FileInfo(path + "/" + file.FileName);
-                if (info.Exists)
-                {
-                    return new Model.File { Path = info.FullName };
-                }
-            }
-            return null;
-        }
+        //public Model.File UploaderFile(Loger loger,FileDTO file)
+        //{
+        //    if (UserLogin(loger) && file.FileStream != null && file.ChatId != -1)
+        //    {
+        //        int realChatId = GetChat(loger, file.ChatId);
+        //        Chat chat = new Chat();
+        //        string path = null;
+        //        using(Meseger ctx = new Meseger())
+        //        {
+        //            chat = ctx.Chats.Find(realChatId);
+        //            path = $"./{chat.Guid}";
+        //            if (!Directory.Exists(path))
+        //            {
+        //                Directory.CreateDirectory(path);
+        //            }
+        //            //TransferService transfer = new TransferService(path);
+        //            //RemoteFileInfo fileInfo = new RemoteFileInfo();
+        //            //fileInfo.FileByteStream = file.FileStream;
+        //            //fileInfo.FileName = file.FileName;
+        //            //fileInfo.Length = file.FileInfo.Length;
+        //            //transfer.UploadFile(fileInfo);
+        //        }
+        //        FileInfo info = new FileInfo(path + "/" + file.FileName);
+        //        if (info.Exists)
+        //        {
+        //            return new Model.File { Path = info.FullName };
+        //        }
+        //    }
+        //    return null;
+        //}
 
 
 

@@ -16,6 +16,7 @@ namespace Messeger.DTO
         public MessageDTO(Message message)
         {
             Id = message.Id;
+            string path;
             using(Meseger ctx = new Meseger())
             {
                 message = ctx.Messages.SingleOrDefault(a => a.Id == Id);
@@ -24,6 +25,23 @@ namespace Messeger.DTO
                 SenderId = message.Sender.Id;
                 ReciversId = message.Receivers.Select(a => a.Id).ToArray<int>();
                 ChatId = message.Chat.Id;
+                if(message.File!= null)
+                {
+                    path = message.File.Path;
+                }
+                else
+                {
+                    path = String.Empty;
+                }
+            }
+            if (path != String.Empty && System.IO.File.Exists(path))
+            {
+                System.IO.FileInfo fileInfo = new System.IO.FileInfo(path);
+                FileName = fileInfo.Name;
+            }
+            else
+            {
+                FileName = String.Empty;
             }
         }
         [DataMember]
@@ -39,6 +57,6 @@ namespace Messeger.DTO
         [DataMember]
         public int ChatId { get; set; }
         [DataMember]
-        public FileDTO File { get; set; }
+        public string FileName { get; set; }
     }
 }

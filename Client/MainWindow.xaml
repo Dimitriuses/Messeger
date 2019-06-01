@@ -8,6 +8,9 @@
         mc:Ignorable="d"
         Title="Interaction" Height="550" Width="1300" Background="{DynamicResource PrimaryHueMidBrush}">
     <Window.Resources>
+        <Style x:Key="MidleButom" TargetType="Button">
+            <Setter Property="Style" Value="{StaticResource MaterialDesignFloatingActionMiniButton}"/>
+        </Style>
         <ControlTemplate x:Key="validationFailed">
             <StackPanel Orientation="Horizontal">
                 <Border BorderBrush="Red" BorderThickness="2">
@@ -310,13 +313,16 @@
                                                 </StackPanel>
                                             </DockPanel>
                                         </materialDesign:ColorZone>
-                                        <RichTextBox x:Name="richMessageBox" Background="{DynamicResource PrimaryHueLightBrush}" Margin="0,72,0,74">
+                                                <StackPanel x:Name="Messages" Background="{DynamicResource PrimaryHueLightBrush}" Margin="0,72,0,74">
+                                                    
+                                                </StackPanel>
+                                        <!--<RichTextBox x:Name="richMessageBox" Background="{DynamicResource PrimaryHueLightBrush}" Margin="0,72,0,74">
                                             <FlowDocument x:Name="Messages">
                                                 <Paragraph>
                                                     <Run ></Run>
                                                 </Paragraph>
                                             </FlowDocument>
-                                        </RichTextBox>
+                                        </RichTextBox>-->
                                     </Grid>
 
                                 </Grid>

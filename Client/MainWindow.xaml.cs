@@ -197,6 +197,7 @@ namespace Client
                         try
                         {
                             client.UploadFile(file.FileName, file.FileInfo.Length, stream);
+                            Button_Click_6(null, null);
                         }
                         catch (Exception error)
                         {
@@ -204,12 +205,11 @@ namespace Client
                             //throw;
                         }
 
-                        Button_Click_6(null, null);
                     }
                     //RemoteFileInfo fileInfo = new RemoteFileInfo(file.FileName, file.FileInfo.Length, file.FileStream);
                 }
 
-                bool CompleteOparation = true; //= client.PushMessage(textBox.Text, UserLoger, idChat, file.FileName);
+                bool CompleteOparation = client.PushMessage(textBox.Text, UserLoger, idChat, file.FileName);
                 client.Close();
                 if (CompleteOparation)
                 {
@@ -268,7 +268,7 @@ namespace Client
 
         private void RenderMessage(MessageDTO[] messages)
         {
-            Messages.Blocks.Clear();
+            Messages.Children.Clear();
             if(messages == null || messages.Length == 0)
             {
                 return;
@@ -284,21 +284,64 @@ namespace Client
                     Foreground = new SolidColorBrush(Colors.White),
                     Padding = (Thickness)tc.ConvertFromString("8px"),
                     UniformCornerRadius = 6,
-                    Content = new TextBlock { Text = $"{item.Text}", TextWrapping = TextWrapping.Wrap }
+                    //Content = new TextBlock { Text = $"{item.Text}", TextWrapping = TextWrapping.Wrap }
                 };
-                Paragraph paragraph = new Paragraph(new InlineUIContainer( card ));
-                paragraph.BorderThickness = (Thickness)tc.ConvertFromString("1px");
+                if (item.FileName != String.Empty)
+                {
+                    StackPanel stack = new StackPanel();
+                    stack.Children.Add(new TextBox {
+                        Text = $"{item.Text}",
+                        TextWrapping = TextWrapping.Wrap,
+                        IsReadOnly = true, Background = new SolidColorBrush(Colors.Transparent),
+                        BorderThickness = (Thickness)tc.ConvertFromString("0px"),
+                        BorderBrush = new SolidColorBrush(Colors.Transparent)
+                    });
+                    Button button = new Button();
+                    StyleSelector style = new StyleSelector();
+                    button.Style = (Style)this.TryFindResource("MaterialDesignFloatingActionMiniButton");
+                    button.Content = new PackIcon { Kind = PackIconKind.Download };
+                    button.Click += new RoutedEventHandler(DownloadFile);
+                    button.HorizontalAlignment = HorizontalAlignment.Left;
+                    TextBlock text = new TextBlock { Text = item.FileName, TextWrapping = TextWrapping.Wrap };
+                    text.HorizontalAlignment = HorizontalAlignment.Right;
+                    text.Foreground = (Brush)this.TryFindResource("PrimaryHueLightForegroundBrush");
+                    StackPanel stack2 = new StackPanel { Orientation = Orientation.Horizontal };
+                    stack2.Background = (Brush)this.TryFindResource("PrimaryHueLightBrush");
+                    stack2.Children.Add(button);
+                    stack2.Children.Add(text);
+                    stack.Children.Add(stack2);
+                    card.Content = stack;
+                }
+                else
+                {
+                    card.Content = new TextBox
+                    {
+                        Text = $"{item.Text}",
+                        TextWrapping = TextWrapping.Wrap,
+                        IsReadOnly = true,
+                        Background = new SolidColorBrush(Colors.Transparent),
+                        BorderThickness = (Thickness)tc.ConvertFromString("0px"),
+                        BorderBrush = new SolidColorBrush(Colors.Transparent),
+                        TextDecorations =
+                    };
+                }
+                //Paragraph paragraph = new Paragraph(new InlineUIContainer( card ));
+                //paragraph.BorderThickness = (Thickness)tc.ConvertFromString("1px");
+                card.Margin = (Thickness)tc.ConvertFromString("3px");
                 if (SenderLogin == UserLoger.Login)
                 {
-                    paragraph.FlowDirection = FlowDirection.RightToLeft;
+                    
+                    card.HorizontalAlignment = HorizontalAlignment.Right;
+                    //paragraph.FlowDirection = FlowDirection.RightToLeft;
                     //paragraph.BorderBrush = Brushes.Red;
                 }
                 else
                 {
-                    paragraph.FlowDirection = FlowDirection.LeftToRight;
+                    card.HorizontalAlignment = HorizontalAlignment.Left;
+                    //paragraph.FlowDirection = FlowDirection.LeftToRight;
                     //paragraph.BorderBrush = Brushes.Blue;
                 }
-                Messages.Blocks.Add(paragraph);
+                Messages.Children.Add(card);
             }
             client.Close();
         }
@@ -999,6 +1042,10 @@ namespace Client
             change.Show();
         }
 
+        private void DownloadFile(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Danke");
+        }
 
         //private List<Message> bletMassage()
         //{

@@ -101,6 +101,7 @@
     <Compile Include="ColorChange.xaml.cs">
       <DependentUpon>ColorChange.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FileDTO.cs" />
     <Compile Include="IDataErrorInfo.cs" />
     <Compile Include="PaletteSelectorViewModel.cs" />
     <Compile Include="Pallete.xaml.cs">
@@ -206,13 +207,7 @@
       <SubType>Designer</SubType>
     </None>
     <Fakes Include="Fakes\MaterialDesignColors.fakes" />
-    <None Include="Connected Services\Server\Service15.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Connected Services\Server\Service151.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\Server\Service16.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
