@@ -352,7 +352,7 @@ namespace Messeger
                 }
                 else if (Secure && messages.Count == 0)
                 {
-                    messageDTOs.Add(new MessageDTO { Text = "This chat is empty", SenderId = 1 });
+                    messageDTOs.Add(new MessageDTO { Text = "This chat is empty", SenderId = 1, FileName = String.Empty });
                     return messageDTOs;
                 }
             }
@@ -644,30 +644,49 @@ namespace Messeger
 
         public RemoteFileInfo DownloadFile(DownloadRequest request)
         {
-            RemoteFileInfo result = new RemoteFileInfo();
-            try
+            Message message = new Message();
+            Chat chat = new Chat();
+            using(Meseger ctx = new Meseger())
             {
-                string filePath = Path.Combine(request.FileName, request.FileName);
-                FileInfo fileInfo = new FileInfo(filePath);
-
-                // check if exists
-                if (!fileInfo.Exists)
-                    throw new FileNotFoundException("Файл не знайдений", request.FileName);
-
-                // open stream
-                FileStream stream = new FileStream(filePath,
-                          System.IO.FileMode.Open, FileAccess.Read);
-
-                // return result 
-                result.FileName = request.FileName;
-                result.Length = fileInfo.Length;
-                result.FileByteStream = stream;
+                message = ctx.Messages.Find(request.IdMessage);
+                chat = message.Chat;
             }
-            catch (Exception ex)
+            if (UserLogin(request.Loger) && message.Id == request.IdMessage && ChatUserExists(request.Loger, chat.Id))
             {
+                Model.File file = new Model.File();
+                using (Meseger ctx = new Meseger())
+                {
+                    file = ctx.Files.SingleOrDefault(a => a.Id == message.Id);
+                }
+                if(file.Id != message.Id)
+                {
+                    return null;
+                }
+                RemoteFileInfo result = new RemoteFileInfo();
+                try
+                {
+                    //string filePath = Path.Combine(request.FileName, request.FileName);
+                    FileInfo fileInfo = new FileInfo(file.Path);
 
+                    // check if exists
+                    if (!fileInfo.Exists)
+                        throw new FileNotFoundException("Файл не знайдений", file.Path);
+
+                    // open stream
+                    FileStream stream = new FileStream(file.Path,System.IO.FileMode.Open, FileAccess.Read);
+
+                    // return result 
+                    result.FileName = fileInfo.Name;
+                    result.Length = fileInfo.Length;
+                    result.FileByteStream = stream;
+                }
+                catch (Exception ex)
+                {
+
+                }
+                return result;
             }
-            return result;
+            return null;
         }
 
         public void UploadFile(RemoteFileInfo request)

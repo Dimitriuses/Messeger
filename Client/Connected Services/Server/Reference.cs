@@ -533,13 +533,17 @@ namespace Client.Server {
     public partial class DownloadRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
-        public string FileName;
+        public int IdMessage;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        public Client.Server.Loger Loger;
         
         public DownloadRequest() {
         }
         
-        public DownloadRequest(string FileName) {
-            this.FileName = FileName;
+        public DownloadRequest(int IdMessage, Client.Server.Loger Loger) {
+            this.IdMessage = IdMessage;
+            this.Loger = Loger;
         }
     }
     
@@ -762,13 +766,14 @@ namespace Client.Server {
             return base.Channel.DownloadFile(request);
         }
         
-        public long DownloadFile(ref string FileName, out System.IO.Stream FileByteStream) {
+        public string DownloadFile(int IdMessage, Client.Server.Loger Loger, out long Length, out System.IO.Stream FileByteStream) {
             Client.Server.DownloadRequest inValue = new Client.Server.DownloadRequest();
-            inValue.FileName = FileName;
+            inValue.IdMessage = IdMessage;
+            inValue.Loger = Loger;
             Client.Server.RemoteFileInfo retVal = ((Client.Server.IService1)(this)).DownloadFile(inValue);
-            FileName = retVal.FileName;
+            Length = retVal.Length;
             FileByteStream = retVal.FileByteStream;
-            return retVal.Length;
+            return retVal.FileName;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -776,9 +781,10 @@ namespace Client.Server {
             return base.Channel.DownloadFileAsync(request);
         }
         
-        public System.Threading.Tasks.Task<Client.Server.RemoteFileInfo> DownloadFileAsync(string FileName) {
+        public System.Threading.Tasks.Task<Client.Server.RemoteFileInfo> DownloadFileAsync(int IdMessage, Client.Server.Loger Loger) {
             Client.Server.DownloadRequest inValue = new Client.Server.DownloadRequest();
-            inValue.FileName = FileName;
+            inValue.IdMessage = IdMessage;
+            inValue.Loger = Loger;
             return ((Client.Server.IService1)(this)).DownloadFileAsync(inValue);
         }
         

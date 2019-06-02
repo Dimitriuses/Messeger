@@ -41,6 +41,8 @@ namespace Client
         int idChat = -1;
         Brush DefaultStackPanelColor;
         Thread thread;
+        MessageDTO[] messagesTOsave;
+        string[] chatsSave;
         //bool Closet = false;
         List<FileDTO> files = new List<FileDTO>();
         public MainWindow()
@@ -72,7 +74,7 @@ namespace Client
         {
             while (true)
             {
-                Thread.Sleep(1000);
+                //Thread.Sleep(1000);
                 bool login = false;
                 //if (!this.Dispatcher.Invoke(() => { Application.Current.Windows.OfType<MainWindow>().Any(); }))
                 //{
@@ -208,6 +210,10 @@ namespace Client
                     }
                     //RemoteFileInfo fileInfo = new RemoteFileInfo(file.FileName, file.FileInfo.Length, file.FileStream);
                 }
+                else
+                {
+                    file = new FileDTO();
+                }
 
                 bool CompleteOparation = client.PushMessage(textBox.Text, UserLoger, idChat, file.FileName);
                 client.Close();
@@ -247,7 +253,7 @@ namespace Client
             Service1Client client = new Service1Client();
             messages = client.GetMessages(UserLoger, idChat);
             client.Close();
-            if(messages != null)
+            if(messages != null&&(messagesTOsave == null||!EqualsMessage(messages)))
             {
                 try
                 {
@@ -255,7 +261,7 @@ namespace Client
                     {
                         RenderMessage(messages);
                     });
-
+                    messagesTOsave = messages;
                 }
                 catch (Exception)
                 {
@@ -265,6 +271,39 @@ namespace Client
 
             }
         }
+
+       private bool EqualsMessage(MessageDTO[] messages)
+       {
+            if (messagesTOsave != null&& messagesTOsave.Length == messages.Length)
+            {
+                for (int i = 0; i < messages.Length; i++)
+                {
+                    bool text = messagesTOsave[i].Text == messages[i].Text;
+                    bool chat = messagesTOsave[i].ChatId == messages[i].ChatId;
+                    bool sender = messagesTOsave[i].SenderId == messages[i].SenderId;
+                    bool id = messagesTOsave[i].Id == messages[i].Id;
+                    bool fileName = messagesTOsave[i].FileName == messages[i].FileName;
+                    if (id && text && sender && chat && fileName)
+                    {
+
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                
+            }
+            else if(messagesTOsave == null)
+            {
+                return false;
+            }
+            else if(messages.Length != messagesTOsave.Length)
+            {
+                return false;
+            }
+            return true;
+        } 
 
         private void RenderMessage(MessageDTO[] messages)
         {
@@ -302,6 +341,7 @@ namespace Client
                     button.Content = new PackIcon { Kind = PackIconKind.Download };
                     button.Click += new RoutedEventHandler(DownloadFile);
                     button.HorizontalAlignment = HorizontalAlignment.Left;
+                    button.Tag = item;
                     TextBlock text = new TextBlock { Text = item.FileName, TextWrapping = TextWrapping.Wrap };
                     text.HorizontalAlignment = HorizontalAlignment.Right;
                     text.Foreground = (Brush)this.TryFindResource("PrimaryHueLightForegroundBrush");
@@ -322,7 +362,7 @@ namespace Client
                         Background = new SolidColorBrush(Colors.Transparent),
                         BorderThickness = (Thickness)tc.ConvertFromString("0px"),
                         BorderBrush = new SolidColorBrush(Colors.Transparent),
-                        TextDecorations =
+                        //TextDecorations = 
                     };
                 }
                 //Paragraph paragraph = new Paragraph(new InlineUIContainer( card ));
@@ -360,26 +400,53 @@ namespace Client
             //}
             ////idChat = tmpIdSelected;
             //listBoxChats.SelectedIndex = tmpIdSelected;
-            try
+            if (!EqualsChats(tmp))
             {
-                this.Dispatcher.Invoke(() =>
+                try
                 {
-                    int tmpIdSelected = idChat;
-                    listBoxChats.Items.Clear();
-                    foreach (string item in tmp)
+                    this.Dispatcher.Invoke(() =>
                     {
-                        listBoxChats.Items.Add(item);
-                    }
-                    //idChat = tmpIdSelected;
-                    listBoxChats.SelectedIndex = tmpIdSelected;
-                });
+                        int tmpIdSelected = idChat;
+                        listBoxChats.Items.Clear();
+                        foreach (string item in tmp)
+                        {
+                            listBoxChats.Items.Add(item);
+                        }
+                        //idChat = tmpIdSelected;
+                        listBoxChats.SelectedIndex = tmpIdSelected;
+                    });
+                    chatsSave = tmp;
+                }
+                catch (Exception)
+                {
+
+                    //throw;
+                }
             }
-            catch (Exception)
+
+        }
+
+        private bool EqualsChats(string[] chats)
+        {
+            if(chatsSave != null && chatsSave.Length == chats.Length)
             {
-
-                //throw;
+                for (int i = 0; i < chats.Length; i++)
+                {
+                    if (chatsSave[i] != chats[i])
+                    {
+                        return false;
+                    }
+                }
             }
-
+            else if(chatsSave == null)
+            {
+                return false;
+            }
+            else if(chatsSave.Length != chats.Length)
+            {
+                return false;
+            }
+            return true;
         }
 
         private void Button2_Click(object sender, RoutedEventArgs e)
@@ -1044,7 +1111,38 @@ namespace Client
 
         private void DownloadFile(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Danke");
+            Button tmp = (Button)sender;
+            MessageDTO message = (MessageDTO)tmp.Tag;
+            int IdMessage = message.Id;
+            MessageBox.Show($"{IdMessage}");
+            RemoteFileInfo remote = new RemoteFileInfo();
+            Service1Client client = new Service1Client();
+            client.DownloadFile(IdMessage, UserLoger, out remote.Length, out remote.FileByteStream);
+            client.Close();
+            FileStream target = null;
+            Stream sourceStream = remote.FileByteStream;
+            string domain = System.IO.Path.GetDirectoryName(new System.Uri(System.Reflection.Assembly.GetExecutingAssembly().CodeBase).LocalPath);
+            string DownloadFolder = domain + @"\Downloads\";
+            if (!Directory.Exists(DownloadFolder))
+            {
+                Directory.CreateDirectory(DownloadFolder);
+            }
+            string filePath = System.IO.Path.Combine(DownloadFolder, message.FileName);
+            using (target = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                //read from the input stream in 65000 byte chunks
+
+                const int bufferLen = 65000;
+                byte[] buffer = new byte[bufferLen];
+                int count = 0;
+                while ((count = sourceStream.Read(buffer, 0, bufferLen)) > 0)
+                {
+                    // save to output stream
+                    target.Write(buffer, 0, count);
+                }
+                target.Close();
+                sourceStream.Close();
+            }
         }
 
         //private List<Message> bletMassage()

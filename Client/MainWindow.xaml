@@ -259,13 +259,16 @@
                                             </StackPanel>
                                         </DockPanel>
                                     </materialDesign:ColorZone>
-                                    <ListBox x:Name="listBoxChats" Grid.Row="1" SelectionChanged="ListBoxChats_SelectionChanged" ItemsSource="{Binding}" Background="{DynamicResource PrimaryHueLightBrush}" Margin="0,72,0,0">
-                                        <ListBox.ItemTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding}"/>
-                                            </DataTemplate>
-                                        </ListBox.ItemTemplate>
-                                    </ListBox>
+                                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,72,0,0">
+                                        <ListBox x:Name="listBoxChats" SelectionChanged="ListBoxChats_SelectionChanged" ItemsSource="{Binding}" Background="{DynamicResource PrimaryHueLightBrush}">
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding}"/>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                    </ScrollViewer>
+                                        
 
                                 </Grid>
                                 <GridSplitter Grid.Column="1" ShowsPreview="False" Width="5" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="{DynamicResource PrimaryHueMidBrush}" BorderBrush="{DynamicResource PrimaryHueMidBrush}"/>
@@ -313,9 +316,11 @@
                                                 </StackPanel>
                                             </DockPanel>
                                         </materialDesign:ColorZone>
-                                                <StackPanel x:Name="Messages" Background="{DynamicResource PrimaryHueLightBrush}" Margin="0,72,0,74">
-                                                    
-                                                </StackPanel>
+                                                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,72,0,74">
+                                                    <StackPanel x:Name="Messages" Background="{DynamicResource PrimaryHueLightBrush}" >
+
+                                                    </StackPanel>
+                                                </ScrollViewer>
                                         <!--<RichTextBox x:Name="richMessageBox" Background="{DynamicResource PrimaryHueLightBrush}" Margin="0,72,0,74">
                                             <FlowDocument x:Name="Messages">
                                                 <Paragraph>

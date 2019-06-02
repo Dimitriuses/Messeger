@@ -102,7 +102,9 @@ namespace Messeger
     public class DownloadRequest
     {
         [MessageBodyMember]
-        public string FileName;
+        public int IdMessage;
+        [MessageBodyMember]
+        public Loger Loger;
     }
 
     [MessageContract]

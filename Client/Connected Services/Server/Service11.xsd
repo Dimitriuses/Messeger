@@ -287,14 +287,15 @@
   <xs:element name="DownloadRequest">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="IdMessage" type="xs:int" />
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Messeger" minOccurs="0" name="Loger" nillable="true" type="q24:Loger" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RemoteFileInfo">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q24="http://schemas.microsoft.com/Message" name="FileByteStream" type="q24:StreamBody" />
+        <xs:element xmlns:q25="http://schemas.microsoft.com/Message" name="FileByteStream" type="q25:StreamBody" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
