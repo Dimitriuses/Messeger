@@ -31,6 +31,8 @@ namespace Messeger
         [OperationContract]
         bool ReloadPhonelUser(Loger Userloger, string phone);
         [OperationContract]
+        bool ReloadPassword(Loger loger, string NewPassHash);
+        [OperationContract]
         bool AddChatToParticipants(Loger loger, int[] participants, int chatId);
         [OperationContract]
         bool AddNewChat(Loger login, string name);

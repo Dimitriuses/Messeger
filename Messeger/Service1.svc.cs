@@ -177,6 +177,30 @@ namespace Messeger
             return false;
         }
 
+        public bool ReloadPassword(Loger loger, string NewPassHash)
+        {
+            if(UserLogin(loger)&& NewPassHash != null)
+            {
+                using (Meseger ctx = new Meseger())
+                {
+                    try
+                    {
+                        User user = ctx.Users.SingleOrDefault<User>(a => a.Login == loger.Login);
+                        user.PasswordHash = NewPassHash;
+                        ctx.SaveChanges();
+                        return true;
+                    }
+                    catch (Exception)
+                    {
+
+                        //throw;
+                    }
+
+                }
+            }
+            return false;
+        }
+
         public bool AddChatToParticipants(Loger loger, int[] participants, int chatId)
         {
             if (UserLogin(loger) && participants != null && participants.Length > 0 && chatId != -1)

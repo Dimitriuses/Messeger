@@ -40,6 +40,12 @@
   <wsdl:message name="IService1_ReloadPhonelUser_OutputMessage">
     <wsdl:part name="parameters" element="tns:ReloadPhonelUserResponse" />
   </wsdl:message>
+  <wsdl:message name="IService1_ReloadPassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReloadPassword" />
+  </wsdl:message>
+  <wsdl:message name="IService1_ReloadPassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReloadPasswordResponse" />
+  </wsdl:message>
   <wsdl:message name="IService1_AddChatToParticipants_InputMessage">
     <wsdl:part name="parameters" element="tns:AddChatToParticipants" />
   </wsdl:message>
@@ -156,6 +162,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/ReloadPhonelUser" message="tns:IService1_ReloadPhonelUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/ReloadPhonelUserResponse" message="tns:IService1_ReloadPhonelUser_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="ReloadPassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService1/ReloadPassword" message="tns:IService1_ReloadPassword_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IService1/ReloadPasswordResponse" message="tns:IService1_ReloadPassword_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="AddChatToParticipants">
       <wsdl:input wsaw:Action="http://tempuri.org/IService1/AddChatToParticipants" message="tns:IService1_AddChatToParticipants_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IService1/AddChatToParticipantsResponse" message="tns:IService1_AddChatToParticipants_OutputMessage" />
@@ -261,6 +271,15 @@
     </wsdl:operation>
     <wsdl:operation name="ReloadPhonelUser">
       <soap:operation soapAction="http://tempuri.org/IService1/ReloadPhonelUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReloadPassword">
+      <soap:operation soapAction="http://tempuri.org/IService1/ReloadPassword" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

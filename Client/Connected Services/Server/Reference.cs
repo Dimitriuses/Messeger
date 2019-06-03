@@ -427,6 +427,12 @@ namespace Client.Server {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ReloadPhonelUser", ReplyAction="http://tempuri.org/IService1/ReloadPhonelUserResponse")]
         System.Threading.Tasks.Task<bool> ReloadPhonelUserAsync(Client.Server.Loger Userloger, string phone);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ReloadPassword", ReplyAction="http://tempuri.org/IService1/ReloadPasswordResponse")]
+        bool ReloadPassword(Client.Server.Loger loger, string NewPassHash);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/ReloadPassword", ReplyAction="http://tempuri.org/IService1/ReloadPasswordResponse")]
+        System.Threading.Tasks.Task<bool> ReloadPasswordAsync(Client.Server.Loger loger, string NewPassHash);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IService1/AddChatToParticipants", ReplyAction="http://tempuri.org/IService1/AddChatToParticipantsResponse")]
         bool AddChatToParticipants(Client.Server.Loger loger, int[] participants, int chatId);
         
@@ -647,6 +653,14 @@ namespace Client.Server {
         
         public System.Threading.Tasks.Task<bool> ReloadPhonelUserAsync(Client.Server.Loger Userloger, string phone) {
             return base.Channel.ReloadPhonelUserAsync(Userloger, phone);
+        }
+        
+        public bool ReloadPassword(Client.Server.Loger loger, string NewPassHash) {
+            return base.Channel.ReloadPassword(loger, NewPassHash);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ReloadPasswordAsync(Client.Server.Loger loger, string NewPassHash) {
+            return base.Channel.ReloadPasswordAsync(loger, NewPassHash);
         }
         
         public bool AddChatToParticipants(Client.Server.Loger loger, int[] participants, int chatId) {

@@ -233,7 +233,12 @@ namespace Client
 
         private void ListBoxChats_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            idChat = listBoxChats.SelectedIndex;
+            ListBoxItem item = (ListBoxItem)listBoxChats.SelectedItem;
+            if(item!= null)
+            {
+                idChat = (int)item.Tag;
+            }
+
             //Update_Chat_List();
             //UpdateMessages();
             
@@ -408,10 +413,14 @@ namespace Client
                     {
                         int tmpIdSelected = idChat;
                         listBoxChats.Items.Clear();
-                        foreach (string item in tmp)
+                        for (int i = 0; i < tmp.Length; i++)
                         {
-                            listBoxChats.Items.Add(item);
+                            listBoxChats.Items.Add(new ListBoxItem() { Content = tmp[i], Tag = i });
                         }
+                        //foreach (string item in tmp)
+                        //{
+                        //    listBoxChats.Items.Add(item);
+                        //}
                         //idChat = tmpIdSelected;
                         listBoxChats.SelectedIndex = tmpIdSelected;
                     });
@@ -821,7 +830,7 @@ namespace Client
 
         string Name = "";
         string SurName = "";
-        bool[] ProfileEditValidator = new bool[3] { false, false, false }; 
+        bool[] ProfileEditValidator = new bool[4] { false, false, false, false }; 
 
         private void ProfileEditName_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -914,6 +923,68 @@ namespace Client
             }
             UpdateEditButton();
         }
+        //pass reload
+
+        private void ProfileEditOldPass_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if(ProfileEditOldPass.Password != String.Empty)
+            {
+                ReloadPass.Background = new SolidColorBrush(Colors.LightYellow);
+                ProfileEditValidator[3] = true;
+                ProfileEditNewPass.ToolTip = "";
+                ProfileEditConfirmPass.ToolTip = "";
+            }
+            else
+            {
+                ReloadPass.Background = DefaultStackPanelColor;
+                ProfileEditValidator[3] = false;
+            }
+        }
+
+        private void ProfileEditNewPass_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (ProfileEditValidator[3])
+            {
+                if (ProfileEditNewPass.Password != ProfileEditConfirmPass.Password)
+                {
+                    ReloadPass.Background = new SolidColorBrush(Colors.LightCoral);
+                    ReloadPass.ToolTip = "Нові паролі неспівпадають";
+                }
+                else
+                {
+                    ReloadPass.Background = DefaultStackPanelColor;
+                    ReloadPass.ToolTip = "";
+                }
+            }
+            else
+            {
+                ProfileEditNewPass.ToolTip = "Ви не ввели старий пароль";
+                ProfileEditNewPass.Password = "";
+            }
+        }
+
+        private void ProfileEditConfirmPass_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (ProfileEditValidator[3])
+            {
+                if(ProfileEditNewPass.Password != ProfileEditConfirmPass.Password)
+                {
+                    ReloadPass.Background = new SolidColorBrush(Colors.LightCoral);
+                    ReloadPass.ToolTip = "Нові паролі неспівпадають";
+                }
+                else
+                {
+                    ReloadPass.Background = DefaultStackPanelColor;
+                    ReloadPass.ToolTip = "";
+                }
+            }
+            else
+            {
+                ProfileEditConfirmPass.ToolTip = "Ви не ввели старий пароль";
+                ProfileEditConfirmPass.Password = "";
+            }
+        }
+
 
         private void ProfileButtonSave_Click(object sender, RoutedEventArgs e)
         {
@@ -930,12 +1001,34 @@ namespace Client
             {
                 client.ReloadPhonelUser(UserLoger, ProfileEditPhone.Text);
             }
+            if (ProfileEditValidator[3])
+            {
+                if(ProfileEditOldPass.Password != String.Empty&&ProfileEditNewPass.Password != String.Empty)
+                {
+                    string pass;
+                    string oldPass;
+                    using(MD5 mD5 = MD5.Create())
+                    {
+                        pass = GetMd5Hash(mD5, ProfileEditNewPass.Password);
+                        oldPass = GetMd5Hash(mD5, ProfileEditOldPass.Password);
+                    }
+                    bool rel = client.ReloadPassword(new Loger() { Login = UserLoger.Login, PasswordHash = oldPass }, pass);
+                    if (rel)
+                    {
+                        UserLoger.PasswordHash = pass;
+                    }
+                }
+
+            }
             ProfileDTO = client.GetUserProfile(UserLoger);
             ProfileEditEmail.Text = client.GetEmail(UserLoger);
             ProfileEditPhone.Text = client.GetPhone(UserLoger);
             client.Close();
             ProfileEditName.Text = ProfileDTO.Name;
             ProfileEditSurName.Text = ProfileDTO.SurName;
+            ProfileEditOldPass.Password = String.Empty;
+            ProfileEditNewPass.Password = String.Empty;
+            ProfileEditConfirmPass.Password = String.Empty;
             ProfileEditName_TextChanged(null, null);
             ProfileEditSurName_TextChanged(null, null);
             ProfileEditEmail_TextChanged(null, null);
@@ -1144,6 +1237,47 @@ namespace Client
                 sourceStream.Close();
             }
         }
+
+        private void FindChat_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string FindText = FindChat.Text;
+            if(FindText!= String.Empty)
+            {
+                List<ListBoxItem> items = new List<ListBoxItem>();
+                for (int i = 0; i < chatsSave.Length; i++)
+                {
+                    items.Add(new ListBoxItem() { Content = chatsSave[i], Tag = i });
+                }
+                listBoxChats.Items.Clear();
+                foreach (ListBoxItem item in items)
+                {
+                    string ChatName = (string)item.Content;
+                    if (ChatName.Contains(FindText))
+                    {
+                        listBoxChats.Items.Add(item);
+                    }
+                }
+                if(listBoxChats.Items.Count == 0)
+                {
+                    listBoxChats.Items.Add(new ListBoxItem { Content = $"Результатів незнайдено", Tag = -1 });
+                }
+
+            }
+            else
+            {
+                listBoxChats.Items.Clear();
+                if(chatsSave != null)
+                {
+                    for (int i = 0; i < chatsSave.Length; i++)
+                    {
+                        listBoxChats.Items.Add(new ListBoxItem() { Content = chatsSave[i], Tag = i });
+                    }
+                }
+
+            }
+
+        }
+
 
         //private List<Message> bletMassage()
         //{
