@@ -16,8 +16,8 @@ namespace Client
         public SelectableVievModel(UserDTO user)
         {
             Id = user.Id;
-            Code = $"{user.Name[0]}{user.SurName[0]}".ToUpper();
-            Name = $"{user.Name} {user.SurName}";
+            Code = (user.Name!=null)? $"{user.Name[0]}{user.SurName[0]}".ToUpper():$"{user.Login[0]}{user.Login[1]}".ToUpper();
+            Name =(user.Name!=null&&user.SurName!=null)? $"{user.Name} {user.SurName}":"";
             Description = user.Login;
             IsSelected = false;
         }

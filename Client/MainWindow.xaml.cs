@@ -334,7 +334,7 @@ namespace Client
                 {
                     StackPanel stack = new StackPanel();
                     stack.Children.Add(new TextBox {
-                        Text = $"{item.Text}",
+                        Text = ((SenderLogin != UserLoger.Login) ? $"{SenderLogin}:" : "") + $"{item.Text}",
                         TextWrapping = TextWrapping.Wrap,
                         IsReadOnly = true, Background = new SolidColorBrush(Colors.Transparent),
                         BorderThickness = (Thickness)tc.ConvertFromString("0px"),
@@ -361,7 +361,7 @@ namespace Client
                 {
                     card.Content = new TextBox
                     {
-                        Text = $"{item.Text}",
+                        Text = ((SenderLogin != UserLoger.Login)?$"{SenderLogin}:":"") +$"{item.Text}",
                         TextWrapping = TextWrapping.Wrap,
                         IsReadOnly = true,
                         Background = new SolidColorBrush(Colors.Transparent),
