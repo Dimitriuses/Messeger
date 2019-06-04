@@ -102,6 +102,9 @@
       <DependentUpon>ColorChange.xaml</DependentUpon>
     </Compile>
     <Compile Include="FileDTO.cs" />
+    <Compile Include="FindMyUsers.xaml.cs">
+      <DependentUpon>FindMyUsers.xaml</DependentUpon>
+    </Compile>
     <Compile Include="IDataErrorInfo.cs" />
     <Compile Include="PaletteSelectorViewModel.cs" />
     <Compile Include="Pallete.xaml.cs">
@@ -123,6 +126,10 @@
     </Compile>
     <Compile Include="UserValidator.cs" />
     <Page Include="ColorChange.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FindMyUsers.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

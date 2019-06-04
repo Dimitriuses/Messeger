@@ -209,144 +209,150 @@
                                 </StackPanel>
                             </StackPanel>
                         </materialDesign:DialogHost.DialogContent>
-                
-                        <materialDesign:DrawerHost BorderBrush="{DynamicResource MaterialDesignDivider}">
-                            <materialDesign:DrawerHost.LeftDrawerContent>
-                                <StackPanel Margin="0,17,0,0">
-                                    <ToggleButton x:Name="ToggleIn" Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}" CommandParameter="{x:Static Dock.Left}" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ToggleIn_Click"/>
-                                    <materialDesign:Card x:Name="ProfileCard" Width="200" Height="100" materialDesign:ShadowAssist.ShadowDepth="Depth2">
-                                        <StackPanel x:Name="ProfilePanel" VerticalAlignment="Center">
-                                            <Button x:Name="CardButtonProfile" Style="{StaticResource MaterialDesignFloatingActionMiniButton}" HorizontalAlignment="Left" Click="CardButtonProfile_Click" FontSize="14"/>
-                                            <TextBlock x:Name="CardLoginProfile" TextWrapping="Wrap" FontSize="14"/>
-                                        </StackPanel>
-                                    </materialDesign:Card>
-                                    <ListBox>
-                                        <TextBlock>
-                                            <StackPanel Orientation="Horizontal" PreviewMouseDown="StackPanel_PreviewMouseDown">
-                                                <materialDesign:PackIcon Kind="AccountMultipleOutline" Width="21" Height="21" />
-                                                <TextBlock Text=" Створити новий чат" FontSize="14"/>
-                                            </StackPanel>
-                                        </TextBlock>
-                                        <TextBlock PreviewMouseDown="TextBlock_PreviewMouseDown">
-                                        <StackPanel Orientation="Horizontal">
-                                            <materialDesign:PackIcon Kind="Account" Width="21" Height="21"/>
-                                            <TextBlock Text=" Контакти" FontSize="14"/>
-                                        </StackPanel>
-                                        </TextBlock>
-                                        <TextBlock>
-                                            <StackPanel Orientation="Horizontal" PreviewMouseDown="StackPanel_PreviewMouseDown_1" >
-                                                <materialDesign:PackIcon Kind="SettingsOutline" Width="21" Height="21" PreviewMouseDown="StackPanel_PreviewMouseDown_1"/>
-                                                <TextBlock Text=" Налаштування" FontSize="14"/>
-                                            </StackPanel>
-                                        </TextBlock>
-                                    </ListBox>
-                                </StackPanel>
-                            </materialDesign:DrawerHost.LeftDrawerContent>
                         
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Grid>
-                                    <materialDesign:ColorZone Mode="PrimaryMid" Padding="16">
-                                        <DockPanel>
-                                            <StackPanel Orientation="Horizontal" materialDesign:RippleAssist.IsCentered="True">
-                                                <ToggleButton x:Name="ToggleOn" Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" CommandParameter="{x:Static Dock.Left}" Click="ToggleOn_Click"/>
-                                                <materialDesign:ColorZone Mode="Standard" Padding="8 4 8 4" CornerRadius="2" Panel.ZIndex="1" Margin="16 0 0 0" materialDesign:ShadowAssist.ShadowDepth="Depth1" Width="554">
-                                                    <Grid>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="Auto" />
-                                                            <ColumnDefinition Width="*" />
-                                                            <ColumnDefinition Width="Auto" />
-                                                        </Grid.ColumnDefinitions>
-                                                        <Button Style="{DynamicResource MaterialDesignToolButton}">
-                                                            <materialDesign:PackIcon Kind="Magnify" Opacity=".56" />
-                                                        </Button>
-                                                        <TextBox x:Name="FindChat" Grid.Column="1" Margin="8 0 0 0" materialDesign:HintAssist.Hint="Пошук" materialDesign:TextFieldAssist.DecorationVisibility="Hidden" BorderThickness="0" MinWidth="200" VerticalAlignment="Center" IsEnabledChanged="TextBox_IsEnabledChanged" TextChanged="FindChat_TextChanged" />
-                                                    </Grid>
-                                                </materialDesign:ColorZone>
+                        <materialDesign:DialogHost x:Name="FindUsersChats">
+                            <materialDesign:DialogHost.DialogContent>
+                                <local:FindMyUsers x:Name="FindPanel"/>
+                            </materialDesign:DialogHost.DialogContent>
+                
+                            <materialDesign:DrawerHost BorderBrush="{DynamicResource MaterialDesignDivider}">
+                                <materialDesign:DrawerHost.LeftDrawerContent>
+                                    <StackPanel Margin="0,17,0,0">
+                                        <ToggleButton x:Name="ToggleIn" Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}" CommandParameter="{x:Static Dock.Left}" HorizontalAlignment="Right" VerticalAlignment="Top" Click="ToggleIn_Click"/>
+                                        <materialDesign:Card x:Name="ProfileCard" Width="200" Height="100" materialDesign:ShadowAssist.ShadowDepth="Depth2">
+                                            <StackPanel x:Name="ProfilePanel" VerticalAlignment="Center">
+                                                <Button x:Name="CardButtonProfile" Style="{StaticResource MaterialDesignFloatingActionMiniButton}" HorizontalAlignment="Left" Click="CardButtonProfile_Click" FontSize="14"/>
+                                                <TextBlock x:Name="CardLoginProfile" TextWrapping="Wrap" FontSize="14"/>
                                             </StackPanel>
-                                        </DockPanel>
-                                    </materialDesign:ColorZone>
-                                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,72,0,0">
-                                        <ListBox x:Name="listBoxChats" SelectionChanged="ListBoxChats_SelectionChanged" ItemsSource="{Binding}" Background="{DynamicResource PrimaryHueLightBrush}">
-                                            <!--<ListBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Text="{Binding}"/>
-                                                </DataTemplate>
-                                            </ListBox.ItemTemplate>-->
+                                        </materialDesign:Card>
+                                        <ListBox>
+                                            <TextBlock>
+                                                <StackPanel Orientation="Horizontal" PreviewMouseDown="StackPanel_PreviewMouseDown">
+                                                    <materialDesign:PackIcon Kind="AccountMultipleOutline" Width="21" Height="21" />
+                                                    <TextBlock Text=" Створити новий чат" FontSize="14"/>
+                                                </StackPanel>
+                                            </TextBlock>
+                                            <TextBlock PreviewMouseDown="TextBlock_PreviewMouseDown">
+                                            <StackPanel Orientation="Horizontal" PreviewMouseDown="StackPanel_PreviewMouseDown_2">
+                                                <materialDesign:PackIcon Kind="Account" Width="21" Height="21"/>
+                                                <TextBlock Text=" Контакти" FontSize="14"/>
+                                            </StackPanel>
+                                            </TextBlock>
+                                            <TextBlock>
+                                                <StackPanel Orientation="Horizontal" PreviewMouseDown="StackPanel_PreviewMouseDown_1" >
+                                                    <materialDesign:PackIcon Kind="SettingsOutline" Width="21" Height="21" PreviewMouseDown="StackPanel_PreviewMouseDown_1"/>
+                                                    <TextBlock Text=" Налаштування" FontSize="14"/>
+                                                </StackPanel>
+                                            </TextBlock>
                                         </ListBox>
-                                    </ScrollViewer>
-                                        
-
-                                </Grid>
-                                <GridSplitter Grid.Column="1" ShowsPreview="False" Width="5" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="{DynamicResource PrimaryHueMidBrush}" BorderBrush="{DynamicResource PrimaryHueMidBrush}"/>
-                                <Grid Grid.Column="2" Margin="0">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <Grid Margin="0">
-
-                                        <materialDesign:ColorZone Mode="PrimaryMid" Padding="16" VerticalAlignment="Bottom">
+                                    </StackPanel>
+                                </materialDesign:DrawerHost.LeftDrawerContent>
+                        
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid>
+                                        <materialDesign:ColorZone Mode="PrimaryMid" Padding="16">
                                             <DockPanel>
-                                                <Button Style="{DynamicResource MaterialDesignToolForegroundButton}" Margin="8 0 0 0" DockPanel.Dock="Right" Click="Button1_Click">
-                                                    <materialDesign:PackIcon Kind="Send" Width="21" Height="21" />
-                                                </Button>
-                                                <!--<ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" VerticalAlignment="Center" DockPanel.Dock="Right" />-->
                                                 <StackPanel Orientation="Horizontal" materialDesign:RippleAssist.IsCentered="True">
-
-                                                    <!--<ToggleButton Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />-->
-                                                    <materialDesign:ColorZone Mode="Standard" Padding="8 4 8 4" CornerRadius="2" Panel.ZIndex="1" Margin="0" materialDesign:ShadowAssist.ShadowDepth="Depth1">
-                                                        <Grid MinWidth="555">
+                                                    <ToggleButton x:Name="ToggleOn" Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" CommandParameter="{x:Static Dock.Left}" Click="ToggleOn_Click"/>
+                                                    <materialDesign:ColorZone Mode="Standard" Padding="8 4 8 4" CornerRadius="2" Panel.ZIndex="1" Margin="16 0 0 0" materialDesign:ShadowAssist.ShadowDepth="Depth1" Width="554">
+                                                        <Grid>
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="Auto" />
-                                                                <ColumnDefinition />
+                                                                <ColumnDefinition Width="*" />
+                                                                <ColumnDefinition Width="Auto" />
                                                             </Grid.ColumnDefinitions>
-                                                            <Button  Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="32" Margin="0,0,0,0" Width="32" Click="Button_Click_6">
-                                                                <materialDesign:PackIcon x:Name="fileAddIcon" Kind="Paperclip" Height="21" Width="21" />
+                                                            <Button Style="{DynamicResource MaterialDesignToolButton}">
+                                                                <materialDesign:PackIcon Kind="Magnify" Opacity=".56" />
                                                             </Button>
-                                                            <TextBox x:Name="textBox" Grid.Column="1" Margin="8,5,0,5" materialDesign:HintAssist.Hint="Написати повідомлення" materialDesign:TextFieldAssist.DecorationVisibility="Hidden" BorderThickness="0" MinWidth="200" VerticalAlignment="Center" Height="24" FontSize="14" PreviewKeyDown="TextBox_PreviewKeyDown" />
+                                                            <TextBox x:Name="FindChat" Grid.Column="1" Margin="8 0 0 0" materialDesign:HintAssist.Hint="Пошук" materialDesign:TextFieldAssist.DecorationVisibility="Hidden" BorderThickness="0" MinWidth="200" VerticalAlignment="Center" IsEnabledChanged="TextBox_IsEnabledChanged" TextChanged="FindChat_TextChanged" />
                                                         </Grid>
                                                     </materialDesign:ColorZone>
                                                 </StackPanel>
                                             </DockPanel>
                                         </materialDesign:ColorZone>
-                                        <materialDesign:ColorZone Mode="Accent" Padding="23">
-                                            <DockPanel>
-                                                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
-                                                    <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges">
-                                                        <ListBox>
-                                                            <ListBoxItem x:Name="AdderParticipant" Selected="AdderParticipant_Selected">Додати учасників</ListBoxItem>
-                                                        </ListBox>
-                                                    </materialDesign:PopupBox>
-                                                </StackPanel>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding ElementName=listBoxChats,Path=SelectedValue.Content}" VerticalAlignment="Center" Margin="16 0 0 0" FontSize="20"/>
-                                                </StackPanel>
-                                            </DockPanel>
-                                        </materialDesign:ColorZone>
-                                                <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,72,0,74">
-                                                    <StackPanel x:Name="Messages" Background="{DynamicResource PrimaryHueLightBrush}" >
+                                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,72,0,0">
+                                            <ListBox x:Name="listBoxChats" SelectionChanged="ListBoxChats_SelectionChanged" ItemsSource="{Binding}" Background="{DynamicResource PrimaryHueLightBrush}">
+                                                <!--<ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding}"/>
+                                                    </DataTemplate>
+                                                </ListBox.ItemTemplate>-->
+                                            </ListBox>
+                                        </ScrollViewer>
+                                        
 
+                                    </Grid>
+                                    <GridSplitter Grid.Column="1" ShowsPreview="False" Width="5" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="{DynamicResource PrimaryHueMidBrush}" BorderBrush="{DynamicResource PrimaryHueMidBrush}"/>
+                                    <Grid Grid.Column="2" Margin="0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Grid Margin="0">
+
+                                            <materialDesign:ColorZone Mode="PrimaryMid" Padding="16" VerticalAlignment="Bottom">
+                                                <DockPanel>
+                                                    <Button Style="{DynamicResource MaterialDesignToolForegroundButton}" Margin="8 0 0 0" DockPanel.Dock="Right" Click="Button1_Click">
+                                                        <materialDesign:PackIcon Kind="Send" Width="21" Height="21" />
+                                                    </Button>
+                                                    <!--<ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" VerticalAlignment="Center" DockPanel.Dock="Right" />-->
+                                                    <StackPanel Orientation="Horizontal" materialDesign:RippleAssist.IsCentered="True">
+
+                                                        <!--<ToggleButton Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />-->
+                                                        <materialDesign:ColorZone Mode="Standard" Padding="8 4 8 4" CornerRadius="2" Panel.ZIndex="1" Margin="0" materialDesign:ShadowAssist.ShadowDepth="Depth1">
+                                                            <Grid MinWidth="555">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="Auto" />
+                                                                    <ColumnDefinition />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Button  Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" ToolTip="MaterialDesignFloatingActionMiniLightButton" Height="32" Margin="0,0,0,0" Width="32" Click="Button_Click_6">
+                                                                    <materialDesign:PackIcon x:Name="fileAddIcon" Kind="Paperclip" Height="21" Width="21" />
+                                                                </Button>
+                                                                <TextBox x:Name="textBox" Grid.Column="1" Margin="8,5,0,5" materialDesign:HintAssist.Hint="Написати повідомлення" materialDesign:TextFieldAssist.DecorationVisibility="Hidden" BorderThickness="0" MinWidth="200" VerticalAlignment="Center" Height="24" FontSize="14" PreviewKeyDown="TextBox_PreviewKeyDown" />
+                                                            </Grid>
+                                                        </materialDesign:ColorZone>
                                                     </StackPanel>
-                                                </ScrollViewer>
-                                        <!--<RichTextBox x:Name="richMessageBox" Background="{DynamicResource PrimaryHueLightBrush}" Margin="0,72,0,74">
-                                            <FlowDocument x:Name="Messages">
-                                                <Paragraph>
-                                                    <Run ></Run>
-                                                </Paragraph>
-                                            </FlowDocument>
-                                        </RichTextBox>-->
+                                                </DockPanel>
+                                            </materialDesign:ColorZone>
+                                            <materialDesign:ColorZone Mode="Accent" Padding="23">
+                                                <DockPanel>
+                                                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                                                        <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges">
+                                                            <ListBox>
+                                                                <ListBoxItem x:Name="AdderParticipant" Selected="AdderParticipant_Selected">Додати учасників</ListBoxItem>
+                                                            </ListBox>
+                                                        </materialDesign:PopupBox>
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{Binding ElementName=listBoxChats,Path=SelectedValue.Content}" VerticalAlignment="Center" Margin="16 0 0 0" FontSize="20"/>
+                                                    </StackPanel>
+                                                </DockPanel>
+                                            </materialDesign:ColorZone>
+                                                    <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,72,0,74">
+                                                        <StackPanel x:Name="Messages" Background="{DynamicResource PrimaryHueLightBrush}" >
+
+                                                        </StackPanel>
+                                                    </ScrollViewer>
+                                            <!--<RichTextBox x:Name="richMessageBox" Background="{DynamicResource PrimaryHueLightBrush}" Margin="0,72,0,74">
+                                                <FlowDocument x:Name="Messages">
+                                                    <Paragraph>
+                                                        <Run ></Run>
+                                                    </Paragraph>
+                                                </FlowDocument>
+                                            </RichTextBox>-->
+                                        </Grid>
+
                                     </Grid>
 
+
+
                                 </Grid>
-
-
-
-                            </Grid>
-                        </materialDesign:DrawerHost>
+                            </materialDesign:DrawerHost>
+                        </materialDesign:DialogHost>
                     </materialDesign:DialogHost>
                 </materialDesign:DialogHost>
             </materialDesign:DialogHost>

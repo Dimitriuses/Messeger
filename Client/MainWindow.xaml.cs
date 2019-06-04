@@ -1278,6 +1278,17 @@ namespace Client
 
         }
 
+        private void StackPanel_PreviewMouseDown_2(object sender, MouseButtonEventArgs e)
+        {
+            FindUsersChats.IsOpen = true;
+            List<ListBoxItem> items = new List<ListBoxItem>();
+            for (int i = 0; i < chatsSave.Length; i++)
+            {
+                items.Add(new ListBoxItem() { Content = chatsSave[i], Tag = i });
+            }
+            FindPanel.SetValues(items, UserLoger);
+        }
+
 
         //private List<Message> bletMassage()
         //{
