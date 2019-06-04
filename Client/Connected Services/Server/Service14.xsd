@@ -11,7 +11,9 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:LogerDTO">
         <xs:sequence>
+          <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Phone" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SurName" nillable="true" type="xs:string" />
         </xs:sequence>
       </xs:extension>

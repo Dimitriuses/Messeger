@@ -22,10 +22,12 @@ namespace Client
     public partial class FindMyUsers : UserControl
     {
         List<SelectableVievModel> selectables;
+        List<UserDTO> users;
         public FindMyUsers()
         {
             InitializeComponent();
             selectables = new List<SelectableVievModel>();
+            users = new List<UserDTO>();
             //DataContext = selectables;
         }
 
@@ -34,6 +36,7 @@ namespace Client
             Service1Client client = new Service1Client();
             HashSet<UserDTO> exist = new HashSet<UserDTO>();//= client.GetChatParticipant(UserLoger, idChat).ToList();
             items.ForEach(a => exist.UnionWith(client.GetChatParticipant(loger, (int)a.Tag)));
+            users = new List<UserDTO>(exist);
             //foreach (ListBoxItem item in items)
             //{
             //    exist.UnionWith(client.GetChatParticipant(loger, (int)item.Tag));
@@ -52,6 +55,7 @@ namespace Client
                 {
                     pararara.Items.Add(tmp[i]);
                     selectables.Add(tmp[i]);
+
                 }
                 else if (FindIdenticalItemForList(tmp, tmp[i]))
                 {
@@ -121,6 +125,23 @@ namespace Client
                 }
             }
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            UserDTO user = new UserDTO();
+            Button button = (Button)sender;
+            int idProfiler = (int)button.Tag;
+            foreach (UserDTO item in users)
+            {
+                if(item.Id == idProfiler)
+                {
+                    user = item;
+                    break;
+                }
+            }
+            Profiler.Set(user);
+            ProfileDialogHost.IsOpen = true;
         }
     }
 }

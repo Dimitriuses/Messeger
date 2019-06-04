@@ -111,6 +111,9 @@
       <DependentUpon>Pallete.xaml</DependentUpon>
     </Compile>
     <Compile Include="PasswordValidator.cs" />
+    <Compile Include="Profiler.xaml.cs">
+      <DependentUpon>Profiler.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Registr.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -151,6 +154,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Pallete.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Profiler.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
