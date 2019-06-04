@@ -334,7 +334,7 @@ namespace Client
                 {
                     StackPanel stack = new StackPanel();
                     stack.Children.Add(new TextBox {
-                        Text = ((SenderLogin != UserLoger.Login) ? $"{SenderLogin}:" : "") + $"{item.Text}",
+                        Text = ((SenderLogin != UserLoger.Login) ? $"{SenderLogin}: " : "") + $"{item.Text}",
                         TextWrapping = TextWrapping.Wrap,
                         IsReadOnly = true, Background = new SolidColorBrush(Colors.Transparent),
                         BorderThickness = (Thickness)tc.ConvertFromString("0px"),
@@ -361,7 +361,7 @@ namespace Client
                 {
                     card.Content = new TextBox
                     {
-                        Text = ((SenderLogin != UserLoger.Login)?$"{SenderLogin}:":"") +$"{item.Text}",
+                        Text = ((SenderLogin != UserLoger.Login)?$"{SenderLogin}: ":"") +$"{item.Text}",
                         TextWrapping = TextWrapping.Wrap,
                         IsReadOnly = true,
                         Background = new SolidColorBrush(Colors.Transparent),
@@ -509,7 +509,13 @@ namespace Client
             //passwordBox.Resources.Add(Resources, "MaterialDesignFilledPasswordFieldPasswordBox");
             if(UserLoger.Login != null)
             {
-
+                FindUsersChats.IsOpen = true;
+                List<ListBoxItem> items = new List<ListBoxItem>();
+                for (int i = 0; i < chatsSave.Length; i++)
+                {
+                    items.Add(new ListBoxItem() { Content = chatsSave[i], Tag = i });
+                }
+                FindPanel.SetValues(items, UserLoger);
             }
             else
             {
@@ -1198,6 +1204,7 @@ namespace Client
 
         private void StackPanel_PreviewMouseDown_1(object sender, MouseButtonEventArgs e)
         {
+            ToggleOn.IsChecked = false;
             ColorChange change = new ColorChange();
             change.Show();
         }
@@ -1278,16 +1285,20 @@ namespace Client
 
         }
 
-        private void StackPanel_PreviewMouseDown_2(object sender, MouseButtonEventArgs e)
-        {
-            FindUsersChats.IsOpen = true;
-            List<ListBoxItem> items = new List<ListBoxItem>();
-            for (int i = 0; i < chatsSave.Length; i++)
-            {
-                items.Add(new ListBoxItem() { Content = chatsSave[i], Tag = i });
-            }
-            FindPanel.SetValues(items, UserLoger);
-        }
+        //private void StackPanel_PreviewMouseDown_2(object sender, MouseButtonEventArgs e)
+        //{
+        //    if(UserLoger != null)
+        //    {
+        //        FindUsersChats.IsOpen = true;
+        //        List<ListBoxItem> items = new List<ListBoxItem>();
+        //        for (int i = 0; i < chatsSave.Length; i++)
+        //        {
+        //            items.Add(new ListBoxItem() { Content = chatsSave[i], Tag = i });
+        //        }
+        //        FindPanel.SetValues(items, UserLoger);
+        //    }
+
+        //}
 
 
         //private List<Message> bletMassage()

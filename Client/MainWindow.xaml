@@ -233,7 +233,7 @@
                                                 </StackPanel>
                                             </TextBlock>
                                             <TextBlock PreviewMouseDown="TextBlock_PreviewMouseDown">
-                                            <StackPanel Orientation="Horizontal" PreviewMouseDown="StackPanel_PreviewMouseDown_2">
+                                            <StackPanel Orientation="Horizontal">
                                                 <materialDesign:PackIcon Kind="Account" Width="21" Height="21"/>
                                                 <TextBlock Text=" Контакти" FontSize="14"/>
                                             </StackPanel>
